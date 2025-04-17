@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-xl font-semibold mb-4">Log In</h2>
+<form method="POST">
+    <input class="block w-full mb-2 p-2 border rounded" name="email" placeholder="Email" required>
+    <input class="block w-full mb-4 p-2 border rounded" type="password" name="password" placeholder="Password" required>
+    <button class="bg-green-600 text-white px-4 py-2 rounded w-full" type="submit">Log In</button>
+</form>
+<p class="mt-4 text-sm text-center">
+    Forgot your password? <a class="text-blue-500 underline" href="{{ url_for('forgot') }}">Reset it</a><br>
+    Don’t have an account? <a class="text-blue-500 underline" href="{{ url_for('signup') }}">Sign up</a>
+</p>
+{% endblock %}
