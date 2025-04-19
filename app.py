@@ -53,28 +53,38 @@ def signup():
     if request.method == 'POST':
         email = request.form['email'].strip().lower()
         password = request.form['password'].strip()
+        confirm_password = request.form['confirm_password'].strip()
 
-        # ✅ Validate email format
+        #validate email format
         try:
             valid = validate_email(email)
-            email = valid.email  # normalized
+            email = valid.email
         except EmailNotValidError:
             flash('Please enter a valid email address.')
             return redirect(url_for('signup'))
 
+        #check if passwords match
+        if password != confirm_password:
+            flash('Passwords do not match.')
+            return redirect(url_for('signup'))
+
+        #check if user already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash('An account with that email already exists.')
             return redirect(url_for('signup'))
 
+        #create the user
         user = User(email=email)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
+
         flash('Account created successfully!')
         return redirect(url_for('login'))
 
     return render_template('signup.html')
+
 
 # --- Login ---
 @app.route('/login', methods=['GET', 'POST'])

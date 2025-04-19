@@ -2,9 +2,13 @@
 {% block content %}
 <h2 class="text-xl font-semibold mb-4">Sign Up</h2>
 <form method="POST">
-    <input class="block w-full mb-2 p-2 border rounded" name="email" placeholder="Email" required>
-    <input class="block w-full mb-4 p-2 border rounded" type="password" name="password" placeholder="Password" required>
-    <button class="bg-blue-600 text-white px-4 py-2 rounded w-full" type="submit">Sign Up</button>
+    <input type="email" name="email" required placeholder="Email" class="block w-full mb-2 p-2 border rounded">
+
+    <input type="password" name="password" required placeholder="Password" class="block w-full mb-2 p-2 border rounded">
+
+    <input type="password" name="confirm_password" required placeholder="Confirm Password" class="block w-full mb-4 p-2 border rounded">
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Sign Up</button>
 </form>
 <p class="mt-4 text-sm text-center">
     Already have an account? <a class="text-blue-500 underline" href="{{ url_for('login') }}">Login</a>
