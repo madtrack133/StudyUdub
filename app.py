@@ -14,18 +14,27 @@ import base64
 from io import BytesIO
 from dotenv import load_dotenv
 import logging
+from logging.handlers import RotatingFileHandler
 
 
 # --- Logging Configuration ---
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s [%(levelname)s] %(message)s',
-    handlers=[
-        logging.StreamHandler(),  # console output
-        logging.FileHandler("app.log", encoding='utf-8')  # output to a file
-    ]
-)
+from logging.handlers import RotatingFileHandler
 
+log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+
+file_handler = RotatingFileHandler('app.log', maxBytes=1_000_000, backupCount=3)
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(log_formatter)
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(log_formatter)
+
+# Add handler to root logger
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
 
 # --- Flask App Setup ---
 app = Flask(__name__)
@@ -349,4 +358,4 @@ def dashboard():
 
 # --- Run the app ---
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(debug=True)
