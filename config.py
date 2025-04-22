@@ -1,5 +1,3 @@
-
-
 from dotenv import load_dotenv
 import os
 
@@ -21,3 +19,7 @@ class Config:
 
     # Optional: Default sender (used if you forget to specify in Message())
     MAIL_DEFAULT_SENDER = MAIL_USERNAME
+    
+    # Two-Factor Authentication (TOTP) settings
+    # Issuer name shown in authenticator apps
+    TWOFA_ISSUER_NAME = os.getenv('TWOFA_ISSUER_NAME', 'StudyUdub')

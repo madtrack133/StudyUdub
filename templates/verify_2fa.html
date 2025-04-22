@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-xl mb-4">Two-Factor Authentication</h2>
+{% if error %}
+    <div style="color: red; padding: 10px; border: 1px solid red;">
+        {{ error }}
+    </div>
+{% endif %}
+<form method="POST" id="verifyForm" onsubmit="collectCode()">
+    <p>Enter 6-digit code from your authenticator app:</p>
+
+    <form method="POST" onsubmit="collectCode()">
+    <div id="appleCode" class="flex justify-center space-x-2 mb-4">
+        <!-- 6 boxes for the code -->
+        <input type="text" inputmode="numeric" maxlength="1" class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                id="code-0">
+        <input type="text" inputmode="numeric" maxlength="1" class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                id="code-1">
+        <input type="text" inputmode="numeric" maxlength="1" class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                id="code-2">
+        <input type="text" inputmode="numeric" maxlength="1" class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                id="code-3">
+        <input type="text" inputmode="numeric" maxlength="1" class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                id="code-4">
+        <input type="text" inputmode="numeric" maxlength="1" class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                id="code-5">
+    </div>
+      
+    <!-- set connected code -->
+    <input type="hidden" name="code" id="hiddenCode">
+
+    <button type="submit"
+            name="action"
+            value="verify"
+            class="bg-blue-500 text-white px-4 py-2 rounded"
+            onclick="document.getElementById('codeInput').required = true;">
+        Verify
+    </button>
+
+    <button type="submit"
+            name="action"
+            value="reset"
+            class="px-4 py-2 rounded"
+            onclick="document.getElementById('codeInput').required = false;">
+        Forget 2FA key?
+    </button>
+</form>
+
+<script>
+    // get all input boxes
+    const inputs = Array.from(document.querySelectorAll('#appleCode input'));
+  
+    inputs.forEach((input, idx) => {
+      // when input is focused, select the text
+      input.addEventListener('input', () => {
+        // delete all non-numeric characters
+        input.value = input.value.replace(/[^0-9]/g, '');
+        if (input.value && idx < inputs.length - 1) {
+          inputs[idx + 1].focus();
+        }
+      });
+      // Backspace key to move to the previous input
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Backspace' && !input.value && idx > 0) {
+          inputs[idx - 1].focus();
+        }
+      });
+    });
+  
+    // Combine the code and set it in a hidden field when the form is submitted
+    function collectCode() {
+      const code = inputs.map(i => i.value).join('');
+      document.getElementById('hiddenCode').value = code;
+    }
+  
+    // Focus on the beginning on page load
+    window.addEventListener('load', () => {
+      inputs[0].focus();
+    });
+</script>
+
+
+{% endblock %}

@@ -10,6 +10,23 @@
 
     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Sign Up</button>
 </form>
+{% if error %}
+    <div style="color: red; padding: 10px; border: 1px solid red;">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    {% if qr_code %}
+    <div style="margin-top: 20px;">
+        <h3>Scan this QR Code:</h3>
+        <img src="data:image/png;base64,{{ qr_code }}" 
+             alt="2FA QR Code" 
+             style="border: 2px solid #333; padding: 10px;">
+        <div style="margin-top: 15px;">
+            <p>Or enter this secret manually: <strong>{{ totp_secret }}</strong></p>
+        </div>
+    </div>
+    {% endif %}
 <p class="mt-4 text-sm text-center">
     Already have an account? <a class="text-blue-500 underline" href="{{ url_for('login') }}">Login</a>
 </p>

@@ -4,10 +4,13 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class User(db.Model, UserMixin):
+class Student(db.Model, UserMixin):
+    __tablename__ = 'Student'
+    
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    totp_secret = db.Column(db.String(32), nullable=True)  # TOTP secret for 2FA
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
