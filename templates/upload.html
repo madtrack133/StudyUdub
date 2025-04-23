@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Upload Notes{% endblock %}
+{% block content %}
+<div class="container py-4">
+
+    <div class="card p-4 shadow-sm">
+        <h2 class="mb-4">Upload New Note 📤</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label">Note Title</label>
+                <input type="text" name="title" class="form-control" placeholder="Enter note title" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Select File</label>
+                <input type="file" name="file" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select name="category" class="form-select" required>
+                    <option disabled selected>Select category</option>
+                    <option>Lecture Notes</option>
+                    <option>Assignment Solutions</option>
+                    <option>Past Exam Papers</option>
+                    <option>Tutorials</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Course</label>
+                <select name="course" class="form-select" required>
+                    <option disabled selected>Select course</option>
+                    <option>CITS3002</option>
+                    <option>CITS3403</option>
+                    <option>MATH1700</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-2">Upload Note</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
