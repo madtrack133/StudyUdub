@@ -140,3 +140,64 @@
 2025-04-22 23:56:10,329 [INFO] 127.0.0.1 - - [22/Apr/2025 23:56:10] "[32mGET / HTTP/1.1[0m" 302 -
 2025-04-22 23:56:10,381 [INFO] 127.0.0.1 - - [22/Apr/2025 23:56:10] "GET /login HTTP/1.1" 200 -
 2025-04-22 23:56:10,446 [INFO] 127.0.0.1 - - [22/Apr/2025 23:56:10] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:56:46,521 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-23 09:56:46,522 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-23 09:56:46,522 [INFO]  * Restarting with stat
+2025-04-23 09:56:46,763 [WARNING]  * Debugger is active!
+2025-04-23 09:56:46,772 [INFO]  * Debugger PIN: 450-662-830
+2025-04-23 09:56:49,000 [INFO] 127.0.0.1 - - [23/Apr/2025 09:56:49] "[32mGET / HTTP/1.1[0m" 302 -
+2025-04-23 09:56:49,040 [INFO] 127.0.0.1 - - [23/Apr/2025 09:56:49] "GET /login HTTP/1.1" 200 -
+2025-04-23 09:56:49,196 [INFO] 127.0.0.1 - - [23/Apr/2025 09:56:49] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:56:58,330 [INFO] 127.0.0.1 - - [23/Apr/2025 09:56:58] "POST /login HTTP/1.1" 200 -
+2025-04-23 09:56:58,355 [INFO] 127.0.0.1 - - [23/Apr/2025 09:56:58] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:57:01,645 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:01] "GET /signup HTTP/1.1" 200 -
+2025-04-23 09:57:01,673 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:01] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:57:09,305 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:09] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-04-23 09:57:09,335 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:09] "GET /setup-2fa HTTP/1.1" 200 -
+2025-04-23 09:57:09,360 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:09] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:57:30,058 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:30] "[32mPOST /setup-2fa HTTP/1.1[0m" 302 -
+2025-04-23 09:57:30,073 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:30] "GET /login HTTP/1.1" 200 -
+2025-04-23 09:57:30,103 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:30] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:57:39,880 [INFO] User 2025.test.emailaddress@gmail.com logged in - redirecting to 2FA verification
+2025-04-23 09:57:39,881 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:39] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-23 09:57:39,884 [INFO] Found student with ID: 1
+2025-04-23 09:57:39,886 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:39] "GET /verify-2fa HTTP/1.1" 200 -
+2025-04-23 09:57:39,910 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:39] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:57:47,577 [INFO] Found student with ID: 1
+2025-04-23 09:57:47,578 [INFO] Login successful for user ID 1 (2025.test.emailaddress@gmail.com) - redirecting to dashboard
+2025-04-23 09:57:47,587 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:47] "[32mPOST /verify-2fa HTTP/1.1[0m" 302 -
+2025-04-23 09:57:47,594 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:47] "GET /dashboard HTTP/1.1" 200 -
+2025-04-23 09:57:49,059 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:49] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-04-23 09:57:49,064 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:49] "GET /login HTTP/1.1" 200 -
+2025-04-23 09:57:49,086 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:49] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:57:56,780 [INFO] User 2025.test.emailaddress@gmail.com logged in - redirecting to 2FA verification
+2025-04-23 09:57:56,782 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:56] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-23 09:57:56,785 [INFO] Found student with ID: 1
+2025-04-23 09:57:56,785 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:56] "GET /verify-2fa HTTP/1.1" 200 -
+2025-04-23 09:57:56,806 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:56] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:57:57,933 [INFO] Found student with ID: 1
+2025-04-23 09:57:57,934 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:57] "[32mPOST /verify-2fa HTTP/1.1[0m" 302 -
+2025-04-23 09:57:57,943 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:57] "GET /reset-2fa-request HTTP/1.1" 200 -
+2025-04-23 09:57:57,975 [INFO] 127.0.0.1 - - [23/Apr/2025 09:57:57] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:58:07,114 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:07] "POST /reset-2fa-request HTTP/1.1" 200 -
+2025-04-23 09:58:07,152 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:07] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:58:22,312 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:22] "GET /reset-2fa/IjIwMjUudGVzdC5lbWFpbGFkZHJlc3NAZ21haWwuY29tIg.aAhJKg.on9FWVbLQk-lVnLtqccOaAIsq6g HTTP/1.1" 200 -
+2025-04-23 09:58:22,336 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:22] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:58:32,072 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:32] "[32mPOST /reset-2fa/IjIwMjUudGVzdC5lbWFpbGFkZHJlc3NAZ21haWwuY29tIg.aAhJKg.on9FWVbLQk-lVnLtqccOaAIsq6g HTTP/1.1[0m" 302 -
+2025-04-23 09:58:32,078 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:32] "GET /login HTTP/1.1" 200 -
+2025-04-23 09:58:32,101 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:32] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:58:42,263 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:42] "POST /login HTTP/1.1" 200 -
+2025-04-23 09:58:42,280 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:42] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:58:52,502 [INFO] User 2025.test.emailaddress@gmail.com logged in - redirecting to 2FA verification
+2025-04-23 09:58:52,504 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:52] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-23 09:58:52,507 [INFO] Found student with ID: 1
+2025-04-23 09:58:52,508 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:52] "GET /verify-2fa HTTP/1.1" 200 -
+2025-04-23 09:58:52,526 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-04-23 09:58:59,228 [INFO] Found student with ID: 1
+2025-04-23 09:58:59,229 [INFO] Login successful for user ID 1 (2025.test.emailaddress@gmail.com) - redirecting to dashboard
+2025-04-23 09:58:59,230 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:59] "[32mPOST /verify-2fa HTTP/1.1[0m" 302 -
+2025-04-23 09:58:59,235 [INFO] 127.0.0.1 - - [23/Apr/2025 09:58:59] "GET /dashboard HTTP/1.1" 200 -
+2025-04-23 09:59:15,879 [INFO] 127.0.0.1 - - [23/Apr/2025 09:59:15] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-04-23 09:59:15,898 [INFO] 127.0.0.1 - - [23/Apr/2025 09:59:15] "GET /login?next=/logout HTTP/1.1" 200 -
+2025-04-23 09:59:15,923 [INFO] 127.0.0.1 - - [23/Apr/2025 09:59:15] "[36mGET /static/style.css HTTP/1.1[0m" 304 -

@@ -166,7 +166,7 @@ def setup_2fa():
         logout_user()
         return redirect(url_for('login'))
 
-    # 2FA未設定ならここでセットアップ
+    # If user dosen't have 2FA set up yet, set it up here
     new_secret = pyotp.random_base32()
     current_user.totp_secret = new_secret
     db.session.commit()
@@ -179,9 +179,7 @@ def setup_2fa():
     img.save(buffer, format="PNG")
     qr_base64 = base64.b64encode(buffer.getvalue()).decode()
 
-    return render_template("setup_2fa.html",
-                       qr_code=qr_base64,
-                       totp_secret=new_secret)
+    return render_template("setup_2fa.html", qr_code=qr_base64, totp_secret=new_secret)
 
 
 # --- Reset 2FA ---
@@ -229,9 +227,7 @@ def reset_2fa_token(token):
     img.save(buffered, format="PNG")
     qr_base64 = base64.b64encode(buffered.getvalue()).decode()
 
-    return render_template("setup_2fa.html",
-                           qr_code=qr_base64,
-                           totp_secret=new_secret)
+    return render_template("setup_2fa.html", qr_code=qr_base64, totp_secret=new_secret)
 
 
 
@@ -268,8 +264,6 @@ def verify_2fa():
         
         # --- Forget 2FA key ---
         if action == 'reset':
-            user.totp_secret = None
-            db.session.commit()
             flash("2FA key has been reset. Please check your email to set up a new key.")
             session.clear()
             return redirect(url_for('reset_2fa_request'))
