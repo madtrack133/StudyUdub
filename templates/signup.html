@@ -2,14 +2,18 @@
 {% block content %}
 <h2 class="text-xl font-semibold mb-4">Sign Up</h2>
 <form method="POST">
-    <input type="email" name="email" required placeholder="Email" class="block w-full mb-2 p-2 border rounded">
-
-    <input type="password" name="password" required placeholder="Password" class="block w-full mb-2 p-2 border rounded">
-
-    <input type="password" name="confirm_password" required placeholder="Confirm Password" class="block w-full mb-4 p-2 border rounded">
-
+    <input type="email" name="email" required placeholder="Email" class="block w-full mb-2 p-2 border rounded" />
+  
+    <input type="password" name="password" required placeholder="Password"
+           pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+           title="Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
+           class="block w-full mb-2 p-2 border rounded" />
+  
+    <input type="password" name="confirm_password" required placeholder="Confirm Password"
+           class="block w-full mb-4 p-2 border rounded" />
+  
     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Sign Up</button>
-</form>
+  </form>  
 <p class="mt-4 text-sm text-center">
     Already have an account? <a class="text-blue-500 underline" href="{{ url_for('login') }}">Login</a>
 </p>
