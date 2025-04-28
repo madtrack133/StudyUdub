@@ -28,32 +28,48 @@ CREATE TABLE StudentClass (
     FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
 );
 
--- Create Assignment table with added FilePath column
 CREATE TABLE Assignment (
-    AssignmentID INT PRIMARY KEY,
-    ClassID INT,
-    StudentID INT,
-    AssignmentName VARCHAR(100) NOT NULL,
-    FilePath VARCHAR(255) NOT NULL,        -- Stores the file path for assignment submission
-    HoursSpent DECIMAL(5,2),
-    Score DECIMAL(5,2) CHECK (Score BETWEEN 0 AND 100),
-    Weight DECIMAL(5,2) CHECK (Weight BETWEEN 0 AND 100),
-    DueDate DATE NOT NULL,
-    FOREIGN KEY (ClassID) REFERENCES Class(ClassID),
-    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+  AssignmentID   INTEGER PRIMARY KEY,
+  ClassID        INTEGER,
+  StudentID      INTEGER,
+  AssignmentName TEXT    NOT NULL,
+  FilePath       TEXT    NOT NULL CHECK (
+    FilePath LIKE '/secure_uploads/%/_%.%'                        -- prefix + at least one char + slash + _hashedname.ext
+    AND length(substr(FilePath, 15, 64)) = 64                    -- the “hashed” filename (64 chars) starts at position 15
+    AND substr(FilePath, 15, 64) NOT LIKE '%/%'                  -- no extra slashes in the hash
+    AND (
+         substr(FilePath, -4, 4) IN ('.pdf', '.txt')            -- ends in .pdf or .txt
+      OR substr(FilePath, -5, 5) = '.docx'                       -- or .docx (5-char extension)
+    )
+  ),
+  HoursSpent     REAL,
+  Score          REAL    CHECK (Score  BETWEEN 0 AND 100),
+  Weight         REAL    CHECK (Weight BETWEEN 0 AND 100),
+  DueDate        DATE    NOT NULL,
+  FOREIGN KEY (ClassID)   REFERENCES Class(ClassID),
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 
--- Create Notes table for student notes (file stored as path)
+
 CREATE TABLE Notes (
-    NoteID INT PRIMARY KEY,
-    StudentID INT,
-    ClassID INT,
-    Title VARCHAR(255),
-    FilePath VARCHAR(255) NOT NULL,         -- File path to the note file
-    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
-    FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
+  NoteID      INTEGER PRIMARY KEY,
+  StudentID   INTEGER,
+  ClassID     INTEGER,
+  Title       TEXT,
+  FilePath    TEXT    NOT NULL CHECK (
+    FilePath LIKE '/secure_notes/%/_%.%'                         -- notes folder
+    AND length(substr(FilePath, 13, 64)) = 64                   -- hash begins at pos 13
+    AND substr(FilePath, 13, 64) NOT LIKE '%/%'                 -- no extra slashes
+    AND (
+         substr(FilePath, -3, 3) = '.md'                        -- .md (3-char extension)
+      OR substr(FilePath, -4, 4) IN ('.txt', '.docx')           -- or .txt/.docx
+    )
+  ),
+  CreatedAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (ClassID)   REFERENCES Class(ClassID)
 );
+
 
 -- Create Share table to manage sharing permissions between students
 CREATE TABLE Share (
