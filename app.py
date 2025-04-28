@@ -1,94 +1,105 @@
-from flask import Flask, render_template, request, redirect, url_for
-from datetime import datetime
+from flask import Flask, render_template, request, redirect, url_for, session
+from collections import defaultdict
 
 app = Flask(__name__)
+app.secret_key = 'studyudub-secret-key'
 
-# Simulated data
-courses = [
-    {'code': 'CITS3002'},
-    {'code': 'CITS3403'},
-    {'code': 'MATH1700'}
-]
-
-notes = []  # Uploaded notes
-deadlines = []  # Added deadlines
-
-# Home page
+# Home/Dashboard
 @app.route('/')
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html', courses=courses, notes=notes)
+    courses = session.get('courses', [])
+    return render_template('dashboard.html', courses=courses)
 
-# Upload Notes page
-@app.route('/upload', methods=['GET', 'POST'])
+# Upload Notes (basic placeholder page)
+@app.route('/upload')
 def upload():
-    if request.method == 'POST':
-        title = request.form['title']
-        file = request.files['file']
-        category = request.form['category']
-        course = request.form['course']
+    return render_template('upload.html', courses=session.get('courses', []))
 
-        notes.append({
-            'title': title,
-            'filename': file.filename,
-            'category': category,
-            'course': course,
-            'date': datetime.now().strftime("%d %b %Y")
-        })
-
-        return redirect(url_for('dashboard'))
-
-    return render_template('upload.html', courses=courses)
-
-# Share Notes page
-@app.route('/share', methods=['GET', 'POST'])
+# Share Notes
+@app.route('/share')
 def share():
-    return render_template('share.html', courses=courses)
+    return render_template('share.html', courses=session.get('courses', []))
 
-# Shared With Me page
+# Shared With Me
 @app.route('/shared_with_me')
 def shared_with_me():
-    return render_template('shared_with_me.html', courses=courses)
+    return render_template('shared_with_me.html', courses=session.get('courses', []))
 
-# Deadlines page
-@app.route('/deadlines', methods=['GET', 'POST'])
+# Deadlines
+@app.route('/deadlines')
 def deadlines():
-    if request.method == 'POST':
-        task = request.form['task']
-        due_date = request.form['due_date']
-        deadlines.append({'task': task, 'due_date': due_date})
-        return redirect(url_for('deadlines'))
-    return render_template('deadlines.html', courses=courses, deadlines=deadlines)
+    return render_template('deadlines.html', courses=session.get('courses', []))
 
-# View notes for a specific course
+# Course-specific Notes View
 @app.route('/course/<course_code>')
 def course_notes(course_code):
-    filtered_notes = [note for note in notes if note['course'] == course_code]
-    return render_template('course_notes.html', course=course_code, notes=filtered_notes, courses=courses)
+    return render_template("course_notes.html", course_code=course_code, courses=session.get('courses', []))
 
-# Add new course
+# Add a New Course
 @app.route('/add_course', methods=['POST'])
 def add_course():
-    new_course_code = request.form['course_code']
-    courses.append({'code': new_course_code})
+    course_code = request.form['course_code']
+    if 'courses' not in session:
+        session['courses'] = []
+    if not any(c['code'] == course_code for c in session['courses']):
+        session['courses'].append({'code': course_code})
+    session.modified = True
     return redirect(url_for('dashboard'))
 
-# Rename course
-@app.route('/rename_course/<old_code>', methods=['POST'])
-def rename_course(old_code):
-    new_code = request.form['new_code']
-    for course in courses:
-        if course['code'] == old_code:
-            course['code'] = new_code
-    return redirect(url_for('dashboard'))
+# Grades Tracker View
+@app.route('/grades', methods=['GET', 'POST'])
+def grades_view():
+    if 'grades' not in session:
+        session['grades'] = []
 
-# Delete course
-@app.route('/delete_course/<course_code>', methods=['POST'])
-def delete_course(course_code):
-    global courses
-    courses = [c for c in courses if c['code'] != course_code]
-    return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        unit = request.form['unit']
+        assessment = request.form['assessment']
+        score = float(request.form['score'])
+        out_of = float(request.form['out_of'])
+        weight = float(request.form['weight'])
+        contribution = round((score / out_of) * weight, 2)
 
-# Run app
+        session['grades'].append({
+            'unit': unit,
+            'assessment': assessment,
+            'score': score,
+            'out_of': out_of,
+            'weight': weight,
+            'contribution': contribution
+        })
+        session.modified = True
+        return redirect(url_for('grades_view'))
+
+    grades = session.get('grades', [])
+
+    summaries = defaultdict(lambda: {'achieved': 0, 'assessments': []})
+    chart_data = {}
+
+    for grade in grades:
+        unit = grade['unit']
+        summaries[unit]['achieved'] += grade['contribution']
+        summaries[unit]['assessments'].append({
+            'assessment': grade['assessment'],
+            'contribution': grade['contribution']
+        })
+
+    for unit, data in summaries.items():
+        chart_data[unit] = {
+            'labels': [a['assessment'] for a in data['assessments']],
+            'values': [a['contribution'] for a in data['assessments']]
+        }
+        data['remaining'] = round(max(0, 50 - data['achieved']), 1)
+        data['achieved'] = round(data['achieved'], 1)
+
+    return render_template(
+        'grades.html',
+        grades=grades,
+        summaries=summaries,
+        chart_data=chart_data,
+        courses=session.get('courses', [])
+    )
+
 if __name__ == '__main__':
     app.run(debug=True)
