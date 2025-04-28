@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Welcome to StudyUdub</h1>
+<p><a href="{{ url_for('signup') }}" class="text-blue-500 underline">Sign up</a> or 
+<a href="{{ url_for('login') }}" class="text-blue-500 underline">log in</a> to get started.</p>
+{% endblock %}
