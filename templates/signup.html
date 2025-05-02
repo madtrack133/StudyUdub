@@ -1,32 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h2 class="text-xl font-semibold mb-4">Sign Up</h2>
 
-<p class="text-sm text-gray-600 mb-2">
-    Password must be at least 8 characters long and include:
-    <ul class="list-disc list-inside text-sm text-gray-600">
-      <li>One uppercase letter (A–Z)</li>
-      <li>One lowercase letter (a–z)</li>
-      <li>One number (0–9)</li>
-      <li>One special character (@ $ ! % * ? &)</li>
-    </ul>
-  </p>
+<!-- Password instructions -->
+<div class="mb-4 text-sm text-gray-700">
+  <p class="mb-1">Password must be at least 8 characters long and include:</p>
+  <ul class="list-disc list-inside ml-4">
+    <li>One uppercase letter (A–Z)</li>
+    <li>One lowercase letter (a–z)</li>
+    <li>One number (0–9)</li>
+    <li>One special character (@ $ ! % * ? &)</li>
+  </ul>
+</div>
 
-  
-<form method="POST">
-    <input type="email" name="email" required placeholder="Email" class="block w-full mb-2 p-2 border rounded" />
-  
-    <input type="password" name="password" required placeholder="Password"
-           pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
-           title="Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
-           class="block w-full mb-2 p-2 border rounded" />
-  
-    <input type="password" name="confirm_password" required placeholder="Confirm Password"
-           class="block w-full mb-4 p-2 border rounded" />
-  
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Sign Up</button>
-  </form>  
-<p class="mt-4 text-sm text-center">
-    Already have an account? <a class="text-blue-500 underline" href="{{ url_for('login') }}">Login</a>
-</p>
+<!-- Signup form -->
+<form method="POST" class="space-y-3">
+  <input type="email" name="email" required placeholder="Email"
+         class="w-full p-2 border border-gray-300 rounded" />
+
+  <input type="password" id="signup-password" name="password" required placeholder="Password"
+         pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+         title="Password must include uppercase, lowercase, number, and special character."
+         class="w-full p-2 border border-gray-300 rounded" />
+
+  <input type="password" id="signup-confirm" name="confirm_password" required placeholder="Confirm Password"
+         class="w-full p-2 border border-gray-300 rounded" />
+
+  <label class="flex items-center text-sm">
+    <input type="checkbox" onclick="toggleSignupPasswords()" class="mr-2"> Show Password
+  </label>
+
+  <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+    Sign Up
+  </button>
+</form>
+
+<!-- JS toggle -->
+<script>
+  function toggleSignupPasswords() {
+    const pw1 = document.getElementById("signup-password");
+    const pw2 = document.getElementById("signup-confirm");
+    const type = pw1.type === "password" ? "text" : "password";
+    pw1.type = type;
+    pw2.type = type;
+  }
+</script>
+
 {% endblock %}
