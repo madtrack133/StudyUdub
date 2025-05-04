@@ -1,66 +1,90 @@
 -- Create Student table with additional authentication fields
 CREATE TABLE Student (
-    StudentID INT PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
+    StudentID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    FirstName TEXT NOT NULL,
+    LastName TEXT NOT NULL,
     Email VARCHAR(100) UNIQUE,
-    Password VARCHAR(255) NOT NULL,      -- Password (typically hashed)
+    Password VARCHAR(255) NOT NULL, -- Password should be hashed
     Otp_Code VARCHAR(10),                -- One-time password code (optional)
     Otp_Expiry DATETIME,                 -- Expiry for the OTP
     CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create Class table
-CREATE TABLE Class (
-    ClassID INT PRIMARY KEY,
+-- Create Course table
+CREATE TABLE Course (
+    CourseID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     UnitCode VARCHAR(20) NOT NULL UNIQUE,
-    ClassName VARCHAR(100) NOT NULL,
-    CreditPoints INT NOT NULL
+    CourseName VARCHAR(100) NOT NULL,
+    CreditPoints INTEGER NOT NULL
 );
 
--- Create StudentClass to capture enrollment relationships
-CREATE TABLE StudentClass (
-    StudentID INT,
-    ClassID INT,
-    EnrollmentDate DATE NOT NULL,
-    PRIMARY KEY (StudentID, ClassID),
-    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
-    FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
+-- Create StudentCourse rename from studentclass to capture enrollment relationships
+CREATE TABLE StudentCourse (
+    StudentID INTEGER NOT NULL,
+    CourseID INTEGER NOT NULL,
+    EnrollmentDate DATE, --CAN be nulll
+    PRIMARY KEY (StudentID, CourseID),
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE,
+    FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE CASCADE
 );
-
--- Create Assignment table with added FilePath column
+--should double check filepath method
 CREATE TABLE Assignment (
-    AssignmentID INT PRIMARY KEY,
-    ClassID INT,
-    StudentID INT,
-    AssignmentName VARCHAR(100) NOT NULL,
-    FilePath VARCHAR(255) NOT NULL,        -- Stores the file path for assignment submission
-    HoursSpent DECIMAL(5,2),
-    Score DECIMAL(5,2) CHECK (Score BETWEEN 0 AND 100),
-    Weight DECIMAL(5,2) CHECK (Weight BETWEEN 0 AND 100),
-    DueDate DATE NOT NULL,
-    FOREIGN KEY (ClassID) REFERENCES Class(ClassID),
-    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+  AssignmentID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  CourseID        INTEGER,
+  StudentID      INTEGER,
+  AssignmentName TEXT    NOT NULL,
+  FilePath       TEXT    NOT NULL CHECK (
+    FilePath LIKE '/secure_uploads/%/_%.%'                        -- prefix + at least one char + slash + _hashedname.ext
+    AND length(substr(FilePath, 17, 64)) = 64                    -- the “hashed” filename (64 chars) starts at position 15
+    AND substr(FilePath, 17, 64) NOT LIKE '%/%'                  -- no extra slashes in the hash
+    AND (
+         substr(FilePath, -3, 3) = '.md'                        -- .md extension
+      OR substr(FilePath, -4, 4) IN ('.pdf', '.txt')            -- .pdf or .txt
+      OR substr(FilePath, -5, 5) = '.docx'                       -- .docx
+    )
+  ),
+  HoursSpent     REAL,
+  Weight         REAL    CHECK (Weight BETWEEN 0 AND 100),
+  MarksAchieved  REAL    CHECK (MarksAchieved BETWEEN 0 AND MarksOutOf),
+  MarksOutOf     REAL    CHECK (MarksOutOf > 0),
+  DueDate        DATE    NOT NULL,
+  FOREIGN KEY (CourseID)   REFERENCES Course(CourseID) ON DELETE CASCADE,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE
 );
 
--- Create Notes table for student notes (file stored as path)
+
 CREATE TABLE Notes (
-    NoteID INT PRIMARY KEY,
-    StudentID INT,
-    ClassID INT,
-    Title VARCHAR(255),
-    FilePath VARCHAR(255) NOT NULL,         -- File path to the note file
-    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
-    FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
+  NoteID      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  StudentID   INTEGER NOT NULL,
+  CourseID     INTEGER,
+  Title       TEXT,
+  Category    TEXT CHECK (Category IN ('Lecture', 'Tutorial', 'Lab', 'Exam', 'Other')),  -- Added constraint for Category
+  Description TEXT,
+  FilePath    TEXT    NOT NULL CHECK (
+    FilePath LIKE '/secure_notes/%/_%.%'                         -- notes folder
+    AND length(substr(FilePath, 15, 64)) = 64                   -- hash begins at pos 13
+    AND substr(FilePath, 15, 64) NOT LIKE '%/%'                 -- no extra slashes
+    AND (
+         substr(FilePath, -3, 3) = '.md'                        -- .md
+      OR substr(FilePath, -4, 4) IN ('.pdf', '.txt')           -- .pdf or .txt
+      OR substr(FilePath, -5, 5) = '.docx'                      -- .docx
+    )
+  ),
+  CreatedAt   DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE,
+  FOREIGN KEY (CourseID)   REFERENCES Course(CourseID) ON DELETE SET NULL
 );
 
--- Create Share table to manage sharing permissions between students
+
+-- Sharing permissions
 CREATE TABLE Share (
-    ShareID INT PRIMARY KEY,
-    OwnerStudentID INT,                     -- The student who owns the resource
-    AccesseeStudentID INT,                  -- The student with whom the resource is shared
-    EditPower BOOLEAN,                      -- TRUE if the accessee is allowed to edit
-    FOREIGN KEY (OwnerStudentID) REFERENCES Student(StudentID),
-    FOREIGN KEY (AccesseeStudentID) REFERENCES Student(StudentID)
+    ShareID           INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    NoteID            INTEGER NOT NULL,
+    OwnerStudentID    INTEGER NOT NULL,
+    AccesseeStudentID INTEGER NOT NULL,
+    EditPower         INTEGER,
+    FOREIGN KEY (NoteID)            REFERENCES Notes(NoteID)            ON DELETE CASCADE,
+    FOREIGN KEY (OwnerStudentID)    REFERENCES Student(StudentID)      ON DELETE CASCADE,
+    FOREIGN KEY (AccesseeStudentID) REFERENCES Student(StudentID)      ON DELETE CASCADE,
+    UNIQUE (NoteID, AccesseeStudentID)
 );
