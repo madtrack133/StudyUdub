@@ -1,28 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
-<<<<<<< HEAD
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-
-db = SQLAlchemy()
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-=======
 from sqlalchemy import CheckConstraint, UniqueConstraint
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 # Initialize SQLAlchemy
 db = SQLAlchemy()
 
-class Student(db.Model):
+class Student(db.Model, UserMixin):
     __tablename__ = 'Student'
     StudentID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     FirstName = db.Column(db.Text, nullable=False)
@@ -32,6 +16,17 @@ class Student(db.Model):
     Otp_Code = db.Column(db.String(10))
     Otp_Expiry = db.Column(db.DateTime)
     CreatedAt = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Flask-Login integration: Use StudentID as the user ID
+    def get_id(self):
+           return (self.StudentID)
+
+    # Password hashing methods
+    def set_password(self, password):
+        self.Password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.Password, password)
 
     # Relationships
     courses = db.relationship('Course', secondary='StudentCourse', back_populates='students')
@@ -127,4 +122,3 @@ class Share(db.Model):
     note = db.relationship('Notes', back_populates='shares')
     owner = db.relationship('Student', foreign_keys=[OwnerStudentID], back_populates='shares_owned')
     accessee = db.relationship('Student', foreign_keys=[AccesseeStudentID], back_populates='shares_received')
->>>>>>> database
