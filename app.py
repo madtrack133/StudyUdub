@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 db.init_app(app)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db) #db versioning
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 mail = Mail(app)
@@ -77,9 +77,6 @@ def signup():
             flash('An account with that email already exists.')
             return redirect(url_for('signup'))
 
-        # Need FirstName and LastName for Student model
-        # For now, let's add placeholders or prompt user - using placeholders for now
-        # Ideally, the signup form should collect these.
         user = Student(Email=email, FirstName=first_name, LastName=last_name) # Updated
         user.set_password(password)
         db.session.add(user)
