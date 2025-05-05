@@ -232,6 +232,7 @@ def login():
 
         user = Student.query.filter_by(Email=email).first()
         if user and user.check_password(password):
+            session.clear()
             login_user(user)
             
             # Check if user has 2FA set up
