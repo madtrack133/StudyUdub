@@ -6,3 +6,6 @@ Flask-Migrate
 itsdangerous
 email-validator
 python-dotenv
+pyotp
+qrcode
+Werkzeug
