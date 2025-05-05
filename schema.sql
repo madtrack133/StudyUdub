@@ -6,7 +6,7 @@ CREATE TABLE Student (
     Email VARCHAR(100) UNIQUE,
     Password VARCHAR(255) NOT NULL, -- Password should be hashed
     totp_secret VARCHAR(32),                
-    Otp_Expiry DATETIME,                 -- Expiry for the OTP
+    Otp_Expiry DATETIME,                 -- Expiry for the OTP when using email varification
     CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
