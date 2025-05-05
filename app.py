@@ -17,6 +17,7 @@ from io import BytesIO
 from dotenv import load_dotenv
 import logging
 from logging.handlers import RotatingFileHandler
+from functools import wraps
 
 
 # --- Logging Configuration ---
@@ -94,7 +95,15 @@ Thanks,
 StudyApp Team
 '''
     mail.send(msg)
-    
+
+def twofa_required(view):
+    @wraps(view)
+    def wrapped_view(**kwargs):
+        if 'user_id' not in session:
+            flash("You must complete 2FA verification to access this page.")
+            return redirect(url_for('verify_2fa'))
+        return view(**kwargs)
+    return wrapped_view
 
 # Helper function to validate strong passwords
 def is_strong_password(password):
@@ -134,6 +143,7 @@ def signup():
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
+        login_user(user)
         flash('Account created successfully! Please set up 2FA.')
         return redirect(url_for('setup_2fa'))
 
@@ -223,6 +233,13 @@ def login():
         user = Student.query.filter_by(Email=email).first()
         if user and user.check_password(password):
             login_user(user)
+            
+            # Check if user has 2FA set up
+            if not user.totp_secret:
+                flash("2FA is not set up. Please complete setup.")
+                return redirect(url_for('setup_2fa'))
+            
+            # --- Two-Factor Authentication (2FA) ---
             session['temp_user_id'] = user.StudentID  # Store user ID temporarily for 2FA
             logging.info(f"User {user.Email} logged in - redirecting to 2FA verification")
             return redirect(url_for('verify_2fa'))
@@ -330,10 +347,8 @@ def reset_password(token):
 
 @app.route('/dashboard')
 @login_required
+@twofa_required
 def dashboard():
-    if not current_user.totp_secret:
-        flash("Please complete 2FA setup before accessing the dashboard.")
-        return redirect(url_for('setup_2fa'))
     return f"<h1>Welcome, {current_user.Email}!</h1><a href='/logout'>Logout</a>"
 
 if __name__ == '__main__':
