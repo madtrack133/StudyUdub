@@ -8,7 +8,7 @@ load_dotenv()  # Load variables from .env into environment
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     # 🗂️ Database config
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///StudyUdub_V1.1.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///StudyUdub_V2.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # 📧 Flask-Mail Gmail SMTP settings
