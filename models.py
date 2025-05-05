@@ -13,7 +13,7 @@ class Student(db.Model, UserMixin):
     LastName = db.Column(db.Text, nullable=False)
     Email = db.Column(db.String(100), unique=True)
     Password = db.Column(db.String(255), nullable=False)
-    Otp_Code = db.Column(db.String(10))
+    totp_secret = db.Column(db.String(32),nullable=True)
     Otp_Expiry = db.Column(db.DateTime)
     CreatedAt = db.Column(db.DateTime, default=datetime.utcnow)
 
