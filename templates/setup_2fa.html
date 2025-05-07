@@ -1,28 +1,29 @@
 {% extends "base.html" %}
+{% block title %}Set Up Two-Factor Authentication{% endblock %}
+
 {% block content %}
-    <h2>Setup 2FA</h2>
+<div class="d-flex vh-100 align-items-center justify-content-center">
+  <div class="card shadow-sm" style="width:100%; max-width:400px;">
+    <div class="card-body p-4">
+      <!-- Logo -->
+      <div class="text-center mb-3">
+        <img src="{{ url_for('static', filename='uploads/StudyUdubLogo.png') }}"
+             alt="StudyUdub"
+             class="img-fluid"
+             style="height:50px;">
+      </div>
 
-    {% if error %}
-        <div style="color: red; padding: 10px; border: 1px solid red;">
-            {{ error }}
-        </div>
-    {% endif %}
+      <h4 class="card-title text-center mb-4">Set Up Two-Factor Authentication</h4>
+      <p class="mb-3 text-center">Scan the QR code below with your authenticator app:</p>
+      <div class="text-center mb-4">
+        <img src="data:image/png;base64,{{ qr_code }}" alt="2FA QR Code" class="img-fluid" style="max-height:200px;">
+      </div>
+      <p class="mb-4 text-center">Or enter this key manually:<br><code>{{ totp_secret }}</code></p>
 
-    {% if qr_code %}
-    <div style="margin-top: 20px;">
-        <h3>Use Authenticator App(Google Authenticator, Microsoft Authenticator etc.)<br><br>Scan this QR Code:</h3>
-        <img src="data:image/png;base64,{{ qr_code }}" 
-             alt="2FA QR Code" 
-             style="border: 2px solid #333; padding: 10px;">
-        <div style="margin-top: 15px;">
-            <p>Or enter this secret manually: <strong>{{ totp_secret }}</strong></p>
-        </div>
+      <form method="POST" action="{{ url_for('setup_2fa') }}">
+        <button type="submit" class="btn btn-primary w-100">I have set up 2FA</button>
+      </form>
     </div>
-    {% endif %}
-
-    <form method="POST">
-      <button class="bg-yellow-500 text-white px-4 py-2 rounded" type="submit">Complete Setup 2FA</button>
-    </form>
-
-   
+  </div>
+</div>
 {% endblock %}
