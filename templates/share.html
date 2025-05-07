@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Share Notes{% endblock %}
+{% block content %}
+<div class="container py-4">
+
+    <div class="card p-4 shadow-sm">
+        <h2 class="mb-4">Share a Note ✉️</h2>
+
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Select Note</label>
+                <select name="note_id" class="form-select" required>
+                    <option disabled selected>Choose a note</option>
+                    <option value="1">Secure Coding Notes</option>
+                    <option value="2">Agile Study Notes</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Recipient Username</label>
+                <input type="text" name="recipient" class="form-control" placeholder="Enter username" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning mt-2">Share Note</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

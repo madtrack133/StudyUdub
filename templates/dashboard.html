@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Welcome Message -->
+  <div class="mb-5">
+    <h1>Hey Krishna! 👋</h1>
+    <p>Welcome back to your Study Hub. Manage your notes and deadlines easily!</p>
+  </div>
+
+  <!-- Quick Actions Section -->
+  <div class="row mb-5">
+    <div class="col-md-3">
+      <a href="{{ url_for('upload') }}" class="text-decoration-none action-card">
+        <div class="card dashboard-icon p-4 shadow-sm text-center">
+          <i class="bi bi-upload fs-1 mb-2 icon"></i>
+          <h5 class="title">Upload Notes</h5>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3">
+      <a href="{{ url_for('deadlines') }}" class="text-decoration-none action-card">
+        <div class="card dashboard-icon p-4 shadow-sm text-center">
+          <i class="bi bi-calendar-event fs-1 mb-2 icon"></i>
+          <h5 class="title">View Deadlines</h5>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3">
+      <a href="{{ url_for('share') }}" class="text-decoration-none action-card">
+        <div class="card dashboard-icon p-4 shadow-sm text-center">
+          <i class="bi bi-share fs-1 mb-2 icon"></i>
+          <h5 class="title">Share Notes</h5>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3">
+      <a href="{{ url_for('shared_with_me') }}" class="text-decoration-none action-card">
+        <div class="card dashboard-icon p-4 shadow-sm text-center">
+          <i class="bi bi-folder-symlink fs-1 mb-2 icon"></i>
+          <h5 class="title">Shared With Me</h5>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Recent Notes Section -->
+  <div class="card p-4 shadow-sm">
+    <h4 class="card-title">Recent Notes 📚</h4>
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if notes %}
+          {% for note in notes %}
+          <tr>
+            <td>{{ note.title }}</td>
+            <td>{{ note.date }}</td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="2" class="text-center">No notes uploaded yet.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<style>
+  .dashboard-icon {
+    transition: all 0.3s ease-in-out;
+    border-radius: 15px;
+    background-color: #ffffff;
+    color: #212529;
+  }
+
+  .dashboard-icon:hover {
+    background-color: #eaeaff;
+    transform: scale(1.03);
+    color: #5f3dc4;
+  }
+
+  .dashboard-icon:hover .icon {
+    color: #5f3dc4;
+  }
+
+  .dashboard-icon:hover .title {
+    color: #5f3dc4;
+  }
+
+  .dashboard-icon .title {
+    font-weight: 600;
+    margin-top: 10px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .dashboard-icon .icon {
+    transition: color 0.3s ease-in-out;
+  }
+</style>
+{% endblock %}

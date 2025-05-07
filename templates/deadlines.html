@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Deadlines{% endblock %}
+{% block content %}
+<div class="container py-4">
+
+    <div class="card p-4 shadow-sm mb-4">
+        <h2 class="mb-4">Upcoming Deadlines 📅</h2>
+
+        <form id="deadline-form">
+            <div class="mb-3">
+                <label class="form-label">Assignment/Test Title</label>
+                <input type="text" name="task" class="form-control" placeholder="Enter task name" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Due Date</label>
+                <input type="date" name="due_date" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-2">Add Deadline</button>
+        </form>
+    </div>
+
+    <div class="card p-4 shadow-sm">
+        <h4>My Deadlines</h4>
+        <table class="table table-hover mt-3" id="deadlines-table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- dynamically added here later -->
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

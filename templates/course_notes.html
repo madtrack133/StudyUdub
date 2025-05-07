@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course_code }} Notes{% endblock %}
+
+{% block content %}
+    <h2 class="mt-4">{{ course_code }} Notes 📚</h2>
+    <div class="card mt-3 p-3">
+        <p>Here will be shown all notes uploaded for <strong>{{ course_code }}</strong>.</p>
+        <p class="text-muted">(*We will later make this list dynamic!*)</p>
+    </div>
+{% endblock %}
