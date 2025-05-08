@@ -58,7 +58,6 @@ class Assignment(db.Model):
     CourseID = db.Column(db.Integer, db.ForeignKey('Course.CourseID', ondelete='CASCADE'))
     StudentID = db.Column(db.Integer, db.ForeignKey('Student.StudentID', ondelete='CASCADE'))
     AssignmentName = db.Column(db.Text, nullable=False)
-    FilePath = db.Column(db.Text, nullable=False)
     HoursSpent = db.Column(db.Float)
     Weight = db.Column(db.Float)
     MarksAchieved = db.Column(db.Float)

@@ -43,7 +43,6 @@ def upgrade():
     sa.Column('CourseID', sa.Integer(), nullable=True),
     sa.Column('StudentID', sa.Integer(), nullable=True),
     sa.Column('AssignmentName', sa.Text(), nullable=False),
-    sa.Column('FilePath', sa.Text(), nullable=False),
     sa.Column('HoursSpent', sa.Float(), nullable=True),
     sa.Column('Weight', sa.Float(), nullable=True),
     sa.Column('MarksAchieved', sa.Float(), nullable=True),

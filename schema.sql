@@ -33,7 +33,6 @@ CREATE TABLE Assignment (
   CourseID        INTEGER,
   StudentID      INTEGER,
   AssignmentName TEXT    NOT NULL,
-  FilePath       TEXT    NOT NULL,
   HoursSpent     REAL,
   Weight         REAL    CHECK (Weight BETWEEN 0 AND 100),
   MarksAchieved  REAL    CHECK (MarksAchieved BETWEEN 0 AND MarksOutOf),
