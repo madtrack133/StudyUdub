@@ -295,43 +295,14 @@ def add_course():
 @login_required
 @twofa_required
 def grades_view():
-    # Initialize the grades list in session if needed
-    if 'grades' not in session:
-        session['grades'] = []
-
-    # Handle form submission
-    if request.method == 'POST':
-        unit    = request.form['unit']
-        assess  = request.form['assessment']
-        score   = float(request.form['score'])
-        out_of  = float(request.form['out_of'])
-        wt      = float(request.form['weight'])
-        contrib = round((score / out_of) * wt, 2)
-
-        session['grades'].append({
-            'unit': unit,
-            'assessment': assess,
-            'score': score,
-            'out_of': out_of,
-            'weight': wt,
-            'contribution': contrib
-        })
+    if 'grades' not in session: session['grades'] = []
+    if request.method=='POST':
+        unit=req.form['unit']; assess=req.form['assessment']
+        score=float(req.form['score']); out_of=float(req.form['out_of']); wt=float(req.form['weight'])
+        contrib=round((score/out_of)*wt,2)
+        session['grades'].append({'unit':unit,'assessment':assess,'score':score,'out_of':out_of,'weight':wt,'contribution':contrib})
         session.modified = True
-
-    # Pull your data back out of session
-    grades     = session.get('grades', [])
-    summaries  = {}    # now a dict, so .items() works
-    chart_data = {}    # default empty dict for your JS
-
-    return render_template(
-        'grades.html',
-        grades=grades,
-        summaries=summaries,
-        chart_data=chart_data,
-        courses=session.get('courses', [])
-    )
-
-
+    return render_template('grades.html', grades=session.get('grades', []), courses=session.get('courses', []))
 
 if __name__ == '__main__':
     app.run(debug=True)
