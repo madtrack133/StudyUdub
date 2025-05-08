@@ -1,14 +1,59 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from collections import defaultdict
+import re
+import os
+import logging
+from logging.handlers import RotatingFileHandler
+from io import BytesIO
+from datetime import datetime
+import base64
+from functools import wraps
 
+from flask import Flask, render_template, redirect, url_for, flash, request, session
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import (
+    LoginManager,
+    login_user,
+    logout_user,
+    login_required,
+    current_user,
+)
+from flask_mail import Mail, Message
+from flask_migrate import Migrate
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from email_validator import validate_email, EmailNotValidError
+import pyotp
+import qrcode
+
+from config import Config
+from models import db, Student
+
+# --- Logging Configuration ---
+log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+
+file_handler = RotatingFileHandler('app.log', maxBytes=1_000_000, backupCount=3)
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(log_formatter)
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(log_formatter)
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+
+# --- Flask App Setup ---
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# Ensure SECRET_KEY is set
+# Fallback secret key
 if not app.config.get('SECRET_KEY'):
     app.config['SECRET_KEY'] = 'studyudub-fallback-secret'
 
 app.secret_key = app.config['SECRET_KEY']
+
+# Now it's safe to initialize the serializer
+s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 # --- Extensions ---
 db.init_app(app)
@@ -38,101 +83,225 @@ def twofa_required(view):
     return wrapped_view
 
 
-# ─── AUTH ROUTES ───────────────────────────────────────────────────────────────
+# --- Email Senders ---
+def send_password_reset_email(user):
+    token = s.dumps(user.Email, salt='email-confirm')
+    link = url_for('reset_password', token=token, _external=True)
+    msg = Message('Reset Your Password', sender=app.config['MAIL_USERNAME'], recipients=[user.Email])
+    msg.body = f"""Hi,\n\nTo reset your password, click below:\n{link}\n\nIf you didn’t request this, ignore this email."""
+    mail.send(msg)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        # In a real app you'd validate against a user database here
-        session['user'] = {'username': username}
-        return redirect(url_for('dashboard'))
-    return render_template('login.html', courses=session.get('courses', []))
+def send_2fa_reset_email(user):
+    token = s.dumps(user.Email, salt='2fa-reset')
+    link = url_for('reset_2fa_token', token=token, _external=True)
+    msg = Message('Reset Your 2FA Key', sender=app.config['MAIL_USERNAME'], recipients=[user.Email])
+    msg.body = f"""
+Hi {user.FirstName},\n\nReset your 2FA key via:\n{link}\n\nThis expires in 1 hour.
+"""
+    mail.send(msg)
 
-
+# --- Routes: Auth ---
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        # Here you would create the user record in your database
-        return redirect(url_for('login'))
-    return render_template('signup.html', courses=session.get('courses', []))
+        email = request.form['email'].strip().lower()
+        password = request.form['password'].strip()
+        confirm = request.form['confirm_password'].strip()
+        first = request.form['first_name'].strip()
+        last  = request.form['last_name'].strip()
+        try:
+            valid = validate_email(email)
+            email = valid.email
+        except EmailNotValidError:
+            flash('Invalid email.', 'danger')
+            return redirect(url_for('signup'))
+        if password != confirm or not is_strong_password(password):
+            flash('Password criteria not met or mismatch.', 'danger')
+            return redirect(url_for('signup'))
+        if Student.query.filter_by(Email=email).first():
+            flash('Email already registered.', 'warning')
+            return redirect(url_for('signup'))
+        user = Student(Email=email, FirstName=first, LastName=last)
+        user.set_password(password)
+        db.session.add(user); db.session.commit()
+        login_user(user)
+        flash('Account created; complete 2FA setup.', 'success')
+        return redirect(url_for('setup_2fa'))
+    return render_template('signup.html')
 
+@app.route('/setup-2fa', methods=['GET','POST'])
+@login_required
+def setup_2fa():
+    if current_user.totp_secret:
+        flash('2FA already set up.', 'info')
+        return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        logout_user(); flash('2FA setup complete; please log in.', 'success')
+        return redirect(url_for('login'))
+    secret = pyotp.random_base32()
+    current_user.totp_secret = secret; db.session.commit()
+    uri = pyotp.TOTP(secret).provisioning_uri(name=current_user.Email, issuer_name='StudyApp')
+    img = qrcode.make(uri)
+    buf = BytesIO(); img.save(buf, 'PNG')
+    qr = base64.b64encode(buf.getvalue()).decode()
+    return render_template('setup_2fa.html', qr_code=qr, totp_secret=secret)
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email'].strip().lower()
+        pwd   = request.form['password'].strip()
+        user  = Student.query.filter_by(Email=email).first()
+
+        if user and user.check_password(pwd):
+            login_user(user)
+            #set your session flag so twofa_required passes
+            session['user_id'] = user.StudentID
+            flash('Logged in successfully!', 'success')
+            return redirect(url_for('dashboard'))
+
+        flash('Invalid email or password.', 'danger')
+
+    return render_template('login.html')
+
+
+@app.route('/verify-2fa', methods=['GET','POST'])
+def verify_2fa():
+    if 'temp_user_id' not in session:
+        return redirect(url_for('login'))
+    user = Student.query.get(session['temp_user_id'])
+    if request.method == 'POST':
+        code = request.form.get('code','').strip()
+        if code == 'reset':
+            session.clear(); send_2fa_reset_email(user)
+            flash('Check email for 2FA reset.', 'info')
+            return redirect(url_for('login'))
+        totp = pyotp.TOTP(user.totp_secret)
+        if totp.verify(code, valid_window=2):
+            session['user_id'] = user.StudentID
+            session.pop('temp_user_id', None)
+            return redirect(url_for('dashboard'))
+        flash('Invalid 2FA code.', 'danger')
+    return render_template('verify_2fa.html')
+
+@app.route('/reset-2fa-request', methods=['GET','POST'])
+def reset_2fa_request():
+    if request.method=='POST':
+        email = request.form['email'].strip().lower()
+        user  = Student.query.filter_by(Email=email).first()
+        if user:
+            send_2fa_reset_email(user)
+            flash('2FA reset link sent.', 'info')
+        else:
+            flash('Email not found.', 'warning')
+    return render_template('reset_2fa_request.html')
+
+@app.route('/reset-2fa/<token>', methods=['GET','POST'])
+def reset_2fa_token(token):
+    try:
+        email = s.loads(token, salt='2fa-reset', max_age=3600)
+    except SignatureExpired:
+        return '<h1>Link expired.</h1>'
+    user = Student.query.filter_by(Email=email).first()
+    if not user: return redirect(url_for('login'))
+    if request.method=='POST':
+        flash('2FA updated; please log in.', 'success')
+        return redirect(url_for('login'))
+    secret = pyotp.random_base32(); user.totp_secret = secret; db.session.commit()
+    uri = pyotp.TOTP(secret).provisioning_uri(name=user.Email, issuer_name='StudyApp')
+    img = qrcode.make(uri); buf = BytesIO(); img.save(buf,'PNG')
+    qr = base64.b64encode(buf.getvalue()).decode()
+    return render_template('setup_2fa.html', qr_code=qr, totp_secret=secret)
+
+@app.route('/forgot', methods=['GET','POST'])
+def forgot():
+    if request.method=='POST':
+        email = request.form['email'].strip().lower()
+        user  = Student.query.filter_by(Email=email).first()
+        if user:
+            send_password_reset_email(user)
+            flash('Password reset sent.', 'info')
+        else:
+            flash('Email not found.', 'warning')
+    return render_template('forgot_password.html')
+
+@app.route('/reset/<token>', methods=['GET','POST'])
+def reset_password(token):
+    try:
+        email = s.loads(token, salt='email-confirm', max_age=3600)
+    except SignatureExpired:
+        return '<h1>Link expired.</h1>'
+    user = Student.query.filter_by(Email=email).first() or redirect(url_for('login'))
+    if request.method=='POST':
+        pwd = request.form['password']; cpwd = request.form['confirm_password']
+        if pwd!=cpwd or not is_strong_password(pwd):
+            flash('Criteria not met.', 'danger')
+            return redirect(request.url)
+        user.set_password(pwd); db.session.commit()
+        flash('Password reset! Log in.', 'success')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html')
 
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop('user', None)
+    logout_user(); session.clear()
+    return redirect(url_for('login'))
+
+# --- Routes: Main Application ---
+@app.route('/')
+def home():
     return redirect(url_for('dashboard'))
 
-
-@app.route('/profile')
-def profile():
-    user = session.get('user')
-    if not user:
-        return redirect(url_for('login'))
-    return render_template('profile.html', user=user, courses=session.get('courses', []))
-
-
-# ─── MAIN APP ROUTES ────────────────────────────────────────────────────────────
-
-# Home/Dashboard
-@app.route('/')
 @app.route('/dashboard')
+@login_required
+@twofa_required
 def dashboard():
-    courses = session.get('courses', [])
-    user = session.get('user')
-    return render_template('dashboard.html', courses=courses, user=user)
+    return render_template('dashboard.html', courses=session.get('courses', []), user=current_user)
 
-
-# Upload Notes
 @app.route('/upload')
+@login_required
+@twofa_required
 def upload():
     return render_template('upload.html', courses=session.get('courses', []))
 
-
-# Share Notes
 @app.route('/share')
+@login_required
+@twofa_required
 def share():
     return render_template('share.html', courses=session.get('courses', []))
 
-
-# Shared With Me
 @app.route('/shared_with_me')
+@login_required
+@twofa_required
 def shared_with_me():
     return render_template('shared_with_me.html', courses=session.get('courses', []))
 
-
-# Deadlines
 @app.route('/deadlines')
+@login_required
+@twofa_required
 def deadlines():
     return render_template('deadlines.html', courses=session.get('courses', []))
 
-
-# Course Notes
 @app.route('/course/<course_code>')
+@login_required
+@twofa_required
 def course_notes(course_code):
-    return render_template(
-        'course_notes.html',
-        course_code=course_code,
-        courses=session.get('courses', [])
-    )
+    return render_template('course_notes.html', course_code=course_code, courses=session.get('courses', []))
 
-
-# Add a New Course
 @app.route('/add_course', methods=['POST'])
+@login_required
+@twofa_required
 def add_course():
-    course_code = request.form['course_code']
-    if 'courses' not in session:
-        session['courses'] = []
-    if not any(c['code'] == course_code for c in session['courses']):
-        session['courses'].append({'code': course_code})
+    code = request.form['course_code']
+    if 'courses' not in session: session['courses'] = []
+    if not any(c['code']==code for c in session['courses']): session['courses'].append({'code':code})
     session.modified = True
     return redirect(url_for('dashboard'))
 
-
+@app.route('/grades', methods=['GET', 'POST'])
 @login_required
 @twofa_required
-
-@app.route('/grades', methods=['GET', 'POST'])
 def grades_view():
     if 'grades' not in session:
         session['grades'] = []
@@ -143,6 +312,7 @@ def grades_view():
         score = float(request.form['score'])
         out_of = float(request.form['out_of'])
         weight = float(request.form['weight'])
+
         contribution = round((score / out_of) * weight, 2)
 
         session['grades'].append({
@@ -155,66 +325,53 @@ def grades_view():
         })
         session.modified = True
 
-        return redirect(url_for('grades_view'))
-
-    grades = session.get('grades', [])
-
-    from collections import defaultdict
-    summaries = defaultdict(lambda: {'achieved': 0, 'assessments': []})
+    # Group grades by unit and calculate summary
+    summaries = {}
     chart_data = {}
 
-    for grade in grades:
-        unit = grade['unit']
-        summaries[unit]['achieved'] += grade['contribution']
-        summaries[unit]['assessments'].append({
-            'assessment': grade['assessment'],
-            'contribution': grade['contribution']
-        })
+    for g in session['grades']:
+        unit = g['unit']
+        summaries.setdefault(unit, {'achieved': 0.0})
+        summaries[unit]['achieved'] += g['contribution']
 
-    for unit, data in summaries.items():
-        chart_data[unit] = {
-            'labels': [a['assessment'] for a in data['assessments']],
-            'values': [a['contribution'] for a in data['assessments']]
-        }
-        data['remaining'] = round(max(0, 50 - data['achieved']), 1)
-        data['achieved'] = round(data['achieved'], 1)
+        chart_data.setdefault(unit, {'labels': [], 'values': []})
+        chart_data[unit]['labels'].append(g['assessment'])
+        chart_data[unit]['values'].append(g['contribution'])
+
+    session['summaries'] = summaries
 
     return render_template(
         'grades.html',
-        grades=grades,
-
+        grades=session['grades'],
         summaries=summaries,
         chart_data=chart_data,
         courses=session.get('courses', [])
     )
 
-
 @app.route("/profile", methods=["GET"])
+@login_required
+@twofa_required
 def profile():
-    user = session.get('user', {
-        "name": "Ray Hale",
-        "email": "rayhale@example.com",
-        "student_id": "12345678",
-        "major": "Computer Science",
-        "year": "3rd Year",
-        "units": "MATH1700, CITS3403, CITS3002"
-    })
-    return render_template("profile.html", user=user)
+    user_data = {
+        "name": current_user.FirstName + ' ' + current_user.LastName,
+        "email": current_user.Email,
+        "student_id": session.get("student_id", ""),
+        "major": session.get("major", ""),
+        "year": session.get("year", ""),
+        "units": session.get("units", "")
+    }
+    return render_template("profile.html", user=user_data, courses=session.get('courses', []))
 
 @app.route("/update_profile", methods=["POST"])
+@login_required
+@twofa_required
 def update_profile():
-    user = {
-        "name": request.form["name"],
-        "email": request.form["email"],
-        "student_id": request.form["student_id"],
-        "major": request.form["major"],
-        "year": request.form["year"],
-        "units": request.form["units"]
-    }
-    session['user'] = user  # Store in session for now
+    session["student_id"] = request.form["student_id"]
+    session["major"] = request.form["major"]
+    session["year"] = request.form["year"]
+    session["units"] = request.form["units"]
     return redirect(url_for("profile"))
 
->>>>>>> Stashed changes
 
 if __name__ == '__main__':
     app.run(debug=True)
