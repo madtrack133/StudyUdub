@@ -9,3 +9,4 @@ __pycache__/
 
 # Alembic migration caches
 migrations/__pycache__/
+StudyUdubV2.sqbpro
