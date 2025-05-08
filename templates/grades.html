@@ -58,8 +58,8 @@
   {% for unit, summary in summaries.items() %}
   <div class="alert alert-info fw-semibold text-center">
     <span class="text-primary">{{ unit }}:</span>
-    Achieved: <strong>{{ "%.1f" | format(summary.achieved) }}%</strong>
-    — Required to Pass: <strong>{{ "%.1f" | format(50 - summary.achieved) }}%</strong>
+    Achieved: <strong>{{ "%.1f"|format(summary.achieved) }}%</strong>
+    — Required to Pass: <strong>{{ "%.1f"|format(50 - summary.achieved) }}%</strong>
   </div>
 
   <div class="d-flex justify-content-center mb-5">
@@ -71,8 +71,9 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% if chart_data %}
 <script>
-  const chartData = {{ chart_data|tojson }};
+  const chartData = {{ chart_data | tojson }};
   for (const unit in chartData) {
     const ctx = document.getElementById(`chart-${unit}`);
     if (!ctx) continue;
@@ -101,4 +102,5 @@
     });
   }
 </script>
+{% endif %}
 {% endblock %}

@@ -291,18 +291,54 @@ def add_course():
     session.modified = True
     return redirect(url_for('dashboard'))
 
-@app.route('/grades', methods=['GET','POST'])
+@app.route('/grades', methods=['GET', 'POST'])
 @login_required
 @twofa_required
 def grades_view():
-    if 'grades' not in session: session['grades'] = []
-    if request.method=='POST':
-        unit=req.form['unit']; assess=req.form['assessment']
-        score=float(req.form['score']); out_of=float(req.form['out_of']); wt=float(req.form['weight'])
-        contrib=round((score/out_of)*wt,2)
-        session['grades'].append({'unit':unit,'assessment':assess,'score':score,'out_of':out_of,'weight':wt,'contribution':contrib})
+    if 'grades' not in session:
+        session['grades'] = []
+
+    if request.method == 'POST':
+        unit = request.form['unit']
+        assessment = request.form['assessment']
+        score = float(request.form['score'])
+        out_of = float(request.form['out_of'])
+        weight = float(request.form['weight'])
+
+        contribution = round((score / out_of) * weight, 2)
+
+        session['grades'].append({
+            'unit': unit,
+            'assessment': assessment,
+            'score': score,
+            'out_of': out_of,
+            'weight': weight,
+            'contribution': contribution
+        })
         session.modified = True
-    return render_template('grades.html', grades=session.get('grades', []), courses=session.get('courses', []))
+
+    # Group grades by unit and calculate summary
+    summaries = {}
+    chart_data = {}
+
+    for g in session['grades']:
+        unit = g['unit']
+        summaries.setdefault(unit, {'achieved': 0.0})
+        summaries[unit]['achieved'] += g['contribution']
+
+        chart_data.setdefault(unit, {'labels': [], 'values': []})
+        chart_data[unit]['labels'].append(g['assessment'])
+        chart_data[unit]['values'].append(g['contribution'])
+
+    session['summaries'] = summaries
+
+    return render_template(
+        'grades.html',
+        grades=session['grades'],
+        summaries=summaries,
+        chart_data=chart_data,
+        courses=session.get('courses', [])
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)

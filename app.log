@@ -226,3 +226,649 @@
 2025-05-07 17:21:06,887 [INFO] 127.0.0.1 - - [07/May/2025 17:21:06] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
 2025-05-07 17:21:07,798 [INFO] 127.0.0.1 - - [07/May/2025 17:21:07] "GET /signup HTTP/1.1" 200 -
 2025-05-07 17:21:07,810 [INFO] 127.0.0.1 - - [07/May/2025 17:21:07] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 14:27:27,671 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 14:27:27,672 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 14:27:36,074 [INFO] 127.0.0.1 - - [08/May/2025 14:27:36] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 14:27:36,253 [INFO] 127.0.0.1 - - [08/May/2025 14:27:36] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 14:27:36,265 [INFO] 127.0.0.1 - - [08/May/2025 14:27:36] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-08 14:27:36,297 [INFO] 127.0.0.1 - - [08/May/2025 14:27:36] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-08 14:27:36,473 [INFO] 127.0.0.1 - - [08/May/2025 14:27:36] "GET /static/uploads/StudyUdubLogo.png HTTP/1.1" 200 -
+2025-05-08 14:27:39,372 [INFO] 127.0.0.1 - - [08/May/2025 14:27:39] "GET /signup HTTP/1.1" 200 -
+2025-05-08 14:27:39,387 [INFO] 127.0.0.1 - - [08/May/2025 14:27:39] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 14:27:46,881 [INFO] 127.0.0.1 - - [08/May/2025 14:27:46] "GET /login HTTP/1.1" 200 -
+2025-05-08 14:27:46,898 [INFO] 127.0.0.1 - - [08/May/2025 14:27:46] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 14:27:48,857 [INFO] 127.0.0.1 - - [08/May/2025 14:27:48] "GET /forgot HTTP/1.1" 200 -
+2025-05-08 14:27:51,698 [INFO] 127.0.0.1 - - [08/May/2025 14:27:51] "GET /login HTTP/1.1" 200 -
+2025-05-08 14:27:51,712 [INFO] 127.0.0.1 - - [08/May/2025 14:27:51] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 14:27:53,773 [INFO] 127.0.0.1 - - [08/May/2025 14:27:53] "GET /forgot HTTP/1.1" 200 -
+2025-05-08 17:35:30,171 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 17:35:30,172 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 17:35:36,385 [INFO] 127.0.0.1 - - [08/May/2025 17:35:36] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:35:36,512 [INFO] 127.0.0.1 - - [08/May/2025 17:35:36] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:35:36,513 [INFO] 127.0.0.1 - - [08/May/2025 17:35:36] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:35:36,516 [INFO] 127.0.0.1 - - [08/May/2025 17:35:36] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:35:36,806 [INFO] 127.0.0.1 - - [08/May/2025 17:35:36] "GET /static/uploads/StudyUdubLogo.png HTTP/1.1" 200 -
+2025-05-08 17:35:38,133 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 305, in grades_view
+    return render_template('grades.html', grades=session.get('grades', []), courses=session.get('courses', []))
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 58, in block 'content'
+    {% for unit, summary in summaries.items() %}
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'summaries' is undefined
+2025-05-08 17:35:38,139 [INFO] 127.0.0.1 - - [08/May/2025 17:35:38] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:35:41,238 [INFO] 127.0.0.1 - - [08/May/2025 17:35:41] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 17:35:41,252 [INFO] 127.0.0.1 - - [08/May/2025 17:35:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:41,907 [INFO] 127.0.0.1 - - [08/May/2025 17:35:41] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 17:35:41,921 [INFO] 127.0.0.1 - - [08/May/2025 17:35:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:42,396 [INFO] 127.0.0.1 - - [08/May/2025 17:35:42] "GET /share HTTP/1.1" 200 -
+2025-05-08 17:35:42,409 [INFO] 127.0.0.1 - - [08/May/2025 17:35:42] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:42,798 [INFO] 127.0.0.1 - - [08/May/2025 17:35:42] "GET /upload HTTP/1.1" 200 -
+2025-05-08 17:35:42,813 [INFO] 127.0.0.1 - - [08/May/2025 17:35:42] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:43,393 [INFO] 127.0.0.1 - - [08/May/2025 17:35:43] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:35:43,407 [INFO] 127.0.0.1 - - [08/May/2025 17:35:43] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:44,057 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 305, in grades_view
+    return render_template('grades.html', grades=session.get('grades', []), courses=session.get('courses', []))
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 58, in block 'content'
+    {% for unit, summary in summaries.items() %}
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'summaries' is undefined
+2025-05-08 17:35:44,059 [INFO] 127.0.0.1 - - [08/May/2025 17:35:44] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:35:48,423 [INFO] 127.0.0.1 - - [08/May/2025 17:35:48] "GET /upload HTTP/1.1" 200 -
+2025-05-08 17:35:48,438 [INFO] 127.0.0.1 - - [08/May/2025 17:35:48] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:48,927 [INFO] 127.0.0.1 - - [08/May/2025 17:35:48] "GET /share HTTP/1.1" 200 -
+2025-05-08 17:35:48,942 [INFO] 127.0.0.1 - - [08/May/2025 17:35:48] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:50,083 [INFO] 127.0.0.1 - - [08/May/2025 17:35:50] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 17:35:50,096 [INFO] 127.0.0.1 - - [08/May/2025 17:35:50] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:50,652 [INFO] 127.0.0.1 - - [08/May/2025 17:35:50] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 17:35:50,667 [INFO] 127.0.0.1 - - [08/May/2025 17:35:50] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:51,261 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 305, in grades_view
+    return render_template('grades.html', grades=session.get('grades', []), courses=session.get('courses', []))
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 58, in block 'content'
+    {% for unit, summary in summaries.items() %}
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'summaries' is undefined
+2025-05-08 17:35:51,262 [INFO] 127.0.0.1 - - [08/May/2025 17:35:51] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:35:53,133 [INFO] 127.0.0.1 - - [08/May/2025 17:35:53] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:35:53,150 [INFO] 127.0.0.1 - - [08/May/2025 17:35:53] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:53,784 [INFO] 127.0.0.1 - - [08/May/2025 17:35:53] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:35:53,796 [INFO] 127.0.0.1 - - [08/May/2025 17:35:53] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:54,316 [INFO] 127.0.0.1 - - [08/May/2025 17:35:54] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:35:54,332 [INFO] 127.0.0.1 - - [08/May/2025 17:35:54] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:54,925 [INFO] 127.0.0.1 - - [08/May/2025 17:35:54] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:35:54,942 [INFO] 127.0.0.1 - - [08/May/2025 17:35:54] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:56,121 [INFO] 127.0.0.1 - - [08/May/2025 17:35:56] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-08 17:35:56,133 [INFO] 127.0.0.1 - - [08/May/2025 17:35:56] "GET /login HTTP/1.1" 200 -
+2025-05-08 17:35:56,151 [INFO] 127.0.0.1 - - [08/May/2025 17:35:56] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:35:58,100 [INFO] 127.0.0.1 - - [08/May/2025 17:35:58] "POST /login HTTP/1.1" 200 -
+2025-05-08 17:35:58,117 [INFO] 127.0.0.1 - - [08/May/2025 17:35:58] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:06,298 [INFO] 127.0.0.1 - - [08/May/2025 17:36:06] "GET /forgot HTTP/1.1" 200 -
+2025-05-08 17:36:15,327 [INFO] 127.0.0.1 - - [08/May/2025 17:36:15] "POST /forgot HTTP/1.1" 200 -
+2025-05-08 17:36:19,055 [INFO] 127.0.0.1 - - [08/May/2025 17:36:19] "GET /login HTTP/1.1" 200 -
+2025-05-08 17:36:19,073 [INFO] 127.0.0.1 - - [08/May/2025 17:36:19] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:24,110 [INFO] 127.0.0.1 - - [08/May/2025 17:36:24] "GET /reset/ImRvbm5hcGVhcmkyNUBnbWFpbC5jb20i.aBx7CA.nb4cTObw3HV5QiNGYS6IMLeszIM HTTP/1.1" 200 -
+2025-05-08 17:36:33,172 [INFO] 127.0.0.1 - - [08/May/2025 17:36:33] "[32mPOST /reset/ImRvbm5hcGVhcmkyNUBnbWFpbC5jb20i.aBx7CA.nb4cTObw3HV5QiNGYS6IMLeszIM HTTP/1.1[0m" 302 -
+2025-05-08 17:36:33,175 [INFO] 127.0.0.1 - - [08/May/2025 17:36:33] "GET /login HTTP/1.1" 200 -
+2025-05-08 17:36:33,191 [INFO] 127.0.0.1 - - [08/May/2025 17:36:33] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:34,717 [INFO] 127.0.0.1 - - [08/May/2025 17:36:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-08 17:36:34,722 [INFO] 127.0.0.1 - - [08/May/2025 17:36:34] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:36:34,733 [INFO] 127.0.0.1 - - [08/May/2025 17:36:34] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:36,271 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 305, in grades_view
+    return render_template('grades.html', grades=session.get('grades', []), courses=session.get('courses', []))
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 58, in block 'content'
+    {% for unit, summary in summaries.items() %}
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'summaries' is undefined
+2025-05-08 17:36:36,272 [INFO] 127.0.0.1 - - [08/May/2025 17:36:36] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:36:38,176 [INFO] 127.0.0.1 - - [08/May/2025 17:36:38] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 17:36:38,192 [INFO] 127.0.0.1 - - [08/May/2025 17:36:38] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:39,627 [INFO] 127.0.0.1 - - [08/May/2025 17:36:39] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 17:36:39,645 [INFO] 127.0.0.1 - - [08/May/2025 17:36:39] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:40,164 [INFO] 127.0.0.1 - - [08/May/2025 17:36:40] "GET /share HTTP/1.1" 200 -
+2025-05-08 17:36:40,179 [INFO] 127.0.0.1 - - [08/May/2025 17:36:40] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:40,698 [INFO] 127.0.0.1 - - [08/May/2025 17:36:40] "GET /upload HTTP/1.1" 200 -
+2025-05-08 17:36:40,710 [INFO] 127.0.0.1 - - [08/May/2025 17:36:40] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:41,333 [INFO] 127.0.0.1 - - [08/May/2025 17:36:41] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:36:41,350 [INFO] 127.0.0.1 - - [08/May/2025 17:36:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:42,339 [INFO] 127.0.0.1 - - [08/May/2025 17:36:42] "GET /upload HTTP/1.1" 200 -
+2025-05-08 17:36:42,352 [INFO] 127.0.0.1 - - [08/May/2025 17:36:42] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:36:45,121 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 305, in grades_view
+    return render_template('grades.html', grades=session.get('grades', []), courses=session.get('courses', []))
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 58, in block 'content'
+    {% for unit, summary in summaries.items() %}
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'summaries' is undefined
+2025-05-08 17:36:45,125 [INFO] 127.0.0.1 - - [08/May/2025 17:36:45] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:38:24,688 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 17:38:24,689 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 17:38:35,888 [INFO] 127.0.0.1 - - [08/May/2025 17:38:35] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:38:36,012 [INFO] 127.0.0.1 - - [08/May/2025 17:38:36] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:38:38,952 [INFO] 127.0.0.1 - - [08/May/2025 17:38:38] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:38:40,519 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 920, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 939, in finalize_request
+    response = self.make_response(rv)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1212, in make_response
+    raise TypeError(
+TypeError: The view function for 'grades_view' did not return a valid response. The function either returned None or ended without a return statement.
+2025-05-08 17:38:40,523 [INFO] 127.0.0.1 - - [08/May/2025 17:38:40] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:38:47,020 [INFO] 127.0.0.1 - - [08/May/2025 17:38:47] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:38:47,035 [INFO] 127.0.0.1 - - [08/May/2025 17:38:47] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:38:47,069 [INFO] 127.0.0.1 - - [08/May/2025 17:38:47] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:39:35,453 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 17:39:35,453 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 17:39:41,767 [INFO] 127.0.0.1 - - [08/May/2025 17:39:41] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:39:41,839 [INFO] 127.0.0.1 - - [08/May/2025 17:39:41] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:39:41,856 [INFO] 127.0.0.1 - - [08/May/2025 17:39:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:39:43,440 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 299, in grades_view
+    return render_template(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 75, in block 'content'
+    const chartData = {{ chart_data|tojson }};
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2025-05-08 17:39:43,470 [INFO] 127.0.0.1 - - [08/May/2025 17:39:43] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:40:44,857 [INFO] 127.0.0.1 - - [08/May/2025 17:40:44] "GET /upload HTTP/1.1" 200 -
+2025-05-08 17:40:44,877 [INFO] 127.0.0.1 - - [08/May/2025 17:40:44] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:40:46,825 [INFO] 127.0.0.1 - - [08/May/2025 17:40:46] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 17:40:46,840 [INFO] 127.0.0.1 - - [08/May/2025 17:40:46] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:41:22,163 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 17:41:22,163 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 17:41:27,404 [INFO] 127.0.0.1 - - [08/May/2025 17:41:27] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:41:27,469 [INFO] 127.0.0.1 - - [08/May/2025 17:41:27] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:41:27,725 [INFO] 127.0.0.1 - - [08/May/2025 17:41:27] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:41:29,030 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 299, in grades_view
+    return render_template(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 75, in block 'content'
+    const chartData = {{ chart_data|tojson }};
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2025-05-08 17:41:29,038 [INFO] 127.0.0.1 - - [08/May/2025 17:41:29] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:41:52,308 [INFO] 127.0.0.1 - - [08/May/2025 17:41:52] "GET /upload HTTP/1.1" 200 -
+2025-05-08 17:41:52,336 [INFO] 127.0.0.1 - - [08/May/2025 17:41:52] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:41:59,932 [INFO] 127.0.0.1 - - [08/May/2025 17:41:59] "[32mPOST /add_course HTTP/1.1[0m" 302 -
+2025-05-08 17:41:59,938 [INFO] 127.0.0.1 - - [08/May/2025 17:41:59] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:41:59,962 [INFO] 127.0.0.1 - - [08/May/2025 17:41:59] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:42:01,526 [INFO] 127.0.0.1 - - [08/May/2025 17:42:01] "GET /course/cits1111 HTTP/1.1" 200 -
+2025-05-08 17:42:01,541 [INFO] 127.0.0.1 - - [08/May/2025 17:42:01] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:42:03,744 [INFO] 127.0.0.1 - - [08/May/2025 17:42:03] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:42:03,765 [INFO] 127.0.0.1 - - [08/May/2025 17:42:03] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:42:07,494 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 299, in grades_view
+    return render_template(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 75, in block 'content'
+    const chartData = {{ chart_data|tojson }};
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2025-05-08 17:42:07,497 [INFO] 127.0.0.1 - - [08/May/2025 17:42:07] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:42:44,185 [INFO] 127.0.0.1 - - [08/May/2025 17:42:44] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:42:44,214 [INFO] 127.0.0.1 - - [08/May/2025 17:42:44] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:42:45,260 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 299, in grades_view
+    return render_template(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 75, in block 'content'
+    const chartData = {{ chart_data|tojson }};
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2025-05-08 17:42:45,262 [INFO] 127.0.0.1 - - [08/May/2025 17:42:45] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:42:49,598 [INFO] 127.0.0.1 - - [08/May/2025 17:42:49] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:42:49,608 [INFO] 127.0.0.1 - - [08/May/2025 17:42:49] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:42:49,629 [INFO] 127.0.0.1 - - [08/May/2025 17:42:49] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:42:50,801 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 299, in grades_view
+    return render_template(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 75, in block 'content'
+    const chartData = {{ chart_data|tojson }};
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2025-05-08 17:42:50,804 [INFO] 127.0.0.1 - - [08/May/2025 17:42:50] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:45:16,539 [INFO] 127.0.0.1 - - [08/May/2025 17:45:16] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:45:16,582 [INFO] 127.0.0.1 - - [08/May/2025 17:45:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:45:18,987 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 299, in grades_view
+    return render_template(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 75, in block 'content'
+    <script>
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2025-05-08 17:45:18,991 [INFO] 127.0.0.1 - - [08/May/2025 17:45:18] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:45:24,481 [INFO] 127.0.0.1 - - [08/May/2025 17:45:24] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:45:24,497 [INFO] 127.0.0.1 - - [08/May/2025 17:45:24] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:45:24,571 [INFO] 127.0.0.1 - - [08/May/2025 17:45:24] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:45:25,851 [ERROR] Exception on /grades [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 74, in wrapped_view
+    return view(**kwargs)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/app.py", line 299, in grades_view
+    return render_template(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/base.html", line 173, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-6/templates/grades.html", line 75, in block 'content'
+    <script>
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/jinja2/utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2025-05-08 17:45:25,853 [INFO] 127.0.0.1 - - [08/May/2025 17:45:25] "[35m[1mGET /grades HTTP/1.1[0m" 500 -
+2025-05-08 17:45:36,304 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 17:45:36,305 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 17:45:40,833 [INFO] 127.0.0.1 - - [08/May/2025 17:45:40] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:45:40,915 [INFO] 127.0.0.1 - - [08/May/2025 17:45:40] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:45:40,930 [INFO] 127.0.0.1 - - [08/May/2025 17:45:40] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:45:42,078 [INFO] 127.0.0.1 - - [08/May/2025 17:45:42] "GET /grades HTTP/1.1" 200 -
+2025-05-08 17:45:42,090 [INFO] 127.0.0.1 - - [08/May/2025 17:45:42] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:45:54,668 [INFO] 127.0.0.1 - - [08/May/2025 17:45:54] "[31m[1mPOST /grades HTTP/1.1[0m" 405 -
+2025-05-08 17:46:08,914 [INFO] 127.0.0.1 - - [08/May/2025 17:46:08] "[31m[1mPOST /grades HTTP/1.1[0m" 405 -
+2025-05-08 17:46:59,730 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 17:46:59,730 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 17:47:04,570 [INFO] 127.0.0.1 - - [08/May/2025 17:47:04] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 17:47:04,638 [INFO] 127.0.0.1 - - [08/May/2025 17:47:04] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 17:47:04,653 [INFO] 127.0.0.1 - - [08/May/2025 17:47:04] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:47:05,872 [INFO] 127.0.0.1 - - [08/May/2025 17:47:05] "GET /grades HTTP/1.1" 200 -
+2025-05-08 17:47:05,888 [INFO] 127.0.0.1 - - [08/May/2025 17:47:05] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 17:47:13,758 [INFO] 127.0.0.1 - - [08/May/2025 17:47:13] "POST /grades HTTP/1.1" 200 -
+2025-05-08 17:47:13,769 [INFO] 127.0.0.1 - - [08/May/2025 17:47:13] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
