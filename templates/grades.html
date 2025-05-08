@@ -44,17 +44,22 @@
       <tbody>
         {% for grade in grades %}
         <tr>
-          <td>{{ grade.unit }}</td>
-          <td>{{ grade.assessment }}</td>
-          <td>{{ grade.score }}/{{ grade.out_of }}</td>
-          <td>{{ grade.weight }}%</td>
-          <td>{{ grade.contribution }}%</td>
+          <!-- Directly use your model attributes -->
+          <td>{{ grade.course.UnitCode }}</td>
+          <td>{{ grade.AssignmentName }}</td>
+          <td>{{ grade.MarksAchieved }}/{{ grade.MarksOutOf }}</td>
+          <td>{{ grade.Weight }}%</td>
+          <td>
+            {{ ((grade.MarksAchieved / grade.MarksOutOf) * grade.Weight)
+               | round(2) }}%
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 
+  {# Summaries dict comes from your view as before #}
   {% for unit, summary in summaries.items() %}
   <div class="alert alert-info fw-semibold text-center">
     <span class="text-primary">{{ unit }}:</span>
@@ -77,29 +82,40 @@
   for (const unit in chartData) {
     const ctx = document.getElementById(`chart-${unit}`);
     if (!ctx) continue;
+
     new Chart(ctx, {
-      type: 'doughnut',
+      type: 'line',
       data: {
         labels: chartData[unit].labels,
         datasets: [{
-          label: 'Contribution (%)',
+          label: 'Average Score (%)',
           data: chartData[unit].values,
-          backgroundColor: ['#d6b3ff', '#e2c7ff', '#f3e0ff', '#f0e6ff']
+          fill: false,
+          tension: 0.2
         }]
       },
       options: {
+        scales: {
+          x: {
+            title: { display: true, text: 'Date' }
+          },
+          y: {
+            beginAtZero: true,
+            suggestedMax: 100,
+            title: { display: true, text: 'Average (%)' }
+          }
+        },
         plugins: {
           title: {
             display: true,
-            text: `Contribution Breakdown for ${unit}`,
-            font: { size: 16 },
-            color: '#333'
+            text: `Average Score Over Time for ${unit}`
           }
         },
         responsive: true,
         maintainAspectRatio: false
       }
     });
+
   }
 </script>
 {% endif %}

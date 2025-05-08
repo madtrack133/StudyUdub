@@ -1448,3 +1448,267 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) CHECK constraint failed:
 2025-05-08 20:17:16,788 [INFO] 127.0.0.1 - - [08/May/2025 20:17:16] "[32mPOST /upload HTTP/1.1[0m" 302 -
 2025-05-08 20:17:16,794 [INFO] 127.0.0.1 - - [08/May/2025 20:17:16] "GET /dashboard HTTP/1.1" 200 -
 2025-05-08 20:17:16,816 [INFO] 127.0.0.1 - - [08/May/2025 20:17:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:47:40,719 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 21:47:40,720 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 21:47:55,065 [INFO] 127.0.0.1 - - [08/May/2025 21:47:55] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 21:47:55,152 [ERROR] Exception on /dashboard [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/default.py", line 945, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: Student
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/login_manager.py", line 364, in _load_user
+    user = self._user_callback(user_id)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-10/app.py", line 93, in load_user
+    return Student.query.get(int(user_id))
+  File "<string>", line 2, in get
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/util/deprecations.py", line 386, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/query.py", line 1126, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/query.py", line 1135, in _get_impl
+    return self.session._get_impl(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/session.py", line 3874, in _get_impl
+    return db_load_fn(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/loading.py", line 694, in load_on_pk_identity
+    session.execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/default.py", line 945, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: Student
+[SQL: SELECT "Student"."StudentID" AS "Student_StudentID", "Student"."FirstName" AS "Student_FirstName", "Student"."LastName" AS "Student_LastName", "Student"."Email" AS "Student_Email", "Student"."Password" AS "Student_Password", "Student".totp_secret AS "Student_totp_secret", "Student"."Otp_Expiry" AS "Student_Otp_Expiry", "Student"."CreatedAt" AS "Student_CreatedAt" 
+FROM "Student" 
+WHERE "Student"."StudentID" = ?]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-08 21:47:55,163 [INFO] 127.0.0.1 - - [08/May/2025 21:47:55] "[35m[1mGET /dashboard HTTP/1.1[0m" 500 -
+2025-05-08 21:47:55,590 [INFO] 127.0.0.1 - - [08/May/2025 21:47:55] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 21:47:55,596 [ERROR] Exception on /dashboard [GET]
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/default.py", line 945, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: Student
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 284, in decorated_view
+    elif not current_user.is_authenticated:
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/flask_login/login_manager.py", line 364, in _load_user
+    user = self._user_callback(user_id)
+  File "/Users/donnapeari/Desktop/agile-projec/StudyUdub-10/app.py", line 93, in load_user
+    return Student.query.get(int(user_id))
+  File "<string>", line 2, in get
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/util/deprecations.py", line 386, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/query.py", line 1126, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/query.py", line 1135, in _get_impl
+    return self.session._get_impl(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/session.py", line 3874, in _get_impl
+    return db_load_fn(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/loading.py", line 694, in load_on_pk_identity
+    session.execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/donnapeari/Library/Python/3.9/lib/python/site-packages/sqlalchemy/engine/default.py", line 945, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: Student
+[SQL: SELECT "Student"."StudentID" AS "Student_StudentID", "Student"."FirstName" AS "Student_FirstName", "Student"."LastName" AS "Student_LastName", "Student"."Email" AS "Student_Email", "Student"."Password" AS "Student_Password", "Student".totp_secret AS "Student_totp_secret", "Student"."Otp_Expiry" AS "Student_Otp_Expiry", "Student"."CreatedAt" AS "Student_CreatedAt" 
+FROM "Student" 
+WHERE "Student"."StudentID" = ?]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-05-08 21:47:55,602 [INFO] 127.0.0.1 - - [08/May/2025 21:47:55] "[35m[1mGET /dashboard HTTP/1.1[0m" 500 -
+2025-05-08 21:50:19,909 [ERROR] Error: Directory migrations already exists and is not empty
+2025-05-08 21:52:53,543 [ERROR] Error: Directory migrations already exists and is not empty
+2025-05-08 21:53:14,176 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 21:53:14,176 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 21:53:23,223 [INFO] 127.0.0.1 - - [08/May/2025 21:53:23] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 21:53:23,301 [INFO] 127.0.0.1 - - [08/May/2025 21:53:23] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-08 21:53:23,346 [INFO] 127.0.0.1 - - [08/May/2025 21:53:23] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-08 21:53:23,747 [INFO] 127.0.0.1 - - [08/May/2025 21:53:23] "GET /static/uploads/StudyUdubLogo.png HTTP/1.1" 200 -
+2025-05-08 21:53:27,168 [INFO] 127.0.0.1 - - [08/May/2025 21:53:27] "GET /signup HTTP/1.1" 200 -
+2025-05-08 21:53:27,189 [INFO] 127.0.0.1 - - [08/May/2025 21:53:27] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:53:30,074 [INFO] 127.0.0.1 - - [08/May/2025 21:53:30] "GET /login HTTP/1.1" 200 -
+2025-05-08 21:53:30,100 [INFO] 127.0.0.1 - - [08/May/2025 21:53:30] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:53:31,169 [INFO] 127.0.0.1 - - [08/May/2025 21:53:31] "POST /login HTTP/1.1" 200 -
+2025-05-08 21:53:31,184 [INFO] 127.0.0.1 - - [08/May/2025 21:53:31] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:53:34,644 [INFO] 127.0.0.1 - - [08/May/2025 21:53:34] "GET /signup HTTP/1.1" 200 -
+2025-05-08 21:53:34,669 [INFO] 127.0.0.1 - - [08/May/2025 21:53:34] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:53:43,954 [INFO] 127.0.0.1 - - [08/May/2025 21:53:43] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-08 21:53:44,179 [INFO] 127.0.0.1 - - [08/May/2025 21:53:44] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-08 21:53:44,195 [INFO] 127.0.0.1 - - [08/May/2025 21:53:44] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:53:46,264 [INFO] 127.0.0.1 - - [08/May/2025 21:53:46] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 21:53:46,287 [INFO] 127.0.0.1 - - [08/May/2025 21:53:46] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:53:47,530 [INFO] 127.0.0.1 - - [08/May/2025 21:53:47] "GET /grades HTTP/1.1" 200 -
+2025-05-08 21:53:47,547 [INFO] 127.0.0.1 - - [08/May/2025 21:53:47] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:53:58,743 [INFO] 127.0.0.1 - - [08/May/2025 21:53:58] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 21:53:58,749 [INFO] 127.0.0.1 - - [08/May/2025 21:53:58] "GET /grades HTTP/1.1" 200 -
+2025-05-08 21:53:58,787 [INFO] 127.0.0.1 - - [08/May/2025 21:53:58] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:56:33,833 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 21:56:33,834 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 21:56:41,628 [INFO] 127.0.0.1 - - [08/May/2025 21:56:41] "GET /grades HTTP/1.1" 200 -
+2025-05-08 21:56:41,695 [INFO] 127.0.0.1 - - [08/May/2025 21:56:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 21:57:03,777 [INFO] 127.0.0.1 - - [08/May/2025 21:57:03] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 21:57:03,783 [INFO] 127.0.0.1 - - [08/May/2025 21:57:03] "GET /grades HTTP/1.1" 200 -
+2025-05-08 21:57:03,823 [INFO] 127.0.0.1 - - [08/May/2025 21:57:03] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:34,223 [INFO] 127.0.0.1 - - [08/May/2025 22:00:34] "GET /share HTTP/1.1" 200 -
+2025-05-08 22:00:34,358 [INFO] 127.0.0.1 - - [08/May/2025 22:00:34] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:35,486 [INFO] 127.0.0.1 - - [08/May/2025 22:00:35] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 22:00:35,499 [INFO] 127.0.0.1 - - [08/May/2025 22:00:35] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:36,252 [INFO] 127.0.0.1 - - [08/May/2025 22:00:36] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 22:00:36,273 [INFO] 127.0.0.1 - - [08/May/2025 22:00:36] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:37,979 [INFO] 127.0.0.1 - - [08/May/2025 22:00:37] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:00:37,994 [INFO] 127.0.0.1 - - [08/May/2025 22:00:37] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:39,550 [INFO] 127.0.0.1 - - [08/May/2025 22:00:39] "GET /upload HTTP/1.1" 200 -
+2025-05-08 22:00:39,573 [INFO] 127.0.0.1 - - [08/May/2025 22:00:39] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:40,734 [INFO] 127.0.0.1 - - [08/May/2025 22:00:40] "GET /share HTTP/1.1" 200 -
+2025-05-08 22:00:40,747 [INFO] 127.0.0.1 - - [08/May/2025 22:00:40] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:44,518 [INFO] 127.0.0.1 - - [08/May/2025 22:00:44] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 22:00:44,538 [INFO] 127.0.0.1 - - [08/May/2025 22:00:44] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:45,005 [INFO] 127.0.0.1 - - [08/May/2025 22:00:45] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 22:00:45,018 [INFO] 127.0.0.1 - - [08/May/2025 22:00:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:45,551 [INFO] 127.0.0.1 - - [08/May/2025 22:00:45] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:00:45,564 [INFO] 127.0.0.1 - - [08/May/2025 22:00:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:00:53,847 [INFO] 127.0.0.1 - - [08/May/2025 22:00:53] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 22:00:53,855 [INFO] 127.0.0.1 - - [08/May/2025 22:00:53] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:00:53,881 [INFO] 127.0.0.1 - - [08/May/2025 22:00:53] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:11:11,890 [ERROR] Error: Directory migrations already exists and is not empty
+2025-05-08 22:12:52,016 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 22:12:52,017 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 22:13:00,473 [INFO] 127.0.0.1 - - [08/May/2025 22:13:00] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 22:13:00,550 [INFO] 127.0.0.1 - - [08/May/2025 22:13:00] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:13:00,576 [INFO] 127.0.0.1 - - [08/May/2025 22:13:00] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:01,901 [INFO] 127.0.0.1 - - [08/May/2025 22:13:01] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:13:01,917 [INFO] 127.0.0.1 - - [08/May/2025 22:13:01] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:17,732 [INFO] 127.0.0.1 - - [08/May/2025 22:13:17] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 22:13:17,738 [INFO] 127.0.0.1 - - [08/May/2025 22:13:17] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:13:17,786 [INFO] 127.0.0.1 - - [08/May/2025 22:13:17] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:53,072 [INFO] 127.0.0.1 - - [08/May/2025 22:13:53] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 22:13:53,109 [INFO] 127.0.0.1 - - [08/May/2025 22:13:53] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:53,978 [INFO] 127.0.0.1 - - [08/May/2025 22:13:53] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 22:13:54,009 [INFO] 127.0.0.1 - - [08/May/2025 22:13:54] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:55,298 [INFO] 127.0.0.1 - - [08/May/2025 22:13:55] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 22:13:55,331 [INFO] 127.0.0.1 - - [08/May/2025 22:13:55] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:55,958 [INFO] 127.0.0.1 - - [08/May/2025 22:13:55] "GET /upload HTTP/1.1" 200 -
+2025-05-08 22:13:55,978 [INFO] 127.0.0.1 - - [08/May/2025 22:13:55] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:56,505 [INFO] 127.0.0.1 - - [08/May/2025 22:13:56] "GET /share HTTP/1.1" 200 -
+2025-05-08 22:13:56,522 [INFO] 127.0.0.1 - - [08/May/2025 22:13:56] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:57,006 [INFO] 127.0.0.1 - - [08/May/2025 22:13:57] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:13:57,027 [INFO] 127.0.0.1 - - [08/May/2025 22:13:57] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:58,624 [INFO] 127.0.0.1 - - [08/May/2025 22:13:58] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 22:13:58,638 [INFO] 127.0.0.1 - - [08/May/2025 22:13:58] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:13:59,553 [INFO] 127.0.0.1 - - [08/May/2025 22:13:59] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:13:59,572 [INFO] 127.0.0.1 - - [08/May/2025 22:13:59] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:14:06,522 [INFO] 127.0.0.1 - - [08/May/2025 22:14:06] "[32mPOST /add_course HTTP/1.1[0m" 302 -
+2025-05-08 22:14:06,528 [INFO] 127.0.0.1 - - [08/May/2025 22:14:06] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:14:06,588 [INFO] 127.0.0.1 - - [08/May/2025 22:14:06] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:14:08,119 [INFO] 127.0.0.1 - - [08/May/2025 22:14:08] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:14:08,139 [INFO] 127.0.0.1 - - [08/May/2025 22:14:08] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:14:16,721 [INFO] 127.0.0.1 - - [08/May/2025 22:14:16] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 22:14:16,730 [INFO] 127.0.0.1 - - [08/May/2025 22:14:16] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:14:16,746 [INFO] 127.0.0.1 - - [08/May/2025 22:14:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:34:59,965 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 22:34:59,965 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 22:35:11,150 [INFO] 127.0.0.1 - - [08/May/2025 22:35:11] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 22:35:11,236 [INFO] 127.0.0.1 - - [08/May/2025 22:35:11] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:35:11,269 [INFO] 127.0.0.1 - - [08/May/2025 22:35:11] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:35:12,717 [INFO] 127.0.0.1 - - [08/May/2025 22:35:12] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:35:12,737 [INFO] 127.0.0.1 - - [08/May/2025 22:35:12] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:35:28,417 [INFO] 127.0.0.1 - - [08/May/2025 22:35:28] "POST /grades HTTP/1.1" 200 -
+2025-05-08 22:35:28,452 [INFO] 127.0.0.1 - - [08/May/2025 22:35:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:47:42,707 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 22:47:42,708 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 22:47:59,983 [INFO] 127.0.0.1 - - [08/May/2025 22:47:59] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 22:48:00,072 [INFO] 127.0.0.1 - - [08/May/2025 22:48:00] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:48:00,093 [INFO] 127.0.0.1 - - [08/May/2025 22:48:00] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:48:01,297 [INFO] 127.0.0.1 - - [08/May/2025 22:48:01] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:48:01,324 [INFO] 127.0.0.1 - - [08/May/2025 22:48:01] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:48:16,556 [INFO] 127.0.0.1 - - [08/May/2025 22:48:16] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 22:48:16,562 [INFO] 127.0.0.1 - - [08/May/2025 22:48:16] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:48:16,616 [INFO] 127.0.0.1 - - [08/May/2025 22:48:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
