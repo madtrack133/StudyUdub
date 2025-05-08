@@ -1,3 +1,6 @@
+# at the top, add these imports
+import secrets
+from werkzeug.utils import secure_filename
 import re
 import os
 import logging
@@ -24,7 +27,7 @@ import pyotp
 import qrcode
 
 from config import Config
-from models import db, Student
+from models import db, Student, Notes, Course
 
 # --- Logging Configuration ---
 log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
@@ -46,6 +49,12 @@ logger.addHandler(console_handler)
 app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = app.config.get('SECRET_KEY')
+#Upload folder
+UPLOAD_FOLDER = os.path.join(app.root_path, 'secure_notes')
+ALLOWED_EXTENSIONS = {'md', 'pdf', 'txt', 'docx'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 # --- Extensions ---
 db.init_app(app)
@@ -59,6 +68,22 @@ s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 def is_strong_password(password):
     pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
     return re.match(pattern, password)
+
+def allowed_file(filename):
+    return (
+        '.' in filename
+        and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    )
+
+def map_category(cat):
+    # map user read to database constraint check
+    return {
+        'Lecture Notes':      'Lecture',
+        'Tutorials':          'Tutorial',
+        'Past Exam Papers':   'Exam',
+        'Assignment Solutions':'Other'
+    }.get(cat, 'Other')
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -251,10 +276,46 @@ def home():
 def dashboard():
     return render_template('dashboard.html', courses=session.get('courses', []), user=current_user)
 
-@app.route('/upload')
+@app.route('/upload', methods=['GET', 'POST'])
 @login_required
 @twofa_required
 def upload():
+    if request.method == 'POST':
+        title       = request.form['title'].strip()
+        raw_cat     = request.form['category']
+        course_code = request.form['course']
+        file        = request.files.get('file')
+
+        if not file or not allowed_file(file.filename):
+            flash('Invalid file type. Allowed: .md, .pdf, .txt, .docx', 'danger')
+            return redirect(request.url)
+
+        # generate 64-hex-char prefix (meets your CHECK constraint)
+        prefix   = secrets.token_hex(32)
+        filename = secure_filename(file.filename)
+        save_name = f"{prefix}_{filename}"
+        save_path = os.path.join(app.config['UPLOAD_FOLDER'], save_name)
+        file.save(save_path)
+
+        # look up the course in the DB (nullable if not found)
+        course = Course.query.filter_by(UnitCode=course_code).first()
+        course_id = course.CourseID if course else None
+
+        note = Notes(
+            StudentID=current_user.StudentID,
+            CourseID=course_id,
+            Title=title,
+            Category=map_category(raw_cat),
+            Description='',
+            FilePath=f"/secure_notes/{save_name}"
+        )
+        db.session.add(note)
+        db.session.commit()
+
+        flash('Note uploaded successfully!', 'success')
+        return redirect(url_for('dashboard'))
+
+    # GET renders the same form
     return render_template('upload.html', courses=session.get('courses', []))
 
 @app.route('/share')

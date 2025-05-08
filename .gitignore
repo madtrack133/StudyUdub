@@ -3,3 +3,9 @@
 *.db
 *.log
 *.pyc
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Alembic migration caches
+migrations/__pycache__/

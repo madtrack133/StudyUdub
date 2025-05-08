@@ -66,13 +66,6 @@ class Assignment(db.Model):
     DueDate = db.Column(db.Date, nullable=False)
 
     __table_args__ = (
-        CheckConstraint("FilePath LIKE '/secure_uploads/%/_%.%'"
-                        " AND length(substr(FilePath, 17, 64)) = 64"
-                        " AND substr(FilePath, 17, 64) NOT LIKE '%/%'"
-                        " AND (substr(FilePath, -3, 3) = '.md'"
-                        " OR substr(FilePath, -4, 4) IN ('.pdf', '.txt')"
-                        " OR substr(FilePath, -5, 5) = '.docx')",
-                        name='assignment_filepath_check'),
         CheckConstraint('Weight BETWEEN 0 AND 100', name='assignment_weight_check'),
         CheckConstraint('MarksOutOf > 0', name='assignment_marksoutof_check'),
         CheckConstraint('MarksAchieved BETWEEN 0 AND MarksOutOf', name='assignment_marksachieved_check'),
@@ -93,13 +86,6 @@ class Notes(db.Model):
     CreatedAt = db.Column(db.DateTime, default=datetime.utcnow)
 
     __table_args__ = (
-        CheckConstraint("FilePath LIKE '/secure_notes/%/_%.%'"
-                        " AND length(substr(FilePath, 15, 64)) = 64"
-                        " AND substr(FilePath, 15, 64) NOT LIKE '%/%'"
-                        " AND (substr(FilePath, -3, 3) = '.md'"
-                        " OR substr(FilePath, -4, 4) IN ('.pdf', '.txt')"
-                        " OR substr(FilePath, -5, 5) = '.docx')",
-                        name='notes_filepath_check'),
         CheckConstraint("Category IN ('Lecture', 'Tutorial', 'Lab', 'Exam', 'Other')", name='notes_category_check'),
     )
 
