@@ -100,6 +100,7 @@
 
 <body>
   <!-- AUTH NAVBAR -->
+<<<<<<< Updated upstream
   <nav class="navbar navbar-expand bg-transparent px-4 py-2">
     <div class="container-fluid justify-content-end">
       {% if session.get('user') %}
@@ -119,6 +120,10 @@
       {% endif %}
     </div>
   </nav>
+=======
+  
+
+>>>>>>> Stashed changes
 
   <div class="container-fluid">
     <div class="row">
@@ -163,11 +168,26 @@
           </div>
         {% endfor %}
         <button class="add-course-btn mt-2" data-bs-toggle="modal" data-bs-target="#addCourseModal">+</button>
+<<<<<<< Updated upstream
 
         <div class="mt-5 small">
           Hi, Krishna 👩‍💻 <br>
           <i class="bi bi-gear-fill"></i>
+=======
+        <div style="margin-top: auto; padding-top: 1rem;">
+          <a href="{{ url_for('profile') }}"
+             class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 w-100">
+            <i class="bi bi-person-circle"></i> {{ current_user.FirstName or 'Profile' }}
+          </a>
+          <a href="{{ url_for('logout') }}" class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
+>>>>>>> Stashed changes
         </div>
+        
+        
+        
+        
       </nav>
 
       <!-- Main Content -->

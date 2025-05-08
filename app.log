@@ -1,0 +1,448 @@
+2025-05-06 00:02:01,338 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-06 00:02:01,339 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-06 00:02:01,340 [INFO]  * Restarting with stat
+2025-05-06 00:02:01,638 [WARNING]  * Debugger is active!
+2025-05-06 00:02:01,646 [INFO]  * Debugger PIN: 144-915-329
+2025-05-06 00:02:04,007 [INFO] 127.0.0.1 - - [06/May/2025 00:02:04] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-06 00:02:04,020 [INFO] 127.0.0.1 - - [06/May/2025 00:02:04] "GET /login HTTP/1.1" 200 -
+2025-05-06 00:02:04,075 [INFO] 127.0.0.1 - - [06/May/2025 00:02:04] "GET /static/style.css HTTP/1.1" 200 -
+2025-05-06 00:02:06,080 [INFO] 127.0.0.1 - - [06/May/2025 00:02:06] "GET /signup HTTP/1.1" 200 -
+2025-05-06 00:02:06,100 [INFO] 127.0.0.1 - - [06/May/2025 00:02:06] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:02:20,162 [INFO] 127.0.0.1 - - [06/May/2025 00:02:20] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-06 00:02:20,193 [INFO] 127.0.0.1 - - [06/May/2025 00:02:20] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-06 00:02:20,216 [INFO] 127.0.0.1 - - [06/May/2025 00:02:20] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:02:31,651 [INFO] 127.0.0.1 - - [06/May/2025 00:02:31] "[32mGET /setup-2fa HTTP/1.1[0m" 302 -
+2025-05-06 00:02:31,670 [INFO] 127.0.0.1 - - [06/May/2025 00:02:31] "GET /login HTTP/1.1" 200 -
+2025-05-06 00:02:31,694 [INFO] 127.0.0.1 - - [06/May/2025 00:02:31] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:02:37,474 [INFO] 127.0.0.1 - - [06/May/2025 00:02:37] "GET /signup HTTP/1.1" 200 -
+2025-05-06 00:02:37,499 [INFO] 127.0.0.1 - - [06/May/2025 00:02:37] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:03:01,468 [INFO] 127.0.0.1 - - [06/May/2025 00:03:01] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-06 00:03:01,487 [INFO] 127.0.0.1 - - [06/May/2025 00:03:01] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-06 00:03:01,510 [INFO] 127.0.0.1 - - [06/May/2025 00:03:01] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:03:40,470 [INFO] 127.0.0.1 - - [06/May/2025 00:03:40] "[32mGET /setup-2fa HTTP/1.1[0m" 302 -
+2025-05-06 00:03:40,480 [INFO] 127.0.0.1 - - [06/May/2025 00:03:40] "GET /login HTTP/1.1" 200 -
+2025-05-06 00:03:40,514 [INFO] 127.0.0.1 - - [06/May/2025 00:03:40] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:03:43,772 [INFO] 127.0.0.1 - - [06/May/2025 00:03:43] "GET /signup HTTP/1.1" 200 -
+2025-05-06 00:03:43,802 [INFO] 127.0.0.1 - - [06/May/2025 00:03:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:04:07,466 [INFO] 127.0.0.1 - - [06/May/2025 00:04:07] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-06 00:04:07,484 [INFO] 127.0.0.1 - - [06/May/2025 00:04:07] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-06 00:04:07,505 [INFO] 127.0.0.1 - - [06/May/2025 00:04:07] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:04:31,742 [INFO] 127.0.0.1 - - [06/May/2025 00:04:31] "[32mGET /setup-2fa HTTP/1.1[0m" 302 -
+2025-05-06 00:04:31,761 [INFO] 127.0.0.1 - - [06/May/2025 00:04:31] "GET /login HTTP/1.1" 200 -
+2025-05-06 00:04:31,787 [INFO] 127.0.0.1 - - [06/May/2025 00:04:31] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:04:33,376 [INFO] 127.0.0.1 - - [06/May/2025 00:04:33] "GET /signup HTTP/1.1" 200 -
+2025-05-06 00:04:33,404 [INFO] 127.0.0.1 - - [06/May/2025 00:04:33] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:04:53,383 [INFO] 127.0.0.1 - - [06/May/2025 00:04:53] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-06 00:04:53,389 [INFO] 127.0.0.1 - - [06/May/2025 00:04:53] "GET /signup HTTP/1.1" 200 -
+2025-05-06 00:04:53,409 [INFO] 127.0.0.1 - - [06/May/2025 00:04:53] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-06 00:05:16,701 [INFO] 127.0.0.1 - - [06/May/2025 00:05:16] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-06 00:05:16,719 [INFO] 127.0.0.1 - - [06/May/2025 00:05:16] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-06 00:05:16,744 [INFO] 127.0.0.1 - - [06/May/2025 00:05:16] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-05-07 16:39:50,972 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-07 16:39:50,972 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-07 16:39:50,973 [INFO]  * Restarting with stat
+2025-05-07 16:39:51,409 [WARNING]  * Debugger is active!
+2025-05-07 16:39:51,443 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 16:39:58,246 [INFO] 127.0.0.1 - - [07/May/2025 16:39:58] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-07 16:39:58,264 [INFO] 127.0.0.1 - - [07/May/2025 16:39:58] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 16:39:58,289 [INFO] 127.0.0.1 - - [07/May/2025 16:39:58] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:39:58,337 [INFO] 127.0.0.1 - - [07/May/2025 16:39:58] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:03,015 [INFO] 127.0.0.1 - - [07/May/2025 16:40:03] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 16:40:03,022 [INFO] 127.0.0.1 - - [07/May/2025 16:40:03] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:40:03,037 [INFO] 127.0.0.1 - - [07/May/2025 16:40:03] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:04,051 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "[32mGET /upload HTTP/1.1[0m" 302 -
+2025-05-07 16:40:04,057 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "GET /login?next=/upload HTTP/1.1" 200 -
+2025-05-07 16:40:04,071 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:04,586 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 16:40:04,588 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:40:04,597 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:04,967 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "[32mGET /upload HTTP/1.1[0m" 302 -
+2025-05-07 16:40:04,972 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "GET /login?next=/upload HTTP/1.1" 200 -
+2025-05-07 16:40:04,985 [INFO] 127.0.0.1 - - [07/May/2025 16:40:04] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:05,368 [INFO] 127.0.0.1 - - [07/May/2025 16:40:05] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 16:40:05,374 [INFO] 127.0.0.1 - - [07/May/2025 16:40:05] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:40:05,388 [INFO] 127.0.0.1 - - [07/May/2025 16:40:05] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:05,709 [INFO] 127.0.0.1 - - [07/May/2025 16:40:05] "[32mGET /upload HTTP/1.1[0m" 302 -
+2025-05-07 16:40:05,714 [INFO] 127.0.0.1 - - [07/May/2025 16:40:05] "GET /login?next=/upload HTTP/1.1" 200 -
+2025-05-07 16:40:05,725 [INFO] 127.0.0.1 - - [07/May/2025 16:40:05] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:06,171 [INFO] 127.0.0.1 - - [07/May/2025 16:40:06] "[32mGET /share HTTP/1.1[0m" 302 -
+2025-05-07 16:40:06,176 [INFO] 127.0.0.1 - - [07/May/2025 16:40:06] "GET /login?next=/share HTTP/1.1" 200 -
+2025-05-07 16:40:06,189 [INFO] 127.0.0.1 - - [07/May/2025 16:40:06] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:06,605 [INFO] 127.0.0.1 - - [07/May/2025 16:40:06] "[32mGET /shared_with_me HTTP/1.1[0m" 302 -
+2025-05-07 16:40:06,610 [INFO] 127.0.0.1 - - [07/May/2025 16:40:06] "GET /login?next=/shared_with_me HTTP/1.1" 200 -
+2025-05-07 16:40:06,624 [INFO] 127.0.0.1 - - [07/May/2025 16:40:06] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:40:07,017 [INFO] 127.0.0.1 - - [07/May/2025 16:40:07] "[32mGET /deadlines HTTP/1.1[0m" 302 -
+2025-05-07 16:40:07,021 [INFO] 127.0.0.1 - - [07/May/2025 16:40:07] "GET /login?next=/deadlines HTTP/1.1" 200 -
+2025-05-07 16:40:07,037 [INFO] 127.0.0.1 - - [07/May/2025 16:40:07] "[33mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 404 -
+2025-05-07 16:48:02,257 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-07 16:48:02,258 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-07 16:48:02,259 [INFO]  * Restarting with stat
+2025-05-07 16:48:02,678 [WARNING]  * Debugger is active!
+2025-05-07 16:48:02,720 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 16:48:11,047 [INFO] 127.0.0.1 - - [07/May/2025 16:48:11] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-07 16:48:11,060 [INFO] 127.0.0.1 - - [07/May/2025 16:48:11] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 16:48:11,091 [INFO] 127.0.0.1 - - [07/May/2025 16:48:11] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:48:11,466 [INFO] 127.0.0.1 - - [07/May/2025 16:48:11] "GET /static/uploads/StudyUdubLogo.png HTTP/1.1" 200 -
+2025-05-07 16:51:47,360 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-07 16:51:47,361 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-07 16:51:47,361 [INFO]  * Restarting with stat
+2025-05-07 16:51:47,786 [WARNING]  * Debugger is active!
+2025-05-07 16:51:47,818 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 16:51:55,002 [INFO] 127.0.0.1 - - [07/May/2025 16:51:55] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-07 16:51:55,019 [INFO] 127.0.0.1 - - [07/May/2025 16:51:55] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 16:51:55,051 [INFO] 127.0.0.1 - - [07/May/2025 16:51:55] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:51:56,298 [INFO] 127.0.0.1 - - [07/May/2025 16:51:56] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:52:01,910 [INFO] 127.0.0.1 - - [07/May/2025 16:52:01] "GET /signup HTTP/1.1" 200 -
+2025-05-07 16:52:10,389 [INFO] 127.0.0.1 - - [07/May/2025 16:52:10] "POST /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:52:10,402 [INFO] 127.0.0.1 - - [07/May/2025 16:52:10] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:52:11,456 [INFO] 127.0.0.1 - - [07/May/2025 16:52:11] "POST /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:52:11,470 [INFO] 127.0.0.1 - - [07/May/2025 16:52:11] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:52:12,195 [INFO] 127.0.0.1 - - [07/May/2025 16:52:12] "POST /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:52:12,207 [INFO] 127.0.0.1 - - [07/May/2025 16:52:12] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:52:12,738 [INFO] 127.0.0.1 - - [07/May/2025 16:52:12] "POST /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:52:12,749 [INFO] 127.0.0.1 - - [07/May/2025 16:52:12] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:52:13,059 [INFO] 127.0.0.1 - - [07/May/2025 16:52:13] "POST /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:52:13,070 [INFO] 127.0.0.1 - - [07/May/2025 16:52:13] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:52:13,814 [INFO] 127.0.0.1 - - [07/May/2025 16:52:13] "POST /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:52:13,830 [INFO] 127.0.0.1 - - [07/May/2025 16:52:13] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:52:14,993 [INFO] 127.0.0.1 - - [07/May/2025 16:52:14] "GET /forgot HTTP/1.1" 200 -
+2025-05-07 16:52:17,417 [INFO] 127.0.0.1 - - [07/May/2025 16:52:17] "POST /forgot HTTP/1.1" 200 -
+2025-05-07 16:54:25,291 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-07 16:54:25,291 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-07 16:54:25,291 [INFO]  * Restarting with stat
+2025-05-07 16:54:25,713 [WARNING]  * Debugger is active!
+2025-05-07 16:54:25,745 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 16:54:33,115 [INFO] 127.0.0.1 - - [07/May/2025 16:54:33] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-07 16:54:33,129 [INFO] 127.0.0.1 - - [07/May/2025 16:54:33] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 16:54:33,159 [INFO] 127.0.0.1 - - [07/May/2025 16:54:33] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 16:54:33,176 [INFO] 127.0.0.1 - - [07/May/2025 16:54:33] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:35,184 [INFO] 127.0.0.1 - - [07/May/2025 16:54:35] "GET /signup HTTP/1.1" 200 -
+2025-05-07 16:54:37,691 [INFO] 127.0.0.1 - - [07/May/2025 16:54:37] "GET /signup HTTP/1.1" 200 -
+2025-05-07 16:54:39,848 [INFO] 127.0.0.1 - - [07/May/2025 16:54:39] "GET /signup HTTP/1.1" 200 -
+2025-05-07 16:54:40,326 [INFO] 127.0.0.1 - - [07/May/2025 16:54:40] "GET /signup HTTP/1.1" 200 -
+2025-05-07 16:54:42,979 [INFO] 127.0.0.1 - - [07/May/2025 16:54:42] "GET /login HTTP/1.1" 200 -
+2025-05-07 16:54:43,003 [INFO] 127.0.0.1 - - [07/May/2025 16:54:43] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:44,640 [INFO] 127.0.0.1 - - [07/May/2025 16:54:44] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:44,650 [INFO] 127.0.0.1 - - [07/May/2025 16:54:44] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:45,342 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:45,355 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:45,574 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:45,585 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:45,791 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:45,802 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:45,989 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:45,999 [INFO] 127.0.0.1 - - [07/May/2025 16:54:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:46,207 [INFO] 127.0.0.1 - - [07/May/2025 16:54:46] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:46,218 [INFO] 127.0.0.1 - - [07/May/2025 16:54:46] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:46,595 [INFO] 127.0.0.1 - - [07/May/2025 16:54:46] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:46,608 [INFO] 127.0.0.1 - - [07/May/2025 16:54:46] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:54:46,806 [INFO] 127.0.0.1 - - [07/May/2025 16:54:46] "POST /login HTTP/1.1" 200 -
+2025-05-07 16:54:46,817 [INFO] 127.0.0.1 - - [07/May/2025 16:54:46] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:59:37,587 [INFO] 127.0.0.1 - - [07/May/2025 16:59:37] "GET /login HTTP/1.1" 200 -
+2025-05-07 16:59:37,632 [INFO] 127.0.0.1 - - [07/May/2025 16:59:37] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 16:59:38,811 [INFO] 127.0.0.1 - - [07/May/2025 16:59:38] "GET /signup HTTP/1.1" 200 -
+2025-05-07 16:59:41,201 [INFO] 127.0.0.1 - - [07/May/2025 16:59:41] "GET /login HTTP/1.1" 200 -
+2025-05-07 16:59:41,217 [INFO] 127.0.0.1 - - [07/May/2025 16:59:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:06:46,635 [INFO]  * Detected change in '/Users/donnapeari/Desktop/agile-projec/StudyUdub-5/app.py', reloading
+2025-05-07 17:06:46,739 [INFO]  * Restarting with stat
+2025-05-07 17:06:48,116 [WARNING]  * Debugger is active!
+2025-05-07 17:06:48,151 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 17:06:56,761 [INFO]  * Detected change in '/Users/donnapeari/Desktop/agile-projec/StudyUdub-5/app.py', reloading
+2025-05-07 17:06:56,816 [INFO]  * Restarting with stat
+2025-05-07 17:06:57,422 [WARNING]  * Debugger is active!
+2025-05-07 17:06:57,445 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 17:08:10,881 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-07 17:08:10,881 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-07 17:08:10,882 [INFO]  * Restarting with stat
+2025-05-07 17:08:11,316 [WARNING]  * Debugger is active!
+2025-05-07 17:08:11,343 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 17:08:19,076 [INFO] 127.0.0.1 - - [07/May/2025 17:08:19] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-07 17:08:19,084 [INFO] 127.0.0.1 - - [07/May/2025 17:08:19] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 17:08:19,124 [INFO] 127.0.0.1 - - [07/May/2025 17:08:19] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 17:08:19,197 [INFO] 127.0.0.1 - - [07/May/2025 17:08:19] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:08:20,929 [INFO] 127.0.0.1 - - [07/May/2025 17:08:20] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-07 17:08:20,936 [INFO] 127.0.0.1 - - [07/May/2025 17:08:20] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 17:08:20,956 [INFO] 127.0.0.1 - - [07/May/2025 17:08:20] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 17:08:21,011 [INFO] 127.0.0.1 - - [07/May/2025 17:08:21] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:08:24,418 [INFO] 127.0.0.1 - - [07/May/2025 17:08:24] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:08:24,438 [INFO] 127.0.0.1 - - [07/May/2025 17:08:24] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:08:25,638 [INFO] 127.0.0.1 - - [07/May/2025 17:08:25] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:08:37,114 [INFO] 127.0.0.1 - - [07/May/2025 17:08:37] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-07 17:08:37,334 [INFO] 127.0.0.1 - - [07/May/2025 17:08:37] "[35m[1mGET /setup-2fa HTTP/1.1[0m" 500 -
+2025-05-07 17:08:37,349 [INFO] 127.0.0.1 - - [07/May/2025 17:08:37] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-05-07 17:08:37,349 [INFO] 127.0.0.1 - - [07/May/2025 17:08:37] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-05-07 17:08:37,374 [INFO] 127.0.0.1 - - [07/May/2025 17:08:37] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=console.png&s=NvTxXAgxtMNW4GWWgIVc HTTP/1.1" 200 -
+2025-05-07 17:08:37,410 [INFO] 127.0.0.1 - - [07/May/2025 17:08:37] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-05-07 17:09:49,025 [INFO] 127.0.0.1 - - [07/May/2025 17:09:49] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:10:05,240 [INFO] 127.0.0.1 - - [07/May/2025 17:10:05] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:10:13,241 [INFO] 127.0.0.1 - - [07/May/2025 17:10:13] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-07 17:10:13,246 [INFO] 127.0.0.1 - - [07/May/2025 17:10:13] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:10:26,094 [INFO] 127.0.0.1 - - [07/May/2025 17:10:26] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-07 17:10:26,100 [INFO] 127.0.0.1 - - [07/May/2025 17:10:26] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:10:28,306 [INFO] 127.0.0.1 - - [07/May/2025 17:10:28] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-07 17:10:28,310 [INFO] 127.0.0.1 - - [07/May/2025 17:10:28] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:10:28,325 [INFO] 127.0.0.1 - - [07/May/2025 17:10:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:10:29,916 [INFO] 127.0.0.1 - - [07/May/2025 17:10:29] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:10:29,926 [INFO] 127.0.0.1 - - [07/May/2025 17:10:29] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:10:30,510 [INFO] 127.0.0.1 - - [07/May/2025 17:10:30] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:10:30,526 [INFO] 127.0.0.1 - - [07/May/2025 17:10:30] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:10:30,997 [INFO] 127.0.0.1 - - [07/May/2025 17:10:30] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:10:31,010 [INFO] 127.0.0.1 - - [07/May/2025 17:10:31] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:10:31,510 [INFO] 127.0.0.1 - - [07/May/2025 17:10:31] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:10:31,535 [INFO] 127.0.0.1 - - [07/May/2025 17:10:31] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:10:32,726 [INFO] 127.0.0.1 - - [07/May/2025 17:10:32] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:14:21,398 [INFO] 127.0.0.1 - - [07/May/2025 17:14:21] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:14:38,586 [INFO] 127.0.0.1 - - [07/May/2025 17:14:38] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:14:48,863 [INFO] 127.0.0.1 - - [07/May/2025 17:14:48] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:14:48,886 [INFO] 127.0.0.1 - - [07/May/2025 17:14:48] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:20:37,882 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-07 17:20:37,882 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-07 17:20:37,883 [INFO]  * Restarting with stat
+2025-05-07 17:20:38,306 [WARNING]  * Debugger is active!
+2025-05-07 17:20:38,339 [INFO]  * Debugger PIN: 126-490-092
+2025-05-07 17:20:45,427 [INFO] 127.0.0.1 - - [07/May/2025 17:20:45] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-07 17:20:45,456 [INFO] 127.0.0.1 - - [07/May/2025 17:20:45] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-07 17:20:45,489 [INFO] 127.0.0.1 - - [07/May/2025 17:20:45] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-07 17:20:45,558 [INFO] 127.0.0.1 - - [07/May/2025 17:20:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:20:49,322 [INFO] 127.0.0.1 - - [07/May/2025 17:20:49] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:20:49,343 [INFO] 127.0.0.1 - - [07/May/2025 17:20:49] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:20:52,296 [INFO] 127.0.0.1 - - [07/May/2025 17:20:52] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:20:52,311 [INFO] 127.0.0.1 - - [07/May/2025 17:20:52] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:20:53,687 [INFO] 127.0.0.1 - - [07/May/2025 17:20:53] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:20:53,708 [INFO] 127.0.0.1 - - [07/May/2025 17:20:53] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:21:02,578 [INFO] 127.0.0.1 - - [07/May/2025 17:21:02] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-07 17:21:02,580 [INFO] 127.0.0.1 - - [07/May/2025 17:21:02] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:21:02,591 [INFO] 127.0.0.1 - - [07/May/2025 17:21:02] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:21:05,988 [INFO] 127.0.0.1 - - [07/May/2025 17:21:05] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:21:06,010 [INFO] 127.0.0.1 - - [07/May/2025 17:21:06] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:21:06,868 [INFO] 127.0.0.1 - - [07/May/2025 17:21:06] "GET /login HTTP/1.1" 200 -
+2025-05-07 17:21:06,887 [INFO] 127.0.0.1 - - [07/May/2025 17:21:06] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-07 17:21:07,798 [INFO] 127.0.0.1 - - [07/May/2025 17:21:07] "GET /signup HTTP/1.1" 200 -
+2025-05-07 17:21:07,810 [INFO] 127.0.0.1 - - [07/May/2025 17:21:07] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:12:53,368 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 18:12:53,368 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 18:12:53,369 [INFO]  * Restarting with stat
+2025-05-08 18:12:53,624 [WARNING]  * Debugger is active!
+2025-05-08 18:12:53,630 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:13:02,457 [INFO] 127.0.0.1 - - [08/May/2025 18:13:02] "[32mGET /profile HTTP/1.1[0m" 302 -
+2025-05-08 18:13:02,497 [INFO] 127.0.0.1 - - [08/May/2025 18:13:02] "[35m[1mGET /login?next=/profile HTTP/1.1[0m" 500 -
+2025-05-08 18:13:02,518 [INFO] 127.0.0.1 - - [08/May/2025 18:13:02] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-05-08 18:13:02,518 [INFO] 127.0.0.1 - - [08/May/2025 18:13:02] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-05-08 18:13:02,525 [INFO] 127.0.0.1 - - [08/May/2025 18:13:02] "GET /login?__debugger__=yes&cmd=resource&f=console.png&s=5tLguCApvu84mLJw45OY HTTP/1.1" 200 -
+2025-05-08 18:13:02,564 [INFO] 127.0.0.1 - - [08/May/2025 18:13:02] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-05-08 18:13:04,810 [INFO] 127.0.0.1 - - [08/May/2025 18:13:04] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 18:13:04,818 [INFO] 127.0.0.1 - - [08/May/2025 18:13:04] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-08 18:13:04,845 [INFO] 127.0.0.1 - - [08/May/2025 18:13:04] "[35m[1mGET /login?next=/dashboard HTTP/1.1[0m" 500 -
+2025-05-08 18:13:05,171 [INFO] 127.0.0.1 - - [08/May/2025 18:13:05] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 18:13:05,174 [INFO] 127.0.0.1 - - [08/May/2025 18:13:05] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-08 18:13:05,188 [INFO] 127.0.0.1 - - [08/May/2025 18:13:05] "[35m[1mGET /login?next=/dashboard HTTP/1.1[0m" 500 -
+2025-05-08 18:13:05,224 [INFO] 127.0.0.1 - - [08/May/2025 18:13:05] "[36mGET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-08 18:13:05,224 [INFO] 127.0.0.1 - - [08/May/2025 18:13:05] "[36mGET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-08 18:13:05,245 [INFO] 127.0.0.1 - - [08/May/2025 18:13:05] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png&s=5tLguCApvu84mLJw45OY HTTP/1.1[0m" 304 -
+2025-05-08 18:14:57,749 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:14:57,850 [INFO]  * Restarting with stat
+2025-05-08 18:26:25,232 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 18:26:25,233 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 18:26:25,233 [INFO]  * Restarting with stat
+2025-05-08 18:26:25,500 [WARNING]  * Debugger is active!
+2025-05-08 18:26:25,509 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:26:31,652 [INFO] 127.0.0.1 - - [08/May/2025 18:26:31] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-08 18:26:31,692 [INFO] 127.0.0.1 - - [08/May/2025 18:26:31] "GET /static/uploads/StudyUdubLogo.png HTTP/1.1" 200 -
+2025-05-08 18:26:38,781 [INFO] 127.0.0.1 - - [08/May/2025 18:26:38] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 18:26:38,785 [INFO] 127.0.0.1 - - [08/May/2025 18:26:38] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-08 18:26:38,790 [INFO] 127.0.0.1 - - [08/May/2025 18:26:38] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-08 18:26:38,824 [INFO] 127.0.0.1 - - [08/May/2025 18:26:38] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:26:43,238 [INFO] 127.0.0.1 - - [08/May/2025 18:26:43] "GET /signup HTTP/1.1" 200 -
+2025-05-08 18:26:43,250 [INFO] 127.0.0.1 - - [08/May/2025 18:26:43] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:27:30,903 [INFO] 127.0.0.1 - - [08/May/2025 18:27:30] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-08 18:27:30,907 [INFO] 127.0.0.1 - - [08/May/2025 18:27:30] "GET /signup HTTP/1.1" 200 -
+2025-05-08 18:27:30,915 [INFO] 127.0.0.1 - - [08/May/2025 18:27:30] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:28:39,995 [INFO] 127.0.0.1 - - [08/May/2025 18:28:39] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-08 18:28:40,012 [INFO] 127.0.0.1 - - [08/May/2025 18:28:40] "[35m[1mGET /setup-2fa HTTP/1.1[0m" 500 -
+2025-05-08 18:28:40,021 [INFO] 127.0.0.1 - - [08/May/2025 18:28:40] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-05-08 18:28:40,022 [INFO] 127.0.0.1 - - [08/May/2025 18:28:40] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-05-08 18:28:40,040 [INFO] 127.0.0.1 - - [08/May/2025 18:28:40] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=console.png&s=E26X3QjmgMNejohoYP4E HTTP/1.1" 200 -
+2025-05-08 18:28:40,053 [INFO] 127.0.0.1 - - [08/May/2025 18:28:40] "GET /setup-2fa?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-05-08 18:29:50,693 [INFO] 127.0.0.1 - - [08/May/2025 18:29:50] "[32mGET /setup-2fa HTTP/1.1[0m" 302 -
+2025-05-08 18:29:50,697 [INFO] 127.0.0.1 - - [08/May/2025 18:29:50] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-08 18:29:50,700 [INFO] 127.0.0.1 - - [08/May/2025 18:29:50] "[32mGET /verify-2fa HTTP/1.1[0m" 302 -
+2025-05-08 18:29:50,705 [INFO] 127.0.0.1 - - [08/May/2025 18:29:50] "GET /login HTTP/1.1" 200 -
+2025-05-08 18:29:50,724 [INFO] 127.0.0.1 - - [08/May/2025 18:29:50] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:30:06,571 [INFO] 127.0.0.1 - - [08/May/2025 18:30:06] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-08 18:30:06,583 [INFO] 127.0.0.1 - - [08/May/2025 18:30:06] "[35m[1mGET /dashboard HTTP/1.1[0m" 500 -
+2025-05-08 18:30:06,597 [INFO] 127.0.0.1 - - [08/May/2025 18:30:06] "[36mGET /dashboard?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-08 18:30:06,597 [INFO] 127.0.0.1 - - [08/May/2025 18:30:06] "[36mGET /dashboard?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-08 18:30:06,606 [INFO] 127.0.0.1 - - [08/May/2025 18:30:06] "GET /dashboard?__debugger__=yes&cmd=resource&f=console.png&s=E26X3QjmgMNejohoYP4E HTTP/1.1" 200 -
+2025-05-08 18:30:06,626 [INFO] 127.0.0.1 - - [08/May/2025 18:30:06] "[36mGET /dashboard?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-05-08 18:32:04,910 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:32:04,998 [INFO]  * Restarting with stat
+2025-05-08 18:32:05,748 [WARNING]  * Debugger is active!
+2025-05-08 18:32:05,754 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:32:07,776 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:32:07,859 [INFO]  * Restarting with stat
+2025-05-08 18:32:08,151 [WARNING]  * Debugger is active!
+2025-05-08 18:32:08,157 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:32:14,206 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:32:14,285 [INFO]  * Restarting with stat
+2025-05-08 18:32:14,557 [WARNING]  * Debugger is active!
+2025-05-08 18:32:14,561 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:32:16,581 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:32:16,665 [INFO]  * Restarting with stat
+2025-05-08 18:32:16,939 [WARNING]  * Debugger is active!
+2025-05-08 18:32:16,943 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:32:17,956 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:32:18,014 [INFO]  * Restarting with stat
+2025-05-08 18:32:18,285 [WARNING]  * Debugger is active!
+2025-05-08 18:32:18,289 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:32:20,312 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:32:20,407 [INFO]  * Restarting with stat
+2025-05-08 18:32:20,834 [WARNING]  * Debugger is active!
+2025-05-08 18:32:20,840 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:32:23,882 [INFO]  * Detected change in '/Users/krishnamodi/Documents/CITS3403-Project/StudyUdub-1/app.py', reloading
+2025-05-08 18:32:23,957 [INFO]  * Restarting with stat
+2025-05-08 18:32:24,245 [WARNING]  * Debugger is active!
+2025-05-08 18:32:24,250 [INFO]  * Debugger PIN: 401-682-260
+2025-05-08 18:32:30,316 [INFO] 127.0.0.1 - - [08/May/2025 18:32:30] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:32:30,335 [INFO] 127.0.0.1 - - [08/May/2025 18:32:30] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:32:55,784 [INFO] 127.0.0.1 - - [08/May/2025 18:32:55] "GET /grades HTTP/1.1" 200 -
+2025-05-08 18:32:55,799 [INFO] 127.0.0.1 - - [08/May/2025 18:32:55] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:32:58,703 [INFO] 127.0.0.1 - - [08/May/2025 18:32:58] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 18:32:58,716 [INFO] 127.0.0.1 - - [08/May/2025 18:32:58] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:32:59,540 [INFO] 127.0.0.1 - - [08/May/2025 18:32:59] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 18:32:59,552 [INFO] 127.0.0.1 - - [08/May/2025 18:32:59] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:33:00,271 [INFO] 127.0.0.1 - - [08/May/2025 18:33:00] "GET /share HTTP/1.1" 200 -
+2025-05-08 18:33:00,284 [INFO] 127.0.0.1 - - [08/May/2025 18:33:00] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:33:00,955 [INFO] 127.0.0.1 - - [08/May/2025 18:33:00] "GET /upload HTTP/1.1" 200 -
+2025-05-08 18:33:00,966 [INFO] 127.0.0.1 - - [08/May/2025 18:33:00] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:33:01,681 [INFO] 127.0.0.1 - - [08/May/2025 18:33:01] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:33:01,692 [INFO] 127.0.0.1 - - [08/May/2025 18:33:01] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:34:16,944 [INFO] 127.0.0.1 - - [08/May/2025 18:34:16] "GET /signup HTTP/1.1" 200 -
+2025-05-08 18:34:16,954 [INFO] 127.0.0.1 - - [08/May/2025 18:34:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:34:42,586 [INFO] 127.0.0.1 - - [08/May/2025 18:34:42] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-08 18:34:42,631 [INFO] 127.0.0.1 - - [08/May/2025 18:34:42] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-08 18:34:42,655 [INFO] 127.0.0.1 - - [08/May/2025 18:34:42] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:35:19,120 [INFO] 127.0.0.1 - - [08/May/2025 18:35:19] "[32mPOST /setup-2fa HTTP/1.1[0m" 302 -
+2025-05-08 18:35:19,130 [INFO] 127.0.0.1 - - [08/May/2025 18:35:19] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:35:19,148 [INFO] 127.0.0.1 - - [08/May/2025 18:35:19] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:36:18,075 [INFO] 127.0.0.1 - - [08/May/2025 18:36:18] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:36:18,088 [INFO] 127.0.0.1 - - [08/May/2025 18:36:18] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:36:57,095 [INFO] 127.0.0.1 - - [08/May/2025 18:36:57] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:36:57,113 [INFO] 127.0.0.1 - - [08/May/2025 18:36:57] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:36:59,504 [INFO] 127.0.0.1 - - [08/May/2025 18:36:59] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:36:59,517 [INFO] 127.0.0.1 - - [08/May/2025 18:36:59] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:37:01,288 [INFO] 127.0.0.1 - - [08/May/2025 18:37:01] "[35m[1mGET /profile HTTP/1.1[0m" 500 -
+2025-05-08 18:37:01,303 [INFO] 127.0.0.1 - - [08/May/2025 18:37:01] "[36mGET /profile?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-08 18:37:01,304 [INFO] 127.0.0.1 - - [08/May/2025 18:37:01] "[36mGET /profile?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-08 18:37:01,313 [INFO] 127.0.0.1 - - [08/May/2025 18:37:01] "GET /profile?__debugger__=yes&cmd=resource&f=console.png&s=kez5xzYsPky294FlGcbF HTTP/1.1" 200 -
+2025-05-08 18:37:01,335 [INFO] 127.0.0.1 - - [08/May/2025 18:37:01] "[36mGET /profile?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-05-08 18:40:41,098 [INFO] 127.0.0.1 - - [08/May/2025 18:40:41] "[35m[1mGET /profile HTTP/1.1[0m" 500 -
+2025-05-08 18:40:41,114 [INFO] 127.0.0.1 - - [08/May/2025 18:40:41] "[36mGET /profile?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-08 18:40:41,117 [INFO] 127.0.0.1 - - [08/May/2025 18:40:41] "[36mGET /profile?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-08 18:40:41,131 [INFO] 127.0.0.1 - - [08/May/2025 18:40:41] "[36mGET /profile?__debugger__=yes&cmd=resource&f=console.png&s=kez5xzYsPky294FlGcbF HTTP/1.1[0m" 304 -
+2025-05-08 18:41:12,470 [INFO] 127.0.0.1 - - [08/May/2025 18:41:12] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:41:12,482 [INFO] 127.0.0.1 - - [08/May/2025 18:41:12] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:41:19,103 [INFO] 127.0.0.1 - - [08/May/2025 18:41:19] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:41:19,119 [INFO] 127.0.0.1 - - [08/May/2025 18:41:19] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:41:21,293 [INFO] 127.0.0.1 - - [08/May/2025 18:41:21] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:41:21,299 [INFO] 127.0.0.1 - - [08/May/2025 18:41:21] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:41:22,980 [INFO] 127.0.0.1 - - [08/May/2025 18:41:22] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:41:22,988 [INFO] 127.0.0.1 - - [08/May/2025 18:41:22] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:41:48,062 [INFO] 127.0.0.1 - - [08/May/2025 18:41:48] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:41:48,074 [INFO] 127.0.0.1 - - [08/May/2025 18:41:48] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:42:03,011 [INFO] 127.0.0.1 - - [08/May/2025 18:42:03] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-08 18:42:03,020 [INFO] 127.0.0.1 - - [08/May/2025 18:42:03] "GET /login HTTP/1.1" 200 -
+2025-05-08 18:42:03,039 [INFO] 127.0.0.1 - - [08/May/2025 18:42:03] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:42:05,827 [INFO] 127.0.0.1 - - [08/May/2025 18:42:05] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-08 18:42:05,832 [INFO] 127.0.0.1 - - [08/May/2025 18:42:05] "GET /login?next=/logout HTTP/1.1" 200 -
+2025-05-08 18:42:05,840 [INFO] 127.0.0.1 - - [08/May/2025 18:42:05] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:42:15,477 [INFO] 127.0.0.1 - - [08/May/2025 18:42:15] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-08 18:42:15,481 [INFO] 127.0.0.1 - - [08/May/2025 18:42:15] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:42:15,491 [INFO] 127.0.0.1 - - [08/May/2025 18:42:15] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:42:18,390 [INFO] 127.0.0.1 - - [08/May/2025 18:42:18] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-08 18:42:18,396 [INFO] 127.0.0.1 - - [08/May/2025 18:42:18] "GET /login HTTP/1.1" 200 -
+2025-05-08 18:42:18,407 [INFO] 127.0.0.1 - - [08/May/2025 18:42:18] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:42:25,423 [INFO] 127.0.0.1 - - [08/May/2025 18:42:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-08 18:42:25,426 [INFO] 127.0.0.1 - - [08/May/2025 18:42:25] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:42:25,436 [INFO] 127.0.0.1 - - [08/May/2025 18:42:25] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:43:20,374 [INFO] 127.0.0.1 - - [08/May/2025 18:43:20] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:43:20,388 [INFO] 127.0.0.1 - - [08/May/2025 18:43:20] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:45:14,997 [INFO] 127.0.0.1 - - [08/May/2025 18:45:14] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:45:15,018 [INFO] 127.0.0.1 - - [08/May/2025 18:45:15] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:45:17,848 [INFO] 127.0.0.1 - - [08/May/2025 18:45:17] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:45:17,858 [INFO] 127.0.0.1 - - [08/May/2025 18:45:17] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:47:03,671 [INFO] 127.0.0.1 - - [08/May/2025 18:47:03] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:47:03,701 [INFO] 127.0.0.1 - - [08/May/2025 18:47:03] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:47:05,384 [INFO] 127.0.0.1 - - [08/May/2025 18:47:05] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:47:05,395 [INFO] 127.0.0.1 - - [08/May/2025 18:47:05] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:48:47,358 [INFO] 127.0.0.1 - - [08/May/2025 18:48:47] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:48:47,371 [INFO] 127.0.0.1 - - [08/May/2025 18:48:47] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:48:50,004 [INFO] 127.0.0.1 - - [08/May/2025 18:48:50] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:48:50,017 [INFO] 127.0.0.1 - - [08/May/2025 18:48:50] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:49:28,824 [INFO] 127.0.0.1 - - [08/May/2025 18:49:28] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:49:28,845 [INFO] 127.0.0.1 - - [08/May/2025 18:49:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:49:29,369 [INFO] 127.0.0.1 - - [08/May/2025 18:49:29] "GET /upload HTTP/1.1" 200 -
+2025-05-08 18:49:29,377 [INFO] 127.0.0.1 - - [08/May/2025 18:49:29] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:49:30,146 [INFO] 127.0.0.1 - - [08/May/2025 18:49:30] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:49:30,154 [INFO] 127.0.0.1 - - [08/May/2025 18:49:30] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:49:45,083 [INFO] 127.0.0.1 - - [08/May/2025 18:49:45] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:49:45,094 [INFO] 127.0.0.1 - - [08/May/2025 18:49:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:50:18,052 [INFO] 127.0.0.1 - - [08/May/2025 18:50:18] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:50:18,070 [INFO] 127.0.0.1 - - [08/May/2025 18:50:18] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:52:07,051 [INFO] 127.0.0.1 - - [08/May/2025 18:52:07] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:52:07,074 [INFO] 127.0.0.1 - - [08/May/2025 18:52:07] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:53:32,974 [INFO] 127.0.0.1 - - [08/May/2025 18:53:32] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:53:32,991 [INFO] 127.0.0.1 - - [08/May/2025 18:53:32] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:53:56,415 [INFO] 127.0.0.1 - - [08/May/2025 18:53:56] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:53:56,427 [INFO] 127.0.0.1 - - [08/May/2025 18:53:56] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:54:01,319 [INFO] 127.0.0.1 - - [08/May/2025 18:54:01] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:54:01,332 [INFO] 127.0.0.1 - - [08/May/2025 18:54:01] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:54:03,940 [INFO] 127.0.0.1 - - [08/May/2025 18:54:03] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:54:03,954 [INFO] 127.0.0.1 - - [08/May/2025 18:54:03] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:54:13,791 [INFO] 127.0.0.1 - - [08/May/2025 18:54:13] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:54:13,803 [INFO] 127.0.0.1 - - [08/May/2025 18:54:13] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:54:16,343 [INFO] 127.0.0.1 - - [08/May/2025 18:54:16] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-08 18:54:16,346 [INFO] 127.0.0.1 - - [08/May/2025 18:54:16] "GET /login HTTP/1.1" 200 -
+2025-05-08 18:54:16,357 [INFO] 127.0.0.1 - - [08/May/2025 18:54:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:54:44,072 [INFO] 127.0.0.1 - - [08/May/2025 18:54:44] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-08 18:54:44,075 [INFO] 127.0.0.1 - - [08/May/2025 18:54:44] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:54:44,087 [INFO] 127.0.0.1 - - [08/May/2025 18:54:44] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:54:53,090 [INFO] 127.0.0.1 - - [08/May/2025 18:54:53] "GET /profile HTTP/1.1" 200 -
+2025-05-08 18:54:53,102 [INFO] 127.0.0.1 - - [08/May/2025 18:54:53] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:56:32,370 [INFO] 127.0.0.1 - - [08/May/2025 18:56:32] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-08 18:56:32,375 [INFO] 127.0.0.1 - - [08/May/2025 18:56:32] "GET /login HTTP/1.1" 200 -
+2025-05-08 18:56:32,387 [INFO] 127.0.0.1 - - [08/May/2025 18:56:32] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:56:49,816 [INFO] 127.0.0.1 - - [08/May/2025 18:56:49] "GET /signup HTTP/1.1" 200 -
+2025-05-08 18:56:49,828 [INFO] 127.0.0.1 - - [08/May/2025 18:56:49] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:58:26,663 [INFO] 127.0.0.1 - - [08/May/2025 18:58:26] "GET /login HTTP/1.1" 200 -
+2025-05-08 18:58:26,675 [INFO] 127.0.0.1 - - [08/May/2025 18:58:26] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:58:34,853 [INFO] 127.0.0.1 - - [08/May/2025 18:58:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-08 18:58:34,856 [INFO] 127.0.0.1 - - [08/May/2025 18:58:34] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:58:34,878 [INFO] 127.0.0.1 - - [08/May/2025 18:58:34] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:59:02,303 [INFO] 127.0.0.1 - - [08/May/2025 18:59:02] "GET /grades HTTP/1.1" 200 -
+2025-05-08 18:59:02,315 [INFO] 127.0.0.1 - - [08/May/2025 18:59:02] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:59:20,266 [INFO] 127.0.0.1 - - [08/May/2025 18:59:20] "[32mPOST /add_course HTTP/1.1[0m" 302 -
+2025-05-08 18:59:20,272 [INFO] 127.0.0.1 - - [08/May/2025 18:59:20] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:59:20,284 [INFO] 127.0.0.1 - - [08/May/2025 18:59:20] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:59:27,591 [INFO] 127.0.0.1 - - [08/May/2025 18:59:27] "[32mPOST /add_course HTTP/1.1[0m" 302 -
+2025-05-08 18:59:27,596 [INFO] 127.0.0.1 - - [08/May/2025 18:59:27] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:59:27,615 [INFO] 127.0.0.1 - - [08/May/2025 18:59:27] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:59:33,393 [INFO] 127.0.0.1 - - [08/May/2025 18:59:33] "[32mPOST /add_course HTTP/1.1[0m" 302 -
+2025-05-08 18:59:33,397 [INFO] 127.0.0.1 - - [08/May/2025 18:59:33] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 18:59:33,406 [INFO] 127.0.0.1 - - [08/May/2025 18:59:33] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 18:59:49,369 [INFO] 127.0.0.1 - - [08/May/2025 18:59:49] "GET /grades HTTP/1.1" 200 -
+2025-05-08 18:59:49,381 [INFO] 127.0.0.1 - - [08/May/2025 18:59:49] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 19:06:22,414 [INFO] 127.0.0.1 - - [08/May/2025 19:06:22] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 19:06:22,427 [INFO] 127.0.0.1 - - [08/May/2025 19:06:22] "GET /grades HTTP/1.1" 200 -
+2025-05-08 19:06:22,437 [INFO] 127.0.0.1 - - [08/May/2025 19:06:22] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 19:07:28,505 [INFO] 127.0.0.1 - - [08/May/2025 19:07:28] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-08 19:07:28,514 [INFO] 127.0.0.1 - - [08/May/2025 19:07:28] "GET /grades HTTP/1.1" 200 -
+2025-05-08 19:07:28,526 [INFO] 127.0.0.1 - - [08/May/2025 19:07:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
