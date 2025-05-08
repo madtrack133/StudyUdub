@@ -27,6 +27,7 @@
             class="form-control"
             placeholder="First Name">
         </div>
+
         <div class="mb-3">
           <label for="last_name" class="form-label">Last Name</label>
           <input
@@ -37,6 +38,7 @@
             class="form-control"
             placeholder="Last Name">
         </div>
+
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input
@@ -47,8 +49,18 @@
             class="form-control"
             placeholder="you@example.com">
         </div>
+
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
+          <div class="mb-2 text-muted small">
+            Password must be at least 8 characters long and include at least:
+            <ul class="mb-1">
+              <li>One uppercase letter (A–Z)</li>
+              <li>One lowercase letter (a–z)</li>
+              <li>One number (0–9)</li>
+              <li>One special character (@$!%*?&)</li>
+            </ul>
+          </div>
           <input
             type="password"
             id="password"
@@ -57,6 +69,7 @@
             class="form-control"
             placeholder="••••••••">
         </div>
+
         <div class="mb-3">
           <label for="confirm_password" class="form-label">Confirm Password</label>
           <input
@@ -67,6 +80,7 @@
             class="form-control"
             placeholder="Confirm Password">
         </div>
+
         <div class="form-check mb-3">
           <input
             type="checkbox"
@@ -75,6 +89,7 @@
             onclick="togglePassword()">
           <label class="form-check-label" for="show_password">Show Password</label>
         </div>
+
         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
       </form>
 
@@ -91,13 +106,9 @@
   function togglePassword() {
     const pw = document.getElementById("password");
     const cpw = document.getElementById("confirm_password");
-    if (pw.type === "password") {
-      pw.type = "text";
-      cpw.type = "text";
-    } else {
-      pw.type = "password";
-      cpw.type = "password";
-    }
+    const type = pw.type === "password" ? "text" : "password";
+    pw.type = type;
+    cpw.type = type;
   }
 </script>
 {% endblock %}
