@@ -2,9 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from collections import defaultdict
 
 app = Flask(__name__)
-<<<<<<< Updated upstream
-app.secret_key = 'studyudub-secret-key'
-=======
 app.config.from_object(Config)
 
 # Ensure SECRET_KEY is set
@@ -39,7 +36,6 @@ def twofa_required(view):
             return redirect(url_for('verify_2fa'))
         return view(**kwargs)
     return wrapped_view
->>>>>>> Stashed changes
 
 
 # ─── AUTH ROUTES ───────────────────────────────────────────────────────────────
@@ -132,13 +128,10 @@ def add_course():
     session.modified = True
     return redirect(url_for('dashboard'))
 
-<<<<<<< Updated upstream
 
-# Grades Tracker View
-=======
 @login_required
 @twofa_required
->>>>>>> Stashed changes
+
 @app.route('/grades', methods=['GET', 'POST'])
 def grades_view():
     if 'grades' not in session:
@@ -161,12 +154,7 @@ def grades_view():
             'contribution': contribution
         })
         session.modified = True
-<<<<<<< Updated upstream
 
-    # build summaries & chart_data as before…
-    grades = session.get('grades', [])
-    # … your existing summarization logic …
-=======
         return redirect(url_for('grades_view'))
 
     grades = session.get('grades', [])
@@ -190,17 +178,11 @@ def grades_view():
         }
         data['remaining'] = round(max(0, 50 - data['achieved']), 1)
         data['achieved'] = round(data['achieved'], 1)
->>>>>>> Stashed changes
 
     return render_template(
         'grades.html',
         grades=grades,
-<<<<<<< Updated upstream
-        # pass through any summaries/chart_data you compute
-        courses = session.get('courses', [])
-    )
 
-=======
         summaries=summaries,
         chart_data=chart_data,
         courses=session.get('courses', [])
