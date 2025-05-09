@@ -9,6 +9,11 @@ from io import BytesIO
 from datetime import datetime
 import base64
 from functools import wraps
+from collections import defaultdict
+from datetime import datetime
+from datetime import datetime
+from flask import render_template, request, redirect, url_for, flash
+
 
 from flask import Flask, render_template, redirect, url_for, flash, request, session, send_from_directory, abort
 from flask_sqlalchemy import SQLAlchemy
@@ -27,7 +32,7 @@ import pyotp
 import qrcode
 
 from config import Config
-from models import db, Student, Notes, Course, Share
+from models import db, Student, Notes, Course, Share, Assignment
 
 # --- Logging Configuration ---
 log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
@@ -93,6 +98,9 @@ def load_user(user_id):
 def twofa_required(view):
     @wraps(view)
     def wrapped_view(**kwargs):
+        if not current_user.is_authenticated or not current_user.is_2fa_enabled():
+            flash("2FA is not enabled. Please set up 2FA.", 'warning')
+            return redirect(url_for('setup_2fa'))
         if 'user_id' not in session:
             flash("You must complete 2FA verification to access this page.", 'warning')
             return redirect(url_for('verify_2fa'))
@@ -172,35 +180,64 @@ def login():
         user  = Student.query.filter_by(Email=email).first()
 
         if user and user.check_password(pwd):
-            login_user(user)
             #set your session flag so twofa_required passes
-            session['user_id'] = user.StudentID
+            session['temp_user_id'] = user.StudentID
             flash('Logged in successfully!', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('verify_2fa'))
 
         flash('Invalid email or password.', 'danger')
 
     return render_template('login.html')
 
 
-@app.route('/verify-2fa', methods=['GET','POST'])
+@app.route('/verify-2fa', methods=['GET', 'POST'])
 def verify_2fa():
     if 'temp_user_id' not in session:
+        logging.warning("No temp_user_id in session – redirecting to login.")
         return redirect(url_for('login'))
+
     user = Student.query.get(session['temp_user_id'])
+    logging.info(f"Found student with ID: {user.StudentID}")
+
     if request.method == 'POST':
-        code = request.form.get('code','').strip()
-        if code == 'reset':
-            session.clear(); send_2fa_reset_email(user)
-            flash('Check email for 2FA reset.', 'info')
-            return redirect(url_for('login'))
-        totp = pyotp.TOTP(user.totp_secret)
-        if totp.verify(code, valid_window=2):
-            session['user_id'] = user.StudentID
-            session.pop('temp_user_id', None)
-            return redirect(url_for('dashboard'))
-        flash('Invalid 2FA code.', 'danger')
+        action = request.form.get('action')
+        
+        # --- Forget 2FA key ---
+        if action == 'reset':
+            flash("2FA key has been reset. Please check your email to set up a new key.")
+            session.clear()
+            return redirect(url_for('reset_2fa_request'))
+        
+        # --- Verify 2FA code ---
+        elif action == 'verify':
+            user_code = request.form.get('code', '').strip()
+            if len(user_code) != 6 or not user_code.isdigit():
+                logging.warning("Invalid code format received during 2FA verification.")
+                return render_template('verify_2fa.html', error="Invalid code format")
+
+            try:
+                totp = pyotp.TOTP(user.totp_secret)
+                current_time = datetime.now().timestamp()
+                logging.debug(f"Current server time: {datetime.now()}")
+                is_valid = totp.verify(user_code, valid_window=2)
+                logging.debug(f"2FA verification for user ID {user.StudentID} : {is_valid}")
+
+                if is_valid:
+                    login_user(user)
+                    session['user_id'] = user.StudentID
+                    session.pop('temp_user_id', None)
+                    logging.info(f"Login successful for user ID {user.StudentID}) - redirecting to dashboard")
+                    return redirect(url_for('dashboard'))
+                
+                logging.warning(f"Invalid 2FA code attempt for user ID {user.StudentID} ({user.Email})")
+                return render_template('verify_2fa.html', error="Invalid verification code")
+            
+            except Exception as e:
+                logging.exception(f"Verification error for user ID {user.StudentID} ({user.Email})")
+                return render_template('verify_2fa.html', error="Verification failed")
+
     return render_template('verify_2fa.html')
+
 
 @app.route('/reset-2fa-request', methods=['GET','POST'])
 def reset_2fa_request():
@@ -388,11 +425,60 @@ def download(note_id):
 def shared_with_me():
     return render_template('shared_with_me.html', courses=session.get('courses', []))
 
-@app.route('/deadlines')
+@app.route('/deadlines', methods=['GET', 'POST'])
 @login_required
-@twofa_required
 def deadlines():
-    return render_template('deadlines.html', courses=session.get('courses', []))
+    if request.method == 'POST':
+        # distinguish “add” vs “toggle done” by a hidden field
+        if 'new_deadline' in request.form:
+            # add new
+            unit_code   = request.form['unit_code'].strip().upper()
+            name        = request.form['task'].strip()
+            due_date    = datetime.strptime(request.form['due_date'], '%Y-%m-%d').date()
+            course = Course.query.filter_by(UnitCode=unit_code).first()
+            if not course:
+                flash(f"Unit '{unit_code}' not found.", 'danger')
+            else:
+                a = Assignment(
+                  AssignmentName = name,
+                  CourseID       = course.CourseID,
+                  StudentID      = current_user.StudentID,
+                  HoursSpent     = 0.0,
+                  Weight         = 0.0,
+                  MarksAchieved  = 0.0,
+                  MarksOutOf     = 1.0,
+                  DueDate        = due_date,
+                  Completed      = False
+                )
+                db.session.add(a)
+                db.session.commit()
+                flash('Deadline added.', 'success')
+        elif 'toggle_id' in request.form:
+            # toggle completed
+            aid = int(request.form['toggle_id'])
+            a = Assignment.query.get_or_404(aid)
+            if a.StudentID == current_user.StudentID:
+                a.Completed = not a.Completed
+                db.session.commit()
+                flash('Updated status.', 'success')
+            else:
+                flash("Permission denied.", 'danger')
+        return redirect(url_for('deadlines'))
+
+    # GET: fetch upcoming vs done
+    upcoming = Assignment.query.filter_by(
+        StudentID=current_user.StudentID, Completed=False
+    ).order_by(Assignment.DueDate).all()
+    done = Assignment.query.filter_by(
+        StudentID=current_user.StudentID, Completed=True
+    ).order_by(Assignment.DueDate.desc()).all()
+
+    return render_template(
+      'deadlines.html',
+      upcoming=upcoming,
+      done=done
+    )
+
 
 @app.route('/course/<course_code>')
 @login_required
@@ -410,54 +496,120 @@ def add_course():
     session.modified = True
     return redirect(url_for('dashboard'))
 
+
+
 @app.route('/grades', methods=['GET', 'POST'])
 @login_required
-@twofa_required
 def grades_view():
-    if 'grades' not in session:
-        session['grades'] = []
-
     if request.method == 'POST':
-        unit = request.form['unit']
-        assessment = request.form['assessment']
-        score = float(request.form['score'])
-        out_of = float(request.form['out_of'])
-        weight = float(request.form['weight'])
+        try:
+            # Read and validate form inputs
+            unit_code    = request.form['unit'].strip().upper()
+            assessment   = request.form['assessment'].strip()
+            score        = float(request.form['score'])
+            out_of       = float(request.form['out_of'])
+            weight       = float(request.form['weight'])
 
-        contribution = round((score / out_of) * weight, 2)
+            #enforce non negative score, positive out_of, and weight 0-100
+            if score < 0 or out_of <= 0 or not (0 <= weight <= 100):
+                flash('Invalid input: Score must be ≥ 0; Out Of must be > 0; Weight 0–100%', 'danger')
+                return redirect(url_for('grades_view'))
+            
+            # Parse the due date
+            due_date_str = request.form['due_date']
+            due_date     = datetime.strptime(due_date_str, '%Y-%m-%d').date()
 
-        session['grades'].append({
-            'unit': unit,
-            'assessment': assessment,
-            'score': score,
-            'out_of': out_of,
-            'weight': weight,
-            'contribution': contribution
-        })
-        session.modified = True
+            
+            # Look up the course
+            course = Course.query.filter_by(UnitCode=unit_code).first()
+            if not course:
+                flash(f"Unit code '{unit_code}' not found. Please add it first.", 'danger')
+                return redirect(url_for('grades_view'))
 
-    # Group grades by unit and calculate summary
+            # Create and save the assignment
+            assignment = Assignment(
+                AssignmentName = assessment,
+                CourseID       = course.CourseID,
+                StudentID      = current_user.StudentID,
+                HoursSpent     = 0.0,
+                Weight         = weight,
+                MarksAchieved  = score,
+                MarksOutOf     = out_of,
+                DueDate        = due_date
+            )
+            db.session.add(assignment)
+            db.session.commit()
+            flash('Assignment saved!', 'success')
+
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error saving assignment: {e}', 'danger')
+
+    # Fetch all assignments for this student, ordered by due date
+    assignments = (
+        Assignment.query
+        .filter_by(StudentID=current_user.StudentID)
+        .join(Course)
+        .order_by(Assignment.DueDate)
+        .all()
+    )
+
+    # Build summaries & per‐unit date lists
     summaries = {}
-    chart_data = {}
+    temp = defaultdict(lambda: defaultdict(list))
+    for a in assignments:
+        unit = a.course.UnitCode
+        pct  = (a.MarksAchieved / a.MarksOutOf) * 100
+        temp[unit][a.DueDate].append(pct)
 
-    for g in session['grades']:
-        unit = g['unit']
         summaries.setdefault(unit, {'achieved': 0.0})
-        summaries[unit]['achieved'] += g['contribution']
+        summaries[unit]['achieved'] += round((a.MarksAchieved / a.MarksOutOf) * a.Weight, 2)
 
-        chart_data.setdefault(unit, {'labels': [], 'values': []})
-        chart_data[unit]['labels'].append(g['assessment'])
-        chart_data[unit]['values'].append(g['contribution'])
+    # Compute cumulative averages per date
+    chart_data = {}
+    for unit, dates in temp.items():
+        sorted_dates = sorted(dates.keys())
+        labels = [d.isoformat() for d in sorted_dates]
 
-    session['summaries'] = summaries
+        # Per‐date average
+        per_date = [round(sum(dates[d]) / len(dates[d]), 2) for d in sorted_dates]
+
+        # Running cumulative average
+        cum_vals = []
+        running = 0.0
+        for i, v in enumerate(per_date):
+            running += v
+            cum_vals.append(round(running / (i + 1), 2))
+
+        chart_data[unit] = {'labels': labels, 'values': cum_vals}
 
     return render_template(
         'grades.html',
-        grades=session['grades'],
-        summaries=summaries,
-        chart_data=chart_data,
-        courses=session.get('courses', [])
+        grades     = assignments,
+        summaries  = summaries,
+        chart_data = chart_data,
+        courses    = session.get('courses', [])
     )
+
+
+@app.route('/grades/delete/<int:assignment_id>', methods=['POST'])
+@login_required
+def delete_assignment(assignment_id):
+    assignment = Assignment.query.get_or_404(assignment_id)
+    # ensure users can only delete their own assignments
+    if assignment.StudentID != current_user.StudentID:
+        flash("You don't have permission to delete that.", 'danger')
+        return redirect(url_for('grades_view'))
+
+    try:
+        db.session.delete(assignment)
+        db.session.commit()
+        flash('Assignment deleted.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error deleting assignment: {e}', 'danger')
+
+    return redirect(url_for('grades_view'))
 
 if __name__ == '__main__':
     app.run(debug=True)

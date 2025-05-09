@@ -1,8 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask import current_app
 from sqlalchemy import CheckConstraint, UniqueConstraint
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from cipher_func import encrypt_secret, decrypt_secret
 # Initialize SQLAlchemy
 db = SQLAlchemy()
 
@@ -14,7 +16,7 @@ class Student(db.Model, UserMixin):
     LastName = db.Column(db.Text, nullable=False)
     Email = db.Column(db.String(100), unique=True)
     Password = db.Column(db.String(255), nullable=False)
-    totp_secret = db.Column(db.String(32),nullable=True)
+    _totp_secret = db.Column("totp_secret", db.String(256), nullable=True)
     Otp_Expiry = db.Column(db.DateTime)
     CreatedAt = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -28,6 +30,16 @@ class Student(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.Password, password)
+    
+    @property
+    def totp_secret(self):
+        if not self._totp_secret:
+            return None
+        return decrypt_secret(self._totp_secret, current_app.config['SECRET_KEY'])
+
+    @totp_secret.setter
+    def totp_secret(self, value):
+        self._totp_secret = encrypt_secret(value, current_app.config['SECRET_KEY'])
 
     # Relationships
     courses = db.relationship('Course', secondary='StudentCourse', back_populates='students')
@@ -64,6 +76,7 @@ class Assignment(db.Model):
     MarksAchieved = db.Column(db.Float)
     MarksOutOf = db.Column(db.Float)
     DueDate = db.Column(db.Date, nullable=False)
+    Completed = db.Column(db.Boolean, nullable=False, default=False)
 
     __table_args__ = (
         CheckConstraint('Weight BETWEEN 0 AND 100', name='assignment_weight_check'),

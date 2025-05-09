@@ -17,8 +17,7 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
-    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')   # ✅ your Gmail App Password (not your real password)
-
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')   
     # Optional: Default sender (used if you forget to specify in Message())
     MAIL_DEFAULT_SENDER = MAIL_USERNAME
 
