@@ -126,6 +126,7 @@ def signup():
         confirm = request.form['confirm_password'].strip()
         first = request.form['first_name'].strip()
         last  = request.form['last_name'].strip()
+        UniStudentID = request.form['uniStudentID'].strip()
         try:
             valid = validate_email(email)
             email = valid.email
@@ -138,7 +139,7 @@ def signup():
         if Student.query.filter_by(Email=email).first():
             flash('Email already registered.', 'warning')
             return redirect(url_for('signup'))
-        user = Student(Email=email, FirstName=first, LastName=last)
+        user = Student(Email=email, FirstName=first, LastName=last,UniStudentID=UniStudentID)
         user.set_password(password)
         db.session.add(user); db.session.commit()
         login_user(user)

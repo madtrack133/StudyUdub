@@ -1448,3 +1448,39 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) CHECK constraint failed:
 2025-05-08 20:17:16,788 [INFO] 127.0.0.1 - - [08/May/2025 20:17:16] "[32mPOST /upload HTTP/1.1[0m" 302 -
 2025-05-08 20:17:16,794 [INFO] 127.0.0.1 - - [08/May/2025 20:17:16] "GET /dashboard HTTP/1.1" 200 -
 2025-05-08 20:17:16,816 [INFO] 127.0.0.1 - - [08/May/2025 20:17:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:14:21,199 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 14:14:21,201 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 14:24:26,078 [INFO] 127.0.0.1 - - [09/May/2025 14:24:26] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 14:24:26,139 [INFO] 127.0.0.1 - - [09/May/2025 14:24:26] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-09 14:24:26,256 [INFO] 127.0.0.1 - - [09/May/2025 14:24:26] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-09 14:24:26,473 [INFO] 127.0.0.1 - - [09/May/2025 14:24:26] "GET /static/uploads/StudyUdubLogo.png HTTP/1.1" 200 -
+2025-05-09 14:24:26,844 [INFO] 127.0.0.1 - - [09/May/2025 14:24:26] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-09 14:24:34,782 [INFO] 127.0.0.1 - - [09/May/2025 14:24:34] "POST /login HTTP/1.1" 200 -
+2025-05-09 14:24:34,823 [INFO] 127.0.0.1 - - [09/May/2025 14:24:34] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:25:28,713 [INFO] 127.0.0.1 - - [09/May/2025 14:25:28] "GET /signup HTTP/1.1" 200 -
+2025-05-09 14:25:28,736 [INFO] 127.0.0.1 - - [09/May/2025 14:25:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:26:00,671 [INFO] 127.0.0.1 - - [09/May/2025 14:26:00] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-09 14:26:00,886 [INFO] 127.0.0.1 - - [09/May/2025 14:26:00] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-09 14:26:00,915 [INFO] 127.0.0.1 - - [09/May/2025 14:26:00] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:26:12,296 [INFO] 127.0.0.1 - - [09/May/2025 14:26:12] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 14:26:12,322 [INFO] 127.0.0.1 - - [09/May/2025 14:26:12] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:26:15,042 [INFO] 127.0.0.1 - - [09/May/2025 14:26:15] "GET /upload HTTP/1.1" 200 -
+2025-05-09 14:26:15,070 [INFO] 127.0.0.1 - - [09/May/2025 14:26:15] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:27:22,934 [INFO] 127.0.0.1 - - [09/May/2025 14:27:22] "[32mPOST /upload HTTP/1.1[0m" 302 -
+2025-05-09 14:27:22,940 [INFO] 127.0.0.1 - - [09/May/2025 14:27:22] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 14:27:22,968 [INFO] 127.0.0.1 - - [09/May/2025 14:27:22] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:37:28,848 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 14:37:28,849 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 14:37:35,215 [INFO] 127.0.0.1 - - [09/May/2025 14:37:35] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 14:37:35,252 [INFO] 127.0.0.1 - - [09/May/2025 14:37:35] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-09 14:37:35,281 [INFO] 127.0.0.1 - - [09/May/2025 14:37:35] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-09 14:37:35,415 [INFO] 127.0.0.1 - - [09/May/2025 14:37:35] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:37:38,937 [INFO] 127.0.0.1 - - [09/May/2025 14:37:38] "GET /signup HTTP/1.1" 200 -
+2025-05-09 14:37:38,959 [INFO] 127.0.0.1 - - [09/May/2025 14:37:38] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:38:37,857 [INFO] 127.0.0.1 - - [09/May/2025 14:38:37] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-09 14:38:37,914 [INFO] 127.0.0.1 - - [09/May/2025 14:38:37] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-09 14:38:37,947 [INFO] 127.0.0.1 - - [09/May/2025 14:38:37] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 14:38:41,768 [INFO] 127.0.0.1 - - [09/May/2025 14:38:41] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 14:38:41,791 [INFO] 127.0.0.1 - - [09/May/2025 14:38:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -

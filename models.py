@@ -9,6 +9,7 @@ db = SQLAlchemy()
 class Student(db.Model, UserMixin):
     __tablename__ = 'Student'
     StudentID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    UniStudentID = db.Column(db.Text, nullable=False)
     FirstName = db.Column(db.Text, nullable=False)
     LastName = db.Column(db.Text, nullable=False)
     Email = db.Column(db.String(100), unique=True)
