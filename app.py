@@ -388,6 +388,7 @@ def add_course():
 
 @app.route('/grades', methods=['GET', 'POST'])
 @login_required
+@twofa_required
 def grades_view():
     if request.method == 'POST':
         try:
