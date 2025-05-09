@@ -15,7 +15,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash
 
 
-from flask import Flask, render_template, redirect, url_for, flash, request, session
+from flask import Flask, render_template, redirect, url_for, flash, request, session, send_from_directory, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import (
     LoginManager,
@@ -32,7 +32,7 @@ import pyotp
 import qrcode
 
 from config import Config
-from models import db, Student, Notes, Course, Assignment
+from models import db, Student, Notes, Course, Share, Assignment
 
 # --- Logging Configuration ---
 log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
@@ -134,6 +134,7 @@ def signup():
         confirm = request.form['confirm_password'].strip()
         first = request.form['first_name'].strip()
         last  = request.form['last_name'].strip()
+        UniStudentID = request.form['uniStudentID'].strip()
         try:
             valid = validate_email(email)
             email = valid.email
@@ -146,7 +147,7 @@ def signup():
         if Student.query.filter_by(Email=email).first():
             flash('Email already registered.', 'warning')
             return redirect(url_for('signup'))
-        user = Student(Email=email, FirstName=first, LastName=last)
+        user = Student(Email=email, FirstName=first, LastName=last,UniStudentID=UniStudentID)
         user.set_password(password)
         db.session.add(user); db.session.commit()
         login_user(user)
@@ -359,8 +360,65 @@ def upload():
 @login_required
 @twofa_required
 def share():
-    return render_template('share.html', courses=session.get('courses', []))
+    if request.method == 'POST':
+        note_id     = int(request.form['note_id'])
+        accessee_id = int(request.form['accessee_id'])
 
+        note = Notes.query.get(note_id)
+        if not note or note.StudentID != current_user.StudentID:
+            flash('Cannot share a note you do not own.', 'danger')
+            return redirect(url_for('share'))
+
+        student = Student.query.get(accessee_id)
+        if not student:
+            flash('Student ID not found.', 'warning')
+            return redirect(url_for('share'))
+
+        existing = Share.query.filter_by(
+            NoteID=note_id, AccesseeStudentID=accessee_id
+        ).first()
+        if existing:
+            flash('Note already shared with that student.', 'info')
+        else:
+            new_share = Share(
+                NoteID=note_id,
+                OwnerStudentID=current_user.StudentID,
+                AccesseeStudentID=accessee_id,
+                EditPower=0
+            )
+            db.session.add(new_share)
+            db.session.commit()
+            flash('Note shared successfully!', 'success')
+
+        return redirect(url_for('share'))
+    # GET: gather lists for the template
+    owned_notes  = Notes.query.filter_by(StudentID=current_user.StudentID).all()
+    shared_notes = [
+        s.note for s in Share.query.filter_by(AccesseeStudentID=current_user.StudentID).all()
+    ]
+    return render_template(
+        'share.html',
+        owned_notes=owned_notes,
+        shared_notes=shared_notes,
+        courses=session.get('courses', [])
+    )
+@app.route('/download/<int:note_id>')
+@login_required
+@twofa_required
+def download(note_id):
+    note = Notes.query.get_or_404(note_id)
+    is_owner = (note.StudentID == current_user.StudentID)
+    is_shared = Share.query.filter_by(
+        NoteID=note_id, AccesseeStudentID=current_user.StudentID
+    ).first() is not None
+
+    if not (is_owner or is_shared):
+        abort(403)
+
+    # FilePath is stored as "/secure_notes/<filename>"
+    filename = os.path.basename(note.FilePath)
+    directory = os.path.join(app.root_path, 'secure_notes')
+    return send_from_directory(directory, filename, as_attachment=True)
 @app.route('/shared_with_me')
 @login_required
 @twofa_required

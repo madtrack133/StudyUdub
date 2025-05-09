@@ -18,6 +18,16 @@
 
       <form method="POST" action="{{ url_for('signup') }}">
         <div class="mb-3">
+          <label for="uniStudentID" class="form-label">Student ID</label>
+          <input
+            type="text"
+            id="uniStudentID"
+            name="uniStudentID"
+            required
+            class="form-control"
+            placeholder="StudentID">
+        </div>
+        <div class="mb-3">
           <label for="first_name" class="form-label">First Name</label>
           <input
             type="text"

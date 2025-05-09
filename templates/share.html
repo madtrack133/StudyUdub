@@ -2,28 +2,45 @@
 {% block title %}Share Notes{% endblock %}
 {% block content %}
 <div class="container py-4">
-
     <div class="card p-4 shadow-sm">
-        <h2 class="mb-4">Share a Note ✉️</h2>
 
+       <h2 class="mb-4">Your Accessible Notes 📥</h2>
+       <ul class="list-group mb-4">
+           {# owned notes #}
+           {% for note in current_user.notes %}
+             <li class="list-group-item d-flex justify-content-between align-items-center">
+               {{ note.Title }}
+               <a href="{{ url_for('download', note_id=note.NoteID) }}" class="btn btn-sm btn-primary">Download</a>
+             </li>
+           {% endfor %}
+           {# notes shared to you #}
+           {% for note in shared_notes %}
+             <li class="list-group-item d-flex justify-content-between align-items-center">
+               {{ note.Title }} <em>(shared)</em>
+               <a href="{{ url_for('download', note_id=note.NoteID) }}" class="btn btn-sm btn-primary">Download</a>
+             </li>
+           {% endfor %}
+       </ul>
+
+        <h2 class="mb-4">Share a Note ✉️</h2>
         <form method="POST">
             <div class="mb-3">
-                <label class="form-label">Select Note</label>
+                <label class="form-label">Select Note You Own</label>
                 <select name="note_id" class="form-select" required>
                     <option disabled selected>Choose a note</option>
-                    <option value="1">Secure Coding Notes</option>
-                    <option value="2">Agile Study Notes</option>
+                    {% for note in owned_notes %}
+                      <option value="{{ note.NoteID }}">{{ note.Title }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Recipient Username</label>
-                <input type="text" name="recipient" class="form-control" placeholder="Enter username" required>
+                <label class="form-label">Recipient Student ID</label>
+                <input type="number" name="accessee_id" class="form-control" placeholder="Enter student ID" required>
             </div>
 
             <button type="submit" class="btn btn-warning mt-2">Share Note</button>
         </form>
     </div>
-
 </div>
 {% endblock %}

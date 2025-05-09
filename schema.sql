@@ -1,6 +1,7 @@
 -- Create Student table with additional authentication fields
 CREATE TABLE Student (
     StudentID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    UniStudentID TEXT NOT NULL,
     FirstName TEXT NOT NULL,
     LastName TEXT NOT NULL,
     Email VARCHAR(100) UNIQUE,
