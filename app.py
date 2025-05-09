@@ -354,26 +354,31 @@ def upload():
     # GET renders the same form
     return render_template('upload.html', courses=session.get('courses', []))
 
-@app.route('/share')
+@app.route('/share', methods=['GET', 'POST'])
 @login_required
 @twofa_required
 def share():
     if request.method == 'POST':
-        note_id     = int(request.form['note_id'])
-        accessee_id = int(request.form['accessee_id'])
+        note_id    = int(request.form['note_id'])
+        uni_id     = request.form['accessee_uni_id'].strip()
 
+        # verify ownership
         note = Notes.query.get(note_id)
         if not note or note.StudentID != current_user.StudentID:
             flash('Cannot share a note you do not own.', 'danger')
             return redirect(url_for('share'))
 
-        student = Student.query.get(accessee_id)
+        # look up the student by UniStudentID, not PK
+        student = Student.query.filter_by(UniStudentID=uni_id).first()
         if not student:
-            flash('Student ID not found.', 'warning')
+            flash(f"No student found with UniStudentID '{uni_id}'.", 'warning')
             return redirect(url_for('share'))
+        accessee_id = student.StudentID
 
+        # prevent duplicates
         existing = Share.query.filter_by(
-            NoteID=note_id, AccesseeStudentID=accessee_id
+            NoteID=note_id,
+            AccesseeStudentID=accessee_id
         ).first()
         if existing:
             flash('Note already shared with that student.', 'info')
@@ -421,7 +426,26 @@ def download(note_id):
 @login_required
 @twofa_required
 def shared_with_me():
-    return render_template('shared_with_me.html', courses=session.get('courses', []))
+    # pull all Share records for this user
+    shares = Share.query.filter_by(AccesseeStudentID=current_user.StudentID).all()
+
+    # build a list of dicts for the template
+    shared_docs = []
+    for share in shares:
+        note  = share.note
+        owner = share.owner
+        shared_docs.append({
+            'id':        note.NoteID,
+            'title':     note.Title,
+            'shared_by': f"{owner.FirstName} {owner.LastName}"
+        })
+
+    return render_template(
+        'shared_with_me.html',
+        shared_docs=shared_docs,
+        courses=session.get('courses', [])
+    )
+
 
 @app.route('/deadlines', methods=['GET', 'POST'])
 @login_required
