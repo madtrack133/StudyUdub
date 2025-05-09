@@ -98,6 +98,9 @@ def load_user(user_id):
 def twofa_required(view):
     @wraps(view)
     def wrapped_view(**kwargs):
+        if not current_user.is_authenticated or not current_user.is_2fa_enabled():
+            flash("2FA is not enabled. Please set up 2FA.", 'warning')
+            return redirect(url_for('setup_2fa'))
         if 'user_id' not in session:
             flash("You must complete 2FA verification to access this page.", 'warning')
             return redirect(url_for('verify_2fa'))
@@ -176,35 +179,64 @@ def login():
         user  = Student.query.filter_by(Email=email).first()
 
         if user and user.check_password(pwd):
-            login_user(user)
             #set your session flag so twofa_required passes
-            session['user_id'] = user.StudentID
+            session['temp_user_id'] = user.StudentID
             flash('Logged in successfully!', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('verify_2fa'))
 
         flash('Invalid email or password.', 'danger')
 
     return render_template('login.html')
 
 
-@app.route('/verify-2fa', methods=['GET','POST'])
+@app.route('/verify-2fa', methods=['GET', 'POST'])
 def verify_2fa():
     if 'temp_user_id' not in session:
+        logging.warning("No temp_user_id in session – redirecting to login.")
         return redirect(url_for('login'))
+
     user = Student.query.get(session['temp_user_id'])
+    logging.info(f"Found student with ID: {user.StudentID}")
+
     if request.method == 'POST':
-        code = request.form.get('code','').strip()
-        if code == 'reset':
-            session.clear(); send_2fa_reset_email(user)
-            flash('Check email for 2FA reset.', 'info')
-            return redirect(url_for('login'))
-        totp = pyotp.TOTP(user.totp_secret)
-        if totp.verify(code, valid_window=2):
-            session['user_id'] = user.StudentID
-            session.pop('temp_user_id', None)
-            return redirect(url_for('dashboard'))
-        flash('Invalid 2FA code.', 'danger')
+        action = request.form.get('action')
+        
+        # --- Forget 2FA key ---
+        if action == 'reset':
+            flash("2FA key has been reset. Please check your email to set up a new key.")
+            session.clear()
+            return redirect(url_for('reset_2fa_request'))
+        
+        # --- Verify 2FA code ---
+        elif action == 'verify':
+            user_code = request.form.get('code', '').strip()
+            if len(user_code) != 6 or not user_code.isdigit():
+                logging.warning("Invalid code format received during 2FA verification.")
+                return render_template('verify_2fa.html', error="Invalid code format")
+
+            try:
+                totp = pyotp.TOTP(user.totp_secret)
+                current_time = datetime.now().timestamp()
+                logging.debug(f"Current server time: {datetime.now()}")
+                is_valid = totp.verify(user_code, valid_window=2)
+                logging.debug(f"2FA verification for user ID {user.StudentID} : {is_valid}")
+
+                if is_valid:
+                    login_user(user)
+                    session['user_id'] = user.StudentID
+                    session.pop('temp_user_id', None)
+                    logging.info(f"Login successful for user ID {user.StudentID}) - redirecting to dashboard")
+                    return redirect(url_for('dashboard'))
+                
+                logging.warning(f"Invalid 2FA code attempt for user ID {user.StudentID} ({user.Email})")
+                return render_template('verify_2fa.html', error="Invalid verification code")
+            
+            except Exception as e:
+                logging.exception(f"Verification error for user ID {user.StudentID} ({user.Email})")
+                return render_template('verify_2fa.html', error="Verification failed")
+
     return render_template('verify_2fa.html')
+
 
 @app.route('/reset-2fa-request', methods=['GET','POST'])
 def reset_2fa_request():
