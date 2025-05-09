@@ -629,7 +629,7 @@ def profile():
     user_data = {
         'name': f"{current_user.FirstName} {current_user.LastName}",
         'email': current_user.Email,
-        'student_id': current_user.StudentID,
+        'uniStudentID':  current_user.UniStudentID,
     }
     return render_template('profile.html', user=user_data)
 

@@ -7,24 +7,43 @@
   <h2 class="mb-4"><i class="bi bi-person-circle me-2"></i>Your Profile</h2>
 
   <form method="POST" action="{{ url_for('profile') }}">
+    <!-- full name -->
     <div class="mb-3">
       <label for="name" class="form-label">Full Name</label>
-      <input type="text" class="form-control" id="name" name="name" value="{{ user.get('name', '') }}" required>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value="{{ user.get('name', '') }}"
+        required>
     </div>
 
+    <!-- email -->
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" name="email" value="{{ user.get('email', '') }}" required>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        value="{{ user.get('email', '') }}"
+        required>
     </div>
 
+    <!-- university student ID -->
     <div class="mb-3">
-        <label for="student_number" class="form-label">Student ID *</label>
-        <input type="text" class="form-control" id="student_number" name="student_number"
-               value="{{ user.StudentNumber or '' }}" pattern="^\d{8}$" required>
-        <div class="form-text">Must be exactly 8 digits</div>
+      <label for="uniStudentID" class="form-label">Student ID</label>
+      <input
+        type="text"
+        class="form-control"
+        id="uniStudentID"
+        name="uniStudentID"
+        value="{{ user.get('uniStudentID', '') }}"
+        pattern="^\d{8}$"
+        required>
+      <div class="form-text">Must be exactly 8 digits</div>
     </div>
-      
-      
 
     <button type="submit" class="btn btn-primary">Save Profile</button>
   </form>
