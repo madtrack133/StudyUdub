@@ -38,6 +38,7 @@ CREATE TABLE Assignment (
   MarksAchieved  REAL    CHECK (MarksAchieved BETWEEN 0 AND MarksOutOf),
   MarksOutOf     REAL    CHECK (MarksOutOf > 0),
   DueDate        DATE    NOT NULL,
+  Completed     INTEGER CHECK (Completed IN (0, 1)), -- 0 for not completed, 1 for completed
   FOREIGN KEY (CourseID)   REFERENCES Course(CourseID) ON DELETE CASCADE,
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE
 );

@@ -63,6 +63,7 @@ class Assignment(db.Model):
     MarksAchieved = db.Column(db.Float)
     MarksOutOf = db.Column(db.Float)
     DueDate = db.Column(db.Date, nullable=False)
+    Completed = db.Column(db.Boolean, nullable=False, default=False)
 
     __table_args__ = (
         CheckConstraint('Weight BETWEEN 0 AND 100', name='assignment_weight_check'),
