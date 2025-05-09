@@ -17,6 +17,9 @@ class Student(db.Model, UserMixin):
     Otp_Expiry = db.Column(db.DateTime)
     CreatedAt = db.Column(db.DateTime, default=datetime.utcnow)
 
+    
+
+
     # Flask-Login integration: Use StudentID as the user ID
     def get_id(self):
            return (self.StudentID)
