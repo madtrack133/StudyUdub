@@ -96,6 +96,9 @@ def load_user(user_id):
 def twofa_required(view):
     @wraps(view)
     def wrapped_view(**kwargs):
+        if not current_user.is_authenticated or not current_user.is_2fa_enabled():
+            flash("2FA is not enabled. Please set up 2FA.", 'warning')
+            return redirect(url_for('setup_2fa'))
         if 'user_id' not in session:
             flash("You must complete 2FA verification to access this page.", 'warning')
             return redirect(url_for('verify_2fa'))
@@ -214,13 +217,13 @@ def verify_2fa():
                 current_time = datetime.now().timestamp()
                 logging.debug(f"Current server time: {datetime.now()}")
                 is_valid = totp.verify(user_code, valid_window=2)
-                logging.debug(f"2FA verification for user ID {user.StudentID} ({user.Email}): {is_valid}")
+                logging.debug(f"2FA verification for user ID {user.StudentID} : {is_valid}")
 
                 if is_valid:
                     login_user(user)
                     session['user_id'] = user.StudentID
                     session.pop('temp_user_id', None)
-                    logging.info(f"Login successful for user ID {user.StudentID} ({user.Email}) - redirecting to dashboard")
+                    logging.info(f"Login successful for user ID {user.StudentID}) - redirecting to dashboard")
                     return redirect(url_for('dashboard'))
                 
                 logging.warning(f"Invalid 2FA code attempt for user ID {user.StudentID} ({user.Email})")
