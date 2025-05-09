@@ -20,7 +20,7 @@ def encrypt_secret(plain_text: str, key: str) -> str:
     iv = os.urandom(BLOCK_SIZE)
     data = pad(plain_text.encode())
 
-    # XOR-based AES (CBC風に自作)
+    # XOR-based AES
     encrypted = bytearray()
     prev = iv
     for i in range(0, len(data), BLOCK_SIZE):
