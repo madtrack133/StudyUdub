@@ -54,6 +54,7 @@ logger.addHandler(console_handler)
 app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = app.config.get('SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super-secret-key')
 #Upload folder
 UPLOAD_FOLDER = os.path.join(app.root_path, 'secure_notes')
 ALLOWED_EXTENSIONS = {'md', 'pdf', 'txt', 'docx'}
@@ -608,6 +609,30 @@ def delete_assignment(assignment_id):
         flash(f'Error deleting assignment: {e}', 'danger')
 
     return redirect(url_for('grades_view'))
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+@twofa_required
+def profile():
+    if request.method == 'POST':
+        current_user.FirstName = request.form['name'].split()[0]
+        current_user.LastName = ' '.join(request.form['name'].split()[1:])
+        current_user.Email = request.form['email']
+        current_user.Major = request.form['major']
+        current_user.Year = request.form['year']
+        current_user.Units = request.form['units']
+        current_user.StudentID = request.form['student_id']
+        db.session.commit()
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('profile'))
+
+    user_data = {
+        'name': f"{current_user.FirstName} {current_user.LastName}",
+        'email': current_user.Email,
+        'student_id': current_user.StudentID,
+    }
+    return render_template('profile.html', user=user_data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
