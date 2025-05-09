@@ -11,16 +11,10 @@
   <!-- Add Grade Form -->
   <form method="POST" class="row g-3 mb-4">
     <div class="col-md-2">
-      <input name="unit"
-             class="form-control"
-             placeholder="e.g. MATH1700"
-             required>
+      <input name="unit" class="form-control" placeholder="e.g. MATH1700" required>
     </div>
     <div class="col-md-2">
-      <input name="assessment"
-             class="form-control"
-             placeholder="e.g. Midsem"
-             required>
+      <input name="assessment" class="form-control" placeholder="e.g. Midsem" required>
     </div>
     <div class="col-md-2">
       <input name="score"
@@ -51,10 +45,7 @@
              required>
     </div>
     <div class="col-md-2">
-      <input name="due_date"
-             class="form-control"
-             type="date"
-             required>
+      <input name="due_date" class="form-control" type="date" required>
     </div>
     <div class="col-md-2 d-grid">
       <button class="btn btn-primary">Add Grade</button>
@@ -83,18 +74,13 @@
           <td>{{ grade.AssignmentName }}</td>
           <td>{{ grade.MarksAchieved }}/{{ grade.MarksOutOf }}</td>
           <td>{{ grade.Weight }}%</td>
-          <td>
-            {{ ((grade.MarksAchieved / grade.MarksOutOf) * grade.Weight)
-               | round(2) }}%
-          </td>
+          <td>{{ ((grade.MarksAchieved/grade.MarksOutOf)*grade.Weight)|round(2) }}%</td>
           <td>{{ grade.DueDate.strftime('%Y-%m-%d') }}</td>
           <td>
             <form method="POST"
                   action="{{ url_for('delete_assignment', assignment_id=grade.AssignmentID) }}"
                   onsubmit="return confirm('Delete this assignment?');">
-              <button type="submit" class="btn btn-sm btn-danger">
-                &times;
-              </button>
+              <button type="submit" class="btn btn-sm btn-danger">&times;</button>
             </form>
           </td>
         </tr>
@@ -110,7 +96,6 @@
     Achieved: <strong>{{ "%.1f"|format(summary.achieved) }}%</strong>
     — Required to Pass: <strong>{{ "%.1f"|format(50 - summary.achieved) }}%</strong>
   </div>
-
   <div class="d-flex justify-content-center mb-5">
     <div style="width: 45%;">
       <canvas id="chart-{{ unit }}"></canvas>
@@ -121,12 +106,15 @@
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 {% if chart_data %}
 <script>
+  // Parse the chart_data JSON into a JS object
   const chartData = {{ chart_data | tojson }};
-  for (const unit in chartData) {
+
+  Object.keys(chartData).forEach(unit => {
     const ctx = document.getElementById(`chart-${unit}`);
-    if (!ctx) continue;
+    if (!ctx) return;
 
     new Chart(ctx, {
       type: 'line',
@@ -142,12 +130,18 @@
       options: {
         scales: {
           x: {
-            title: { display: true, text: 'Date' }
+            title: {
+              display: true,
+              text: 'Date'
+            }
           },
           y: {
             beginAtZero: true,
             suggestedMax: 100,
-            title: { display: true, text: 'Average (%)' }
+            title: {
+              display: true,
+              text: 'Average (%)'
+            }
           }
         },
         plugins: {
@@ -160,7 +154,7 @@
         maintainAspectRatio: false
       }
     });
-  }
+  });
 </script>
 {% endif %}
 {% endblock %}
