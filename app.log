@@ -1712,3 +1712,210 @@ WHERE "Student"."StudentID" = ?]
 2025-05-08 22:48:16,556 [INFO] 127.0.0.1 - - [08/May/2025 22:48:16] "[32mPOST /grades HTTP/1.1[0m" 302 -
 2025-05-08 22:48:16,562 [INFO] 127.0.0.1 - - [08/May/2025 22:48:16] "GET /grades HTTP/1.1" 200 -
 2025-05-08 22:48:16,616 [INFO] 127.0.0.1 - - [08/May/2025 22:48:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:54:44,295 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-08 22:54:44,296 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-08 22:55:16,144 [INFO] 127.0.0.1 - - [08/May/2025 22:55:16] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-08 22:55:16,232 [INFO] 127.0.0.1 - - [08/May/2025 22:55:16] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:55:16,632 [INFO] 127.0.0.1 - - [08/May/2025 22:55:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:18,457 [INFO] 127.0.0.1 - - [08/May/2025 22:55:18] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:55:18,476 [INFO] 127.0.0.1 - - [08/May/2025 22:55:18] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:21,508 [INFO] 127.0.0.1 - - [08/May/2025 22:55:21] "GET /course/MATH1700 HTTP/1.1" 200 -
+2025-05-08 22:55:21,530 [INFO] 127.0.0.1 - - [08/May/2025 22:55:21] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:28,780 [INFO] 127.0.0.1 - - [08/May/2025 22:55:28] "GET /grades HTTP/1.1" 200 -
+2025-05-08 22:55:28,819 [INFO] 127.0.0.1 - - [08/May/2025 22:55:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:35,183 [INFO] 127.0.0.1 - - [08/May/2025 22:55:35] "GET /deadlines HTTP/1.1" 200 -
+2025-05-08 22:55:35,212 [INFO] 127.0.0.1 - - [08/May/2025 22:55:35] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:36,838 [INFO] 127.0.0.1 - - [08/May/2025 22:55:36] "GET /shared_with_me HTTP/1.1" 200 -
+2025-05-08 22:55:36,859 [INFO] 127.0.0.1 - - [08/May/2025 22:55:36] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:37,653 [INFO] 127.0.0.1 - - [08/May/2025 22:55:37] "GET /share HTTP/1.1" 200 -
+2025-05-08 22:55:37,667 [INFO] 127.0.0.1 - - [08/May/2025 22:55:37] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:38,354 [INFO] 127.0.0.1 - - [08/May/2025 22:55:38] "GET /upload HTTP/1.1" 200 -
+2025-05-08 22:55:38,395 [INFO] 127.0.0.1 - - [08/May/2025 22:55:38] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-08 22:55:38,988 [INFO] 127.0.0.1 - - [08/May/2025 22:55:38] "GET /dashboard HTTP/1.1" 200 -
+2025-05-08 22:55:39,006 [INFO] 127.0.0.1 - - [08/May/2025 22:55:39] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:47:01,110 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 07:47:01,111 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 07:47:12,268 [INFO] 127.0.0.1 - - [09/May/2025 07:47:12] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 07:47:12,336 [INFO] 127.0.0.1 - - [09/May/2025 07:47:12] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-09 07:47:12,381 [INFO] 127.0.0.1 - - [09/May/2025 07:47:12] "GET /login?next=/dashboard HTTP/1.1" 200 -
+2025-05-09 07:47:13,331 [INFO] 127.0.0.1 - - [09/May/2025 07:47:13] "GET /static/uploads/StudyUdubLogo.png HTTP/1.1" 200 -
+2025-05-09 07:47:16,104 [INFO] 127.0.0.1 - - [09/May/2025 07:47:16] "GET /login HTTP/1.1" 200 -
+2025-05-09 07:47:16,129 [INFO] 127.0.0.1 - - [09/May/2025 07:47:16] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:47:36,331 [INFO] 127.0.0.1 - - [09/May/2025 07:47:36] "GET /forgot HTTP/1.1" 200 -
+2025-05-09 07:47:45,867 [INFO] 127.0.0.1 - - [09/May/2025 07:47:45] "POST /forgot HTTP/1.1" 200 -
+2025-05-09 07:47:48,708 [INFO] 127.0.0.1 - - [09/May/2025 07:47:48] "GET /signup HTTP/1.1" 200 -
+2025-05-09 07:47:48,722 [INFO] 127.0.0.1 - - [09/May/2025 07:47:48] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:47:52,945 [INFO] 127.0.0.1 - - [09/May/2025 07:47:52] "GET /login HTTP/1.1" 200 -
+2025-05-09 07:47:52,958 [INFO] 127.0.0.1 - - [09/May/2025 07:47:52] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:48:41,381 [INFO] 127.0.0.1 - - [09/May/2025 07:48:41] "GET /forgot HTTP/1.1" 200 -
+2025-05-09 07:48:54,119 [INFO] 127.0.0.1 - - [09/May/2025 07:48:54] "POST /forgot HTTP/1.1" 200 -
+2025-05-09 07:49:08,460 [INFO] 127.0.0.1 - - [09/May/2025 07:49:08] "GET /signup HTTP/1.1" 200 -
+2025-05-09 07:49:08,479 [INFO] 127.0.0.1 - - [09/May/2025 07:49:08] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:49:29,094 [INFO] 127.0.0.1 - - [09/May/2025 07:49:29] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-09 07:49:29,097 [INFO] 127.0.0.1 - - [09/May/2025 07:49:29] "GET /signup HTTP/1.1" 200 -
+2025-05-09 07:49:29,107 [INFO] 127.0.0.1 - - [09/May/2025 07:49:29] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:49:58,745 [INFO] 127.0.0.1 - - [09/May/2025 07:49:58] "GET /login HTTP/1.1" 200 -
+2025-05-09 07:49:58,760 [INFO] 127.0.0.1 - - [09/May/2025 07:49:58] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:49:59,873 [INFO] 127.0.0.1 - - [09/May/2025 07:49:59] "GET /forgot HTTP/1.1" 200 -
+2025-05-09 07:50:08,902 [INFO] 127.0.0.1 - - [09/May/2025 07:50:08] "POST /forgot HTTP/1.1" 200 -
+2025-05-09 07:50:25,704 [INFO] 127.0.0.1 - - [09/May/2025 07:50:25] "GET /signup HTTP/1.1" 200 -
+2025-05-09 07:50:25,729 [INFO] 127.0.0.1 - - [09/May/2025 07:50:25] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:50:49,753 [INFO] 127.0.0.1 - - [09/May/2025 07:50:49] "[32mPOST /signup HTTP/1.1[0m" 302 -
+2025-05-09 07:50:49,982 [INFO] 127.0.0.1 - - [09/May/2025 07:50:49] "GET /setup-2fa HTTP/1.1" 200 -
+2025-05-09 07:50:50,006 [INFO] 127.0.0.1 - - [09/May/2025 07:50:50] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:50:55,273 [INFO] 127.0.0.1 - - [09/May/2025 07:50:55] "GET /grades HTTP/1.1" 200 -
+2025-05-09 07:50:55,285 [INFO] 127.0.0.1 - - [09/May/2025 07:50:55] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:51:14,436 [INFO] 127.0.0.1 - - [09/May/2025 07:51:14] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-09 07:51:14,442 [INFO] 127.0.0.1 - - [09/May/2025 07:51:14] "GET /grades HTTP/1.1" 200 -
+2025-05-09 07:51:14,454 [INFO] 127.0.0.1 - - [09/May/2025 07:51:14] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:51:45,469 [INFO] 127.0.0.1 - - [09/May/2025 07:51:45] "POST /grades HTTP/1.1" 200 -
+2025-05-09 07:51:45,483 [INFO] 127.0.0.1 - - [09/May/2025 07:51:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:51:54,239 [INFO] 127.0.0.1 - - [09/May/2025 07:51:54] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-09 07:51:54,243 [INFO] 127.0.0.1 - - [09/May/2025 07:51:54] "[32mGET /verify-2fa HTTP/1.1[0m" 302 -
+2025-05-09 07:51:54,248 [INFO] 127.0.0.1 - - [09/May/2025 07:51:54] "GET /login HTTP/1.1" 200 -
+2025-05-09 07:51:54,267 [INFO] 127.0.0.1 - - [09/May/2025 07:51:54] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:52:00,794 [INFO] 127.0.0.1 - - [09/May/2025 07:52:00] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2025-05-09 07:52:00,798 [INFO] 127.0.0.1 - - [09/May/2025 07:52:00] "[32mGET /verify-2fa HTTP/1.1[0m" 302 -
+2025-05-09 07:52:00,803 [INFO] 127.0.0.1 - - [09/May/2025 07:52:00] "GET /login HTTP/1.1" 200 -
+2025-05-09 07:52:00,815 [INFO] 127.0.0.1 - - [09/May/2025 07:52:00] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:52:03,109 [INFO] 127.0.0.1 - - [09/May/2025 07:52:03] "GET /signup HTTP/1.1" 200 -
+2025-05-09 07:52:03,124 [INFO] 127.0.0.1 - - [09/May/2025 07:52:03] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:52:04,452 [INFO] 127.0.0.1 - - [09/May/2025 07:52:04] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-09 07:52:04,457 [INFO] 127.0.0.1 - - [09/May/2025 07:52:04] "GET /login HTTP/1.1" 200 -
+2025-05-09 07:52:04,469 [INFO] 127.0.0.1 - - [09/May/2025 07:52:04] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:52:05,808 [INFO] 127.0.0.1 - - [09/May/2025 07:52:05] "GET /forgot HTTP/1.1" 200 -
+2025-05-09 07:56:25,259 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 07:56:25,259 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 07:57:08,557 [INFO] 127.0.0.1 - - [09/May/2025 07:57:08] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 07:57:08,635 [INFO] 127.0.0.1 - - [09/May/2025 07:57:08] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 07:57:08,650 [INFO] 127.0.0.1 - - [09/May/2025 07:57:08] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:57:10,306 [INFO] 127.0.0.1 - - [09/May/2025 07:57:10] "GET /grades HTTP/1.1" 200 -
+2025-05-09 07:57:10,324 [INFO] 127.0.0.1 - - [09/May/2025 07:57:10] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:57:23,766 [INFO] 127.0.0.1 - - [09/May/2025 07:57:23] "POST /grades HTTP/1.1" 200 -
+2025-05-09 07:57:23,786 [INFO] 127.0.0.1 - - [09/May/2025 07:57:23] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:59:11,981 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 07:59:11,981 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 07:59:20,474 [INFO] 127.0.0.1 - - [09/May/2025 07:59:20] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 07:59:20,554 [INFO] 127.0.0.1 - - [09/May/2025 07:59:20] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 07:59:21,071 [INFO] 127.0.0.1 - - [09/May/2025 07:59:21] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:59:22,584 [INFO] 127.0.0.1 - - [09/May/2025 07:59:22] "GET /grades HTTP/1.1" 200 -
+2025-05-09 07:59:22,602 [INFO] 127.0.0.1 - - [09/May/2025 07:59:22] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 07:59:55,278 [INFO] 127.0.0.1 - - [09/May/2025 07:59:55] "POST /grades HTTP/1.1" 200 -
+2025-05-09 07:59:55,308 [INFO] 127.0.0.1 - - [09/May/2025 07:59:55] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:00:59,676 [INFO] 127.0.0.1 - - [09/May/2025 08:00:59] "GET /course/MATH1700 HTTP/1.1" 200 -
+2025-05-09 08:00:59,706 [INFO] 127.0.0.1 - - [09/May/2025 08:00:59] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:01:02,737 [INFO] 127.0.0.1 - - [09/May/2025 08:01:02] "GET /deadlines HTTP/1.1" 200 -
+2025-05-09 08:01:02,758 [INFO] 127.0.0.1 - - [09/May/2025 08:01:02] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:12:39,371 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 08:12:39,371 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 08:12:46,120 [INFO] 127.0.0.1 - - [09/May/2025 08:12:46] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 08:12:46,201 [INFO] 127.0.0.1 - - [09/May/2025 08:12:46] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 08:12:46,225 [INFO] 127.0.0.1 - - [09/May/2025 08:12:46] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:12:47,578 [INFO] 127.0.0.1 - - [09/May/2025 08:12:47] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:12:47,594 [INFO] 127.0.0.1 - - [09/May/2025 08:12:47] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:13:02,619 [INFO] 127.0.0.1 - - [09/May/2025 08:13:02] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-09 08:13:02,626 [INFO] 127.0.0.1 - - [09/May/2025 08:13:02] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:13:02,648 [INFO] 127.0.0.1 - - [09/May/2025 08:13:02] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:13:24,875 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 08:13:24,875 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 08:13:30,319 [INFO] 127.0.0.1 - - [09/May/2025 08:13:30] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 08:13:30,395 [INFO] 127.0.0.1 - - [09/May/2025 08:13:30] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 08:13:30,409 [INFO] 127.0.0.1 - - [09/May/2025 08:13:30] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:13:31,776 [INFO] 127.0.0.1 - - [09/May/2025 08:13:31] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:13:31,790 [INFO] 127.0.0.1 - - [09/May/2025 08:13:31] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:13:47,123 [INFO] 127.0.0.1 - - [09/May/2025 08:13:47] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-09 08:13:47,129 [INFO] 127.0.0.1 - - [09/May/2025 08:13:47] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:13:47,144 [INFO] 127.0.0.1 - - [09/May/2025 08:13:47] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:14:04,340 [INFO] 127.0.0.1 - - [09/May/2025 08:14:04] "[32mPOST /add_course HTTP/1.1[0m" 302 -
+2025-05-09 08:14:04,344 [INFO] 127.0.0.1 - - [09/May/2025 08:14:04] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 08:14:04,364 [INFO] 127.0.0.1 - - [09/May/2025 08:14:04] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:14:06,504 [INFO] 127.0.0.1 - - [09/May/2025 08:14:06] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:14:06,519 [INFO] 127.0.0.1 - - [09/May/2025 08:14:06] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:14:14,645 [INFO] 127.0.0.1 - - [09/May/2025 08:14:14] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-09 08:14:14,654 [INFO] 127.0.0.1 - - [09/May/2025 08:14:14] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:14:14,670 [INFO] 127.0.0.1 - - [09/May/2025 08:14:14] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:14:32,958 [INFO] 127.0.0.1 - - [09/May/2025 08:14:32] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:14:32,985 [INFO] 127.0.0.1 - - [09/May/2025 08:14:32] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:14:42,249 [INFO] 127.0.0.1 - - [09/May/2025 08:14:42] "[32mPOST /grades HTTP/1.1[0m" 302 -
+2025-05-09 08:14:42,257 [INFO] 127.0.0.1 - - [09/May/2025 08:14:42] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:14:42,279 [INFO] 127.0.0.1 - - [09/May/2025 08:14:42] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:18:12,249 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 08:18:12,250 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 08:18:18,695 [INFO] 127.0.0.1 - - [09/May/2025 08:18:18] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 08:18:18,757 [INFO] 127.0.0.1 - - [09/May/2025 08:18:18] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 08:18:19,272 [INFO] 127.0.0.1 - - [09/May/2025 08:18:19] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:18:20,690 [INFO] 127.0.0.1 - - [09/May/2025 08:18:20] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:18:20,704 [INFO] 127.0.0.1 - - [09/May/2025 08:18:20] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:18:34,201 [INFO] 127.0.0.1 - - [09/May/2025 08:18:34] "POST /grades HTTP/1.1" 200 -
+2025-05-09 08:18:34,737 [INFO] 127.0.0.1 - - [09/May/2025 08:18:34] "POST /grades HTTP/1.1" 200 -
+2025-05-09 08:18:37,706 [INFO] 127.0.0.1 - - [09/May/2025 08:18:37] "POST /grades HTTP/1.1" 200 -
+2025-05-09 08:18:37,732 [INFO] 127.0.0.1 - - [09/May/2025 08:18:37] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:19:39,055 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 08:19:39,055 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 08:19:42,512 [INFO] 127.0.0.1 - - [09/May/2025 08:19:42] "GET /grades HTTP/1.1" 200 -
+2025-05-09 08:19:42,588 [INFO] 127.0.0.1 - - [09/May/2025 08:19:42] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:19:53,712 [INFO] 127.0.0.1 - - [09/May/2025 08:19:53] "POST /grades HTTP/1.1" 200 -
+2025-05-09 08:19:53,742 [INFO] 127.0.0.1 - - [09/May/2025 08:19:53] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 08:21:23,801 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 08:21:23,801 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 08:21:30,981 [INFO] 127.0.0.1 - - [09/May/2025 08:21:30] "POST /grades HTTP/1.1" 200 -
+2025-05-09 08:21:31,002 [INFO] 127.0.0.1 - - [09/May/2025 08:21:31] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:22:05,567 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 09:22:05,567 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 09:22:12,172 [INFO] 127.0.0.1 - - [09/May/2025 09:22:12] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 09:22:12,241 [INFO] 127.0.0.1 - - [09/May/2025 09:22:12] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 09:22:18,279 [INFO] 127.0.0.1 - - [09/May/2025 09:22:18] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 09:22:18,311 [INFO] 127.0.0.1 - - [09/May/2025 09:22:18] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 09:22:18,469 [INFO] 127.0.0.1 - - [09/May/2025 09:22:18] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:22:23,702 [INFO] 127.0.0.1 - - [09/May/2025 09:22:23] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-09 09:22:23,714 [INFO] 127.0.0.1 - - [09/May/2025 09:22:23] "GET /login HTTP/1.1" 200 -
+2025-05-09 09:22:23,768 [INFO] 127.0.0.1 - - [09/May/2025 09:22:23] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:22:25,271 [INFO] 127.0.0.1 - - [09/May/2025 09:22:25] "GET /signup HTTP/1.1" 200 -
+2025-05-09 09:22:25,286 [INFO] 127.0.0.1 - - [09/May/2025 09:22:25] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:22:27,142 [INFO] 127.0.0.1 - - [09/May/2025 09:22:27] "GET /login HTTP/1.1" 200 -
+2025-05-09 09:22:27,160 [INFO] 127.0.0.1 - - [09/May/2025 09:22:27] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:22:28,524 [INFO] 127.0.0.1 - - [09/May/2025 09:22:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-09 09:22:28,527 [INFO] 127.0.0.1 - - [09/May/2025 09:22:28] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 09:22:28,539 [INFO] 127.0.0.1 - - [09/May/2025 09:22:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:22:30,047 [INFO] 127.0.0.1 - - [09/May/2025 09:22:30] "GET /grades HTTP/1.1" 200 -
+2025-05-09 09:22:30,065 [INFO] 127.0.0.1 - - [09/May/2025 09:22:30] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:22:45,423 [INFO] 127.0.0.1 - - [09/May/2025 09:22:45] "POST /grades HTTP/1.1" 200 -
+2025-05-09 09:22:45,434 [INFO] 127.0.0.1 - - [09/May/2025 09:22:45] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:25:28,292 [INFO] 127.0.0.1 - - [09/May/2025 09:25:28] "POST /grades HTTP/1.1" 200 -
+2025-05-09 09:25:28,316 [INFO] 127.0.0.1 - - [09/May/2025 09:25:28] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:25:33,581 [INFO] 127.0.0.1 - - [09/May/2025 09:25:33] "GET /grades HTTP/1.1" 200 -
+2025-05-09 09:25:33,596 [INFO] 127.0.0.1 - - [09/May/2025 09:25:33] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:26:02,757 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 09:26:02,757 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 09:26:09,124 [INFO] 127.0.0.1 - - [09/May/2025 09:26:09] "GET /grades HTTP/1.1" 200 -
+2025-05-09 09:26:09,188 [INFO] 127.0.0.1 - - [09/May/2025 09:26:09] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:26:49,043 [INFO] 127.0.0.1 - - [09/May/2025 09:26:49] "GET /grades HTTP/1.1" 200 -
+2025-05-09 09:26:49,072 [INFO] 127.0.0.1 - - [09/May/2025 09:26:49] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:26:55,666 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 09:26:55,666 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 09:26:58,497 [INFO] 127.0.0.1 - - [09/May/2025 09:26:58] "GET /grades HTTP/1.1" 200 -
+2025-05-09 09:26:58,519 [INFO] 127.0.0.1 - - [09/May/2025 09:26:58] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:27:17,285 [INFO] 127.0.0.1 - - [09/May/2025 09:27:17] "GET /grades HTTP/1.1" 200 -
+2025-05-09 09:27:17,314 [INFO] 127.0.0.1 - - [09/May/2025 09:27:17] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:31:01,940 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-09 09:31:01,940 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-09 09:31:08,029 [INFO] 127.0.0.1 - - [09/May/2025 09:31:08] "[32mGET / HTTP/1.1[0m" 302 -
+2025-05-09 09:31:08,107 [INFO] 127.0.0.1 - - [09/May/2025 09:31:08] "GET /dashboard HTTP/1.1" 200 -
+2025-05-09 09:31:08,572 [INFO] 127.0.0.1 - - [09/May/2025 09:31:08] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:31:10,607 [INFO] 127.0.0.1 - - [09/May/2025 09:31:10] "GET /grades HTTP/1.1" 200 -
+2025-05-09 09:31:10,620 [INFO] 127.0.0.1 - - [09/May/2025 09:31:10] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -
+2025-05-09 09:31:41,410 [INFO] 127.0.0.1 - - [09/May/2025 09:31:41] "POST /grades HTTP/1.1" 200 -
+2025-05-09 09:31:41,422 [INFO] 127.0.0.1 - - [09/May/2025 09:31:41] "[36mGET /static/uploads/StudyUdubLogo.png HTTP/1.1[0m" 304 -

@@ -10,6 +10,8 @@ from datetime import datetime
 import base64
 from functools import wraps
 from collections import defaultdict
+from collections import defaultdict
+from datetime import datetime
 
 
 from flask import Flask, render_template, redirect, url_for, flash, request, session
@@ -354,22 +356,31 @@ def add_course():
     session.modified = True
     return redirect(url_for('dashboard'))
 
+
+
 @app.route('/grades', methods=['GET', 'POST'])
 @login_required
 def grades_view():
     if request.method == 'POST':
         try:
-            unit_code  = request.form['unit'].strip().upper()
-            assessment = request.form['assessment'].strip()
-            score      = float(request.form['score'])
-            out_of     = float(request.form['out_of'])
-            weight     = float(request.form['weight'])
+            #read and validate form inputs
+            unit_code    = request.form['unit'].strip().upper()
+            assessment   = request.form['assessment'].strip()
+            score        = float(request.form['score'])
+            out_of       = float(request.form['out_of'])
+            weight       = float(request.form['weight'])
 
+            #parse the due date
+            due_date_str = request.form['due_date']
+            due_date     = datetime.strptime(due_date_str, '%Y-%m-%d').date()
+
+            #look up the course
             course = Course.query.filter_by(UnitCode=unit_code).first()
             if not course:
                 flash(f"Unit code '{unit_code}' not found. Please add it first.", 'danger')
                 return redirect(url_for('grades_view'))
 
+            #create and save the assignment
             assignment = Assignment(
                 AssignmentName = assessment,
                 CourseID       = course.CourseID,
@@ -378,16 +389,17 @@ def grades_view():
                 Weight         = weight,
                 MarksAchieved  = score,
                 MarksOutOf     = out_of,
-                DueDate        = datetime.today().date()
+                DueDate        = due_date
             )
             db.session.add(assignment)
             db.session.commit()
             flash('Assignment saved to database!', 'success')
+
         except Exception as e:
             db.session.rollback()
-            flash(f'Error saving assignment: {str(e)}', 'danger')
+            flash(f'Error saving assignment: {e}', 'danger')
 
-    #fetch all assignments for this student
+    #fetch all assignments for this student, ordered by date
     assignments = (
         Assignment.query
         .filter_by(StudentID=current_user.StudentID)
@@ -396,31 +408,38 @@ def grades_view():
         .all()
     )
 
-    #build total summaries if you still need them
+    #build summary totals (if still needed) and per-unit date lists
     summaries = {}
-    #temp structure: { unit: { date: [percentages...] } }
     temp = defaultdict(lambda: defaultdict(list))
 
     for a in assignments:
         unit = a.course.UnitCode
-        # raw percent score for this assignment
-        pct = (a.MarksAchieved / a.MarksOutOf) * 100
+        pct  = (a.MarksAchieved / a.MarksOutOf) * 100
+
+        #collect raw percentages by date
         temp[unit][a.DueDate].append(pct)
 
-        # optional: keep your existing total contribution summary
+        #total contribution summary
         summaries.setdefault(unit, {'achieved': 0.0})
         summaries[unit]['achieved'] += round((a.MarksAchieved / a.MarksOutOf) * a.Weight, 2)
 
-    # Compute average per date
+    #compute cumulative averages per date
     chart_data = {}
     for unit, dates in temp.items():
         sorted_dates = sorted(dates.keys())
         labels = [d.isoformat() for d in sorted_dates]
-        values = [
-            round(sum(dates[d]) / len(dates[d]), 2)
-            for d in sorted_dates
-        ]
-        chart_data[unit] = {'labels': labels, 'values': values}
+
+        #per date average
+        per_date = [ round(sum(dates[d]) / len(dates[d]), 2) for d in sorted_dates ]
+
+        #running cumulative average
+        cum_vals = []
+        running_sum = 0.0
+        for i, v in enumerate(per_date):
+            running_sum += v
+            cum_vals.append(round(running_sum / (i + 1), 2))
+
+        chart_data[unit] = {'labels': labels, 'values': cum_vals}
 
     return render_template(
         'grades.html',
@@ -429,7 +448,6 @@ def grades_view():
         chart_data = chart_data,
         courses    = session.get('courses', [])
     )
-
 
 if __name__ == '__main__':
     app.run(debug=True)
