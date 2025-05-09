@@ -352,7 +352,8 @@ def upload():
         return redirect(url_for('dashboard'))
 
     # GET renders the same form
-    return render_template('upload.html', courses=session.get('courses', []))
+    all_courses = Course.query.order_by(Course.UnitCode).all()
+    return render_template('upload.html', courses=all_courses)
 
 @app.route('/share')
 @login_required
