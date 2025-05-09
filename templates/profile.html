@@ -6,7 +6,7 @@
 <div class="container mt-4">
   <h2 class="mb-4"><i class="bi bi-person-circle me-2"></i>Your Profile</h2>
 
-  <form method="POST" action="{{ url_for('update_profile') }}">
+  <form method="POST" action="{{ url_for('profile') }}">
     <div class="mb-3">
       <label for="name" class="form-label">Full Name</label>
       <input type="text" class="form-control" id="name" name="name" value="{{ user.get('name', '') }}" required>
@@ -18,26 +18,13 @@
     </div>
 
     <div class="mb-3">
-      <label for="student_id" class="form-label">Student ID</label>
-      <input type="text" class="form-control" id="student_id" name="student_id" value="{{ user.get('student_id', '') }}">
+        <label for="student_number" class="form-label">Student ID *</label>
+        <input type="text" class="form-control" id="student_number" name="student_number"
+               value="{{ user.StudentNumber or '' }}" pattern="^\d{8}$" required>
+        <div class="form-text">Must be exactly 8 digits</div>
     </div>
-
-    <div class="mb-3">
-      <label for="major" class="form-label">Major</label>
-      <input type="text" class="form-control" id="major" name="major" value="{{ user.get('major', '') }}">
-    </div>
-
-    <div class="mb-3">
-      <label for="year" class="form-label">Year</label>
-      <input type="text" class="form-control" id="year" name="year" value="{{ user.get('year', '') }}">
-    </div>
-
-    <div class="mb-3">
-      <label for="units" class="form-label">Enrolled Units</label>
-      <textarea class="form-control" id="units" name="units" rows="2">{{ user.get('units', '') }}</textarea>
-      <div class="form-text">Separate units by commas (e.g. CITS3403, MATH1700)</div>
-
-    </div>
+      
+      
 
     <button type="submit" class="btn btn-primary">Save Profile</button>
   </form>
