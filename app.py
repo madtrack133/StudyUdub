@@ -96,9 +96,6 @@ def load_user(user_id):
 def twofa_required(view):
     @wraps(view)
     def wrapped_view(**kwargs):
-        if not current_user.is_authenticated or not current_user.is_2fa_enabled():
-            flash("2FA is not enabled. Please set up 2FA.", 'warning')
-            return redirect(url_for('setup_2fa'))
         if 'user_id' not in session:
             flash("You must complete 2FA verification to access this page.", 'warning')
             return redirect(url_for('verify_2fa'))
