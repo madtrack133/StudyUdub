@@ -369,10 +369,16 @@ def grades_view():
             out_of       = float(request.form['out_of'])
             weight       = float(request.form['weight'])
 
+            #enforce non negative score, positive out_of, and weight 0-100
+            if score < 0 or out_of <= 0 or not (0 <= weight <= 100):
+                flash('Invalid input: Score must be ≥ 0; Out Of must be > 0; Weight 0–100%', 'danger')
+                return redirect(url_for('grades_view'))
+            
             # Parse the due date
             due_date_str = request.form['due_date']
             due_date     = datetime.strptime(due_date_str, '%Y-%m-%d').date()
 
+            
             # Look up the course
             course = Course.query.filter_by(UnitCode=unit_code).first()
             if not course:
