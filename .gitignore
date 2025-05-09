@@ -6,6 +6,7 @@
 # Python bytecode
 __pycache__/
 *.py[cod]
+* app.log
 
 # Alembic migration caches
 migrations/__pycache__/

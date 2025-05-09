@@ -8,36 +8,56 @@
     <i class="bi bi-bar-chart-fill text-dark"></i> Grades Tracker
   </h2>
 
+  <!-- Add Grade Form -->
   <form method="POST" class="row g-3 mb-4">
     <div class="col-md-2">
-      <input name="unit" class="form-control" placeholder="e.g. MATH1700" required>
-    </div>
-    <div class="col-md-2">
-      <input name="assessment" class="form-control" placeholder="e.g. Midsem" required>
-    </div>
-    <div class="col-md-2">
-      <input name="score" class="form-control" type="number" step="0.01" placeholder="Score" required>
-    </div>
-    <div class="col-md-2">
-      <input name="out_of" class="form-control" type="number" step="0.01" placeholder="Out Of" required>
-    </div>
-    <div class="col-md-2">
-      <input name="weight" class="form-control" type="number" step="0.01" placeholder="Weight (%)" required>
-    </div>
-
-    <div class="col-md-2">
-      <input name="due_date" 
-             class="form-control" 
-             type="date" 
-             placeholder="Due Date"
+      <input name="unit"
+             class="form-control"
+             placeholder="e.g. MATH1700"
              required>
     </div>
-
+    <div class="col-md-2">
+      <input name="assessment"
+             class="form-control"
+             placeholder="e.g. Midsem"
+             required>
+    </div>
+    <div class="col-md-2">
+      <input name="score"
+             class="form-control"
+             type="number"
+             step="0.01"
+             placeholder="Score"
+             required>
+    </div>
+    <div class="col-md-2">
+      <input name="out_of"
+             class="form-control"
+             type="number"
+             step="0.01"
+             placeholder="Out Of"
+             required>
+    </div>
+    <div class="col-md-2">
+      <input name="weight"
+             class="form-control"
+             type="number"
+             step="0.01"
+             placeholder="Weight (%)"
+             required>
+    </div>
+    <div class="col-md-2">
+      <input name="due_date"
+             class="form-control"
+             type="date"
+             required>
+    </div>
     <div class="col-md-2 d-grid">
       <button class="btn btn-primary">Add Grade</button>
     </div>
   </form>
 
+  <!-- Grade Table -->
   <h4 class="mb-3"><i class="bi bi-brain text-danger"></i> Grade Summary</h4>
   <div class="table-responsive mb-4">
     <table class="table table-bordered align-middle">
@@ -48,12 +68,13 @@
           <th>Score</th>
           <th>Weight (%)</th>
           <th>Contribution (%)</th>
+          <th>Date of Assessment</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         {% for grade in grades %}
         <tr>
-          <!-- Directly use your model attributes -->
           <td>{{ grade.course.UnitCode }}</td>
           <td>{{ grade.AssignmentName }}</td>
           <td>{{ grade.MarksAchieved }}/{{ grade.MarksOutOf }}</td>
@@ -62,13 +83,23 @@
             {{ ((grade.MarksAchieved / grade.MarksOutOf) * grade.Weight)
                | round(2) }}%
           </td>
+          <td>{{ grade.DueDate.strftime('%Y-%m-%d') }}</td>
+          <td>
+            <form method="POST"
+                  action="{{ url_for('delete_assignment', assignment_id=grade.AssignmentID) }}"
+                  onsubmit="return confirm('Delete this assignment?');">
+              <button type="submit" class="btn btn-sm btn-danger">
+                &times;
+              </button>
+            </form>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 
-  {# Summaries dict comes from your view as before #}
+  <!-- Summaries & Charts -->
   {% for unit, summary in summaries.items() %}
   <div class="alert alert-info fw-semibold text-center">
     <span class="text-primary">{{ unit }}:</span>
@@ -84,6 +115,7 @@
   {% endfor %}
 </div>
 
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% if chart_data %}
 <script>
@@ -124,7 +156,6 @@
         maintainAspectRatio: false
       }
     });
-
   }
 </script>
 {% endif %}

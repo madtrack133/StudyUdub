@@ -10,7 +10,6 @@ from datetime import datetime
 import base64
 from functools import wraps
 from collections import defaultdict
-from collections import defaultdict
 from datetime import datetime
 
 
@@ -363,24 +362,24 @@ def add_course():
 def grades_view():
     if request.method == 'POST':
         try:
-            #read and validate form inputs
+            # Read and validate form inputs
             unit_code    = request.form['unit'].strip().upper()
             assessment   = request.form['assessment'].strip()
             score        = float(request.form['score'])
             out_of       = float(request.form['out_of'])
             weight       = float(request.form['weight'])
 
-            #parse the due date
+            # Parse the due date
             due_date_str = request.form['due_date']
             due_date     = datetime.strptime(due_date_str, '%Y-%m-%d').date()
 
-            #look up the course
+            # Look up the course
             course = Course.query.filter_by(UnitCode=unit_code).first()
             if not course:
                 flash(f"Unit code '{unit_code}' not found. Please add it first.", 'danger')
                 return redirect(url_for('grades_view'))
 
-            #create and save the assignment
+            # Create and save the assignment
             assignment = Assignment(
                 AssignmentName = assessment,
                 CourseID       = course.CourseID,
@@ -399,7 +398,7 @@ def grades_view():
             db.session.rollback()
             flash(f'Error saving assignment: {e}', 'danger')
 
-    #fetch all assignments for this student, ordered by date
+    # Fetch all assignments for this student, ordered by due date
     assignments = (
         Assignment.query
         .filter_by(StudentID=current_user.StudentID)
@@ -408,36 +407,32 @@ def grades_view():
         .all()
     )
 
-    #build summary totals (if still needed) and per-unit date lists
+    # Build summaries & per‐unit date lists
     summaries = {}
     temp = defaultdict(lambda: defaultdict(list))
-
     for a in assignments:
         unit = a.course.UnitCode
         pct  = (a.MarksAchieved / a.MarksOutOf) * 100
-
-        #collect raw percentages by date
         temp[unit][a.DueDate].append(pct)
 
-        #total contribution summary
         summaries.setdefault(unit, {'achieved': 0.0})
         summaries[unit]['achieved'] += round((a.MarksAchieved / a.MarksOutOf) * a.Weight, 2)
 
-    #compute cumulative averages per date
+    # Compute cumulative averages per date
     chart_data = {}
     for unit, dates in temp.items():
         sorted_dates = sorted(dates.keys())
         labels = [d.isoformat() for d in sorted_dates]
 
-        #per date average
-        per_date = [ round(sum(dates[d]) / len(dates[d]), 2) for d in sorted_dates ]
+        # Per‐date average
+        per_date = [round(sum(dates[d]) / len(dates[d]), 2) for d in sorted_dates]
 
-        #running cumulative average
+        # Running cumulative average
         cum_vals = []
-        running_sum = 0.0
+        running = 0.0
         for i, v in enumerate(per_date):
-            running_sum += v
-            cum_vals.append(round(running_sum / (i + 1), 2))
+            running += v
+            cum_vals.append(round(running / (i + 1), 2))
 
         chart_data[unit] = {'labels': labels, 'values': cum_vals}
 
@@ -448,6 +443,26 @@ def grades_view():
         chart_data = chart_data,
         courses    = session.get('courses', [])
     )
+
+
+@app.route('/grades/delete/<int:assignment_id>', methods=['POST'])
+@login_required
+def delete_assignment(assignment_id):
+    assignment = Assignment.query.get_or_404(assignment_id)
+    # ensure users can only delete their own assignments
+    if assignment.StudentID != current_user.StudentID:
+        flash("You don't have permission to delete that.", 'danger')
+        return redirect(url_for('grades_view'))
+
+    try:
+        db.session.delete(assignment)
+        db.session.commit()
+        flash('Assignment deleted.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error deleting assignment: {e}', 'danger')
+
+    return redirect(url_for('grades_view'))
 
 if __name__ == '__main__':
     app.run(debug=True)
