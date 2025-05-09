@@ -31,12 +31,14 @@
             <div class="mb-3">
                 <label class="form-label">Course</label>
                 <select name="course" class="form-select" required>
-                    <option disabled selected>Select course</option>
-                    <option>CITS3002</option>
-                    <option>CITS3403</option>
-                    <option>MATH1700</option>
+                  <option disabled selected>Select course</option>
+                  {% for course in courses %}
+                    <option value="{{ course.UnitCode }}">
+                      {{ course.UnitCode }} – {{ course.CourseName }}
+                    </option>
+                  {% endfor %}
                 </select>
-            </div>
+              </div>
 
             <button type="submit" class="btn btn-primary mt-2">Upload Note</button>
         </form>

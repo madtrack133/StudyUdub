@@ -352,7 +352,8 @@ def upload():
         return redirect(url_for('dashboard'))
 
     # GET renders the same form
-    return render_template('upload.html', courses=session.get('courses', []))
+    all_courses = Course.query.order_by(Course.UnitCode).all()
+    return render_template('upload.html', courses=all_courses)
 
 @app.route('/share', methods=['GET', 'POST'])
 @login_required
@@ -653,7 +654,7 @@ def profile():
     user_data = {
         'name': f"{current_user.FirstName} {current_user.LastName}",
         'email': current_user.Email,
-        'student_id': current_user.StudentID,
+        'uniStudentID':  current_user.UniStudentID,
     }
     return render_template('profile.html', user=user_data)
 
