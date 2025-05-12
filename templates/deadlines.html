@@ -7,6 +7,7 @@
   <div class="card p-4 shadow-sm mb-4">
     <h2 class="mb-4">Upcoming Deadlines 📅</h2>
     <form method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input type="hidden" name="new_deadline" value="1">
       <div class="row g-3">
         <div class="col-md-4">

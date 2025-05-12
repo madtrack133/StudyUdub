@@ -1,128 +1,106 @@
-# at the top, add these imports
-import secrets
-from werkzeug.utils import secure_filename
-import re
 import os
+import re
+import secrets
 import logging
 from logging.handlers import RotatingFileHandler
 from io import BytesIO
 from datetime import datetime
-import base64
 from functools import wraps
 from collections import defaultdict
-from datetime import datetime
-from datetime import datetime
-from flask import render_template, request, redirect, url_for, flash
 
-
-from flask import Flask, render_template, redirect, url_for, flash, request, session, send_from_directory, abort
+from flask import (
+    Flask, render_template, request, redirect, url_for,
+    flash, session, send_from_directory, abort
+)
+from flask_wtf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import (
-    LoginManager,
-    login_user,
-    logout_user,
-    login_required,
-    current_user,
+    LoginManager, login_user, logout_user,
+    login_required, current_user
 )
 from flask_mail import Mail, Message
 from flask_migrate import Migrate
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from email_validator import validate_email, EmailNotValidError
-import pyotp
-import qrcode
+import pyotp, qrcode
 
 from config import Config
 from models import db, Student, Notes, Course, Share, Assignment
 
-# --- Logging Configuration ---
-log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+# ── App + CSRF Setup ─────────────────────────────
+app = Flask(__name__)
+app.config.from_object(Config)    # SECRET_KEY, DATABASE_URI, MAIL_*, etc.
+CSRFProtect(app)                  # all POSTs now require a valid csrf_token
 
-file_handler = RotatingFileHandler('app.log', maxBytes=1_000_000, backupCount=3)
-file_handler.setLevel(logging.INFO)
-file_handler.setFormatter(log_formatter)
-
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
-console_handler.setFormatter(log_formatter)
-
+# ── Logging ──────────────────────────────────────
+formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+fh = RotatingFileHandler('app.log', maxBytes=1_000_000, backupCount=3)
+fh.setFormatter(formatter)
+ch = logging.StreamHandler()
+ch.setFormatter(formatter)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-logger.addHandler(file_handler)
-logger.addHandler(console_handler)
+logger.addHandler(fh)
+logger.addHandler(ch)
 
-# --- Flask App Setup ---
-app = Flask(__name__)
-app.config.from_object(Config)
-app.secret_key = app.config.get('SECRET_KEY')
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super-secret-key')
-#Upload folder
-UPLOAD_FOLDER = os.path.join(app.root_path, 'secure_notes')
-ALLOWED_EXTENSIONS = {'md', 'pdf', 'txt', 'docx'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-
-# --- Extensions ---
+# ── Extensions ────────────────────────────────────
 db.init_app(app)
 migrate = Migrate(app, db)
-mail = Mail(app)
+mail    = Mail(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
-# --- Helper Functions ---
-def is_strong_password(password):
-    pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
-    return re.match(pattern, password)
-
-def allowed_file(filename):
-    return (
-        '.' in filename
-        and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+# ── Helpers & Decorators ─────────────────────────
+def is_strong_password(pw):
+    return re.match(
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$',
+      pw
     )
 
-def map_category(cat):
-    # map user read to database constraint check
-    return {
-        'Lecture Notes':      'Lecture',
-        'Tutorials':          'Tutorial',
-        'Past Exam Papers':   'Exam',
-        'Assignment Solutions':'Other'
-    }.get(cat, 'Other')
+def allowed_file(fn):
+    return '.' in fn and fn.rsplit('.',1)[1].lower() in {'md','pdf','txt','docx'}
 
+def map_category(cat):
+    return {
+      'Lecture Notes':'Lecture',
+      'Tutorials':'Tutorial',
+      'Past Exam Papers':'Exam',
+      'Assignment Solutions':'Other'
+    }.get(cat,'Other')
 
 @login_manager.user_loader
 def load_user(user_id):
     return Student.query.get(int(user_id))
 
-# --- Auth Decorators ---
-def twofa_required(view):
-    @wraps(view)
-    def wrapped_view(**kwargs):
+def twofa_required(f):
+    @wraps(f)
+    def wrapped(*args,**kwargs):
         if 'user_id' not in session:
-            flash("You must complete 2FA verification to access this page.", 'warning')
+            flash("Complete 2FA first.", 'warning')
             return redirect(url_for('verify_2fa'))
-        return view(**kwargs)
-    return wrapped_view
+        return f(*args,**kwargs)
+    return wrapped
 
-
-# --- Email Senders ---
 def send_password_reset_email(user):
-    token = s.dumps(user.Email, salt='email-confirm')
+    token = serializer.dumps(user.Email, salt='email-confirm')
     link = url_for('reset_password', token=token, _external=True)
-    msg = Message('Reset Your Password', sender=app.config['MAIL_USERNAME'], recipients=[user.Email])
-    msg.body = f"""Hi,\n\nTo reset your password, click below:\n{link}\n\nIf you didn’t request this, ignore this email."""
+    msg = Message('Reset Your Password',
+                  sender=app.config['MAIL_USERNAME'],
+                  recipients=[user.Email])
+    msg.body = f"Hi,\n\nReset at: {link}"
     mail.send(msg)
 
 def send_2fa_reset_email(user):
-    token = s.dumps(user.Email, salt='2fa-reset')
+    token = serializer.dumps(user.Email, salt='2fa-reset')
     link = url_for('reset_2fa_token', token=token, _external=True)
-    msg = Message('Reset Your 2FA Key', sender=app.config['MAIL_USERNAME'], recipients=[user.Email])
-    msg.body = f"""
-Hi {user.FirstName},\n\nReset your 2FA key via:\n{link}\n\nThis expires in 1 hour.
-"""
+    msg = Message('Reset Your 2FA Key',
+                  sender=app.config['MAIL_USERNAME'],
+                  recipients=[user.Email])
+    msg.body = f"Hi {user.FirstName}, reset here:\n{link}"
     mail.send(msg)
 
+    
 # --- Routes: Auth ---
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

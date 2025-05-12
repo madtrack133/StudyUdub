@@ -24,6 +24,7 @@
       {% endif %}
 
       <form method="POST" onsubmit="collectCode()">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <p class="text-center mb-3">Enter the 6-digit code from your authenticator app:</p>
 
         <div class="d-flex justify-content-center gap-2 mb-3">
