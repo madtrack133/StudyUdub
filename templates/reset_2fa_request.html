@@ -1,26 +1,47 @@
 {% extends "base.html" %}
 
+{% block title %}Reset 2FA Key{% endblock %}
+
 {% block content %}
-<h2 class="text-xl font-bold mb-4 text-center">Reset Your 2FA Key</h2>
+<div class="d-flex vh-100 align-items-center justify-content-center">
+  <div class="card shadow-sm" style="width:100%; max-width:400px;">
+    <div class="card-body p-4">
 
-<p class="mb-4 text-sm text-gray-600 text-center">
-    Enter your registered email address and we'll send you a link to reset your 2FA key.
-</p>
+      <!-- Logo -->
+      <div class="text-center mb-3">
+        <img
+          src="{{ url_for('static', filename='uploads/StudyUdubLogo.png') }}"
+          alt="StudyUdub"
+          class="img-fluid"
+          style="height:50px;">
+      </div>
 
-<form method="POST">
-    <label for="email" class="block mb-2 font-medium">Email</label>
-    <input type="email" name="email" id="email" required
-            class="w-full px-4 py-2 border rounded mb-4"
-            placeholder="you@example.com">
+      <h4 class="card-title text-center mb-3">Reset Your 2FA Key</h4>
 
-    <button type="submit"
-            class="w-full bg-yellow-500 text-white font-semibold py-2 rounded hover:bg-blue-600">
-        Send Reset Link
-    </button>
-</form>
+      <p class="text-muted small text-center mb-4">
+        Enter your registered email address and we'll send you a link to reset your 2FA key.
+      </p>
 
+      <form method="POST">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email"
+                 id="email"
+                 name="email"
+                 required
+                 class="form-control"
+                 placeholder="you@example.com">
+        </div>
 
-<p class="mt-6 text-sm text-center">
-    <a href="{{ url_for('login') }}" class="text-blue-600 hover:underline">Back to login</a>
-</p>
+        <button type="submit" class="btn btn-warning w-100">
+          Send Reset Link
+        </button>
+      </form>
+
+      <div class="mt-4 text-center small">
+        <a href="{{ url_for('login') }}" class="link-primary">Back to login</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -157,8 +157,9 @@ def signup():
 @login_required
 def setup_2fa():
     if current_user.totp_secret:
-        flash('2FA already set up.', 'info')
-        return redirect(url_for('dashboard'))
+        flash('2FA is already configured. Please log in.', 'info')
+        logout_user()
+        return redirect(url_for('login'))
     if request.method == 'POST':
         logout_user(); flash('2FA setup complete; please log in.', 'success')
         return redirect(url_for('login'))
@@ -199,13 +200,13 @@ def verify_2fa():
 
     if request.method == 'POST':
         action = request.form.get('action')
-        
+
         # --- Forget 2FA key ---
         if action == 'reset':
             flash("2FA key has been reset. Please check your email to set up a new key.")
             session.clear()
             return redirect(url_for('reset_2fa_request'))
-        
+
         # --- Verify 2FA code ---
         elif action == 'verify':
             user_code = request.form.get('code', '').strip()
@@ -226,10 +227,10 @@ def verify_2fa():
                     session.pop('temp_user_id', None)
                     logging.info(f"Login successful for user ID {user.StudentID}) - redirecting to dashboard")
                     return redirect(url_for('dashboard'))
-                
+
                 logging.warning(f"Invalid 2FA code attempt for user ID {user.StudentID} ({user.Email})")
                 return render_template('verify_2fa.html', error="Invalid verification code")
-            
+
             except Exception as e:
                 logging.exception(f"Verification error for user ID {user.StudentID} ({user.Email})")
                 return render_template('verify_2fa.html', error="Verification failed")
@@ -538,12 +539,12 @@ def grades_view():
             if score < 0 or out_of <= 0 or not (0 <= weight <= 100):
                 flash('Invalid input: Score must be ≥ 0; Out Of must be > 0; Weight 0–100%', 'danger')
                 return redirect(url_for('grades_view'))
-            
+
             # Parse the due date
             due_date_str = request.form['due_date']
             due_date     = datetime.strptime(due_date_str, '%Y-%m-%d').date()
 
-            
+
             # Look up the course
             course = Course.query.filter_by(UnitCode=unit_code).first()
             if not course:
