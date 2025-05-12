@@ -1,6 +1,7 @@
 # at the top, add these imports
 import secrets
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 import re
 import os
 import logging
@@ -89,6 +90,11 @@ def map_category(cat):
         'Past Exam Papers':   'Exam',
         'Assignment Solutions':'Other'
     }.get(cat, 'Other')
+#error file size.
+@app.errorhandler(RequestEntityTooLarge)
+def handle_file_too_large(e):
+    flash('File is too large (max 10 MB).', 'danger')
+    return redirect(request.url)
 
 
 @login_manager.user_loader
@@ -398,15 +404,34 @@ def share():
         return redirect(url_for('share'))
     # GET: gather lists for the template
     owned_notes  = Notes.query.filter_by(StudentID=current_user.StudentID).all()
-    shared_notes = [
-        s.note for s in Share.query.filter_by(AccesseeStudentID=current_user.StudentID).all()
-    ]
+    received_shares = Share.query.filter_by(
+        AccesseeStudentID=current_user.StudentID
+    ).join(Notes).all()
+    owned_notes    = Notes.query.filter_by(StudentID=current_user.StudentID).all()
+    owned_shares   = Share.query.filter_by(OwnerStudentID=current_user.StudentID).all()
+
     return render_template(
         'share.html',
         owned_notes=owned_notes,
-        shared_notes=shared_notes,
+        received_shares=received_shares,
+        owned_shares=owned_shares,
         courses=session.get('courses', [])
     )
+
+@app.route('/share/remove/<int:share_id>', methods=['POST'])
+@login_required
+@twofa_required
+def remove_share(share_id):
+    share = Share.query.get_or_404(share_id)
+    if share.OwnerStudentID != current_user.StudentID:
+        flash("You don't have permission to do that.", 'danger')
+        return redirect(url_for('share'))
+    db.session.delete(share)
+    db.session.commit()
+    flash('Access revoked.', 'success')
+    return redirect(url_for('share'))
+
+
 @app.route('/download/<int:note_id>')
 @login_required
 @twofa_required
