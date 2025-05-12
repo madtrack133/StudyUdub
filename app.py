@@ -683,6 +683,58 @@ def profile():
     }
     return render_template('profile.html', user=user_data)
 
+@app.route('/manage-courses')
+@login_required
+@twofa_required
+def manage_courses():
+    # all courses, plus which ones this user is already in
+    courses      = Course.query.order_by(Course.UnitCode).all()
+    enrolled_ids = { c.CourseID for c in current_user.courses }
+    return render_template(
+        'manage_courses.html',
+        courses=courses,
+        enrolled_ids=enrolled_ids,
+        courses_session=session.get('courses', [])
+    )
+
+@app.route('/manage-courses/add', methods=['POST'])
+@login_required
+@twofa_required
+def add_course_db():
+    unit = request.form['unitcode'].strip().upper()
+    name = request.form['name'].strip()
+    try:
+        cp = int(request.form['creditpoints'])
+    except ValueError:
+        flash('Credit points must be a number.', 'danger')
+        return redirect(url_for('manage_courses'))
+
+    if Course.query.filter_by(UnitCode=unit).first():
+        flash(f"Course {unit} already exists.", 'warning')
+    else:
+        new = Course(UnitCode=unit, CourseName=name, CreditPoints=cp)
+        db.session.add(new)
+        db.session.commit()
+        flash(f"Added course {unit}.", 'success')
+    return redirect(url_for('manage_courses'))
+
+@app.route('/manage-courses/enroll/<int:course_id>', methods=['POST'])
+@login_required
+@twofa_required
+def enroll_course(course_id):
+    course = Course.query.get_or_404(course_id)
+    if course in current_user.courses:
+        flash(f"Already enrolled in {course.UnitCode}.", 'info')
+    else:
+        sc = StudentCourse(
+            StudentID=current_user.StudentID,
+            CourseID=course.CourseID,
+            EnrollmentDate=date.today()
+        )
+        db.session.add(sc)
+        db.session.commit()
+        flash(f"Enrolled in {course.UnitCode}.", 'success')
+    return redirect(url_for('manage_courses'))
 
 if __name__ == '__main__':
     app.run(debug=True)

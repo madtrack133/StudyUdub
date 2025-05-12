@@ -150,6 +150,11 @@
         <a href="{{ url_for('grades_view') }}" class="{% if request.endpoint == 'grades_view' %}active{% endif %}">
           <i class="bi bi-bar-chart"></i> Grades
         </a>
+       <!-- Manage Courses -->
+        <a href="{{ url_for('manage_courses') }}"
+           class="{% if request.endpoint in ['manage_courses','add_course_db','enroll_course'] %}active{% endif %}">
+          <i class="bi bi-journal-plus"></i> Manage Courses
+        </a>
         <hr>
         
         {#
