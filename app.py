@@ -451,6 +451,7 @@ def shared_with_me():
 
 @app.route('/deadlines', methods=['GET', 'POST'])
 @login_required
+@twofa_required
 def deadlines():
     if request.method == 'POST':
         # distinguish “add” vs “toggle done” by a hidden field
@@ -619,6 +620,7 @@ def grades_view():
 
 @app.route('/grades/delete/<int:assignment_id>', methods=['POST'])
 @login_required
+@twofa_required
 def delete_assignment(assignment_id):
     assignment = Assignment.query.get_or_404(assignment_id)
     # ensure users can only delete their own assignments
