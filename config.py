@@ -10,6 +10,7 @@ class Config:
     # 🗂️ Database config
     SQLALCHEMY_DATABASE_URI = 'sqlite:///StudyUdub_V2.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    WTF_CSRF_ENABLED = True
 
     # 📧 Flask-Mail Gmail SMTP settings
     MAIL_SERVER = 'smtp.gmail.com'

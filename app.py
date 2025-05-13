@@ -13,7 +13,7 @@ from collections import defaultdict
 from datetime import datetime
 from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash
-
+from flask_wtf import CSRFProtect
 
 from flask import Flask, render_template, redirect, url_for, flash, request, session, send_from_directory, abort
 from flask_sqlalchemy import SQLAlchemy
@@ -53,8 +53,8 @@ logger.addHandler(console_handler)
 # --- Flask App Setup ---
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = app.config.get('SECRET_KEY')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super-secret-key')
+csrf = CSRFProtect(app)
 #Upload folder
 UPLOAD_FOLDER = os.path.join(app.root_path, 'secure_notes')
 ALLOWED_EXTENSIONS = {'md', 'pdf', 'txt', 'docx'}

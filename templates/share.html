@@ -24,6 +24,7 @@
 
         <h2 class="mb-4">Share a Note ✉️</h2>
         <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="mb-3">
                 <label class="form-label">Select Note You Own</label>
                 <select name="note_id" class="form-select" required>
