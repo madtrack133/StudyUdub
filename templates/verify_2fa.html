@@ -23,7 +23,9 @@
       </div>
       {% endif %}
 
-      <form method="POST">
+      <form method="POST" onsubmit="collectCode()">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <p class="text-center mb-3">Enter the 6-digit code from your authenticator app:</p>
 
         <div class="d-flex justify-content-center gap-2 mb-3">
@@ -61,41 +63,32 @@
   const hiddenCode = document.getElementById('hiddenCode');
   const hiddenAction = document.getElementById('hiddenAction');
 
-  // Track if user has clicked a manual submit button
   let lastClickedButton = null;
 
-  // Focus first input on load
   window.addEventListener('load', () => {
     inputs[0].focus();
   });
 
-  // Capture last clicked submit button
   document.querySelectorAll('button[type="submit"]').forEach(btn => {
     btn.addEventListener('mousedown', () => {
       lastClickedButton = btn;
     });
   });
 
-  // Function to join and check code
   function getCode() {
     return inputs.map(i => i.value).join('');
   }
 
-  // Watch inputs
   inputs.forEach((input, idx) => {
     input.addEventListener('input', () => {
       input.value = input.value.replace(/[^0-9]/g, '');
-
       if (input.value && idx < inputs.length - 1) {
         inputs[idx + 1].focus();
       }
 
       const code = getCode();
-
-      // Delay to allow button click event to register
       if (code.length === 6) {
         setTimeout(() => {
-          // If no button was clicked by user, auto-submit
           if (!lastClickedButton) {
             hiddenCode.value = code;
             hiddenAction.value = 'verify';
@@ -112,22 +105,11 @@
     });
   });
 
-  // Handle all submits
   form.addEventListener('submit', (e) => {
     const code = getCode();
     hiddenCode.value = code;
-
-    // If user clicked reset button, preserve its value
-    if (lastClickedButton) {
-      hiddenAction.value = lastClickedButton.value;
-    } else {
-      hiddenAction.value = 'verify';
-    }
-
-    // Clear for next round
+    hiddenAction.value = lastClickedButton ? lastClickedButton.value : 'verify';
     lastClickedButton = null;
   });
 </script>
-
-
 {% endblock %}

@@ -16,6 +16,7 @@
     {% endif %}
 
     <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div>
             <label for="token">Authentication Code:</label>
             <input type="text" id="token" name="token" required autocomplete="one-time-code">
