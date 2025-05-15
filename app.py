@@ -659,6 +659,18 @@ def profile():
     }
     return render_template('profile.html', user=user_data)
 
+@app.route("/test-login", methods=["POST"])
+def test_login():
+    if not app.config.get("TESTING"):
+        abort(403)
+    from flask_login import login_user
+    user = Student.query.filter_by(Email=request.form["email"]).first()
+    if user:
+        login_user(user)
+        return redirect("/dashboard")
+    return "User not found", 404
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
