@@ -17,6 +17,7 @@
       <h4 class="card-title text-center mb-4">Log In</h4>
 
       <form method="POST" action="{{ url_for('login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input
