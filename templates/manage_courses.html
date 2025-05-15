@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Manage Courses{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Manage Courses</h2>
+
+  <!-- Add New Course -->
+  <div class="card mb-5 shadow-sm">
+    <div class="card-body">
+      <h4 class="card-title">Add New Course</h4>
+      <form method="POST" action="{{ url_for('add_course_db') }}">
+        <div class="mb-3">
+          <label class="form-label">Unit Code</label>
+          <input type="text" name="unitcode" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Course Name</label>
+          <input type="text" name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Credit Points</label>
+          <input type="number" name="creditpoints" class="form-control" min="0" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Course</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- List and Enroll -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="card-title">Available Courses</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Unit Code</th>
+            <th>Name</th>
+            <th>Credits</th>
+            <th>Enroll</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for c in courses %}
+          <tr>
+            <td>{{ c.UnitCode }}</td>
+            <td>{{ c.CourseName }}</td>
+            <td>{{ c.CreditPoints }}</td>
+            <td>
+              {% if c.CourseID in enrolled_ids %}
+                <span class="badge bg-success">Enrolled</span>
+              {% else %}
+                <form method="POST" action="{{ url_for('enroll_course', course_id=c.CourseID) }}">
+                  <button type="submit" class="btn btn-sm btn-primary">Enroll</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
