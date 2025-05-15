@@ -1,9 +1,12 @@
 import sys
 import os
 import pytest
-from app import app as flask_app, db as _db
+from datetime import date
+from sqlalchemy.exc import IntegrityError
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from app import app as flask_app, db as _db
+
 
 @pytest.fixture(scope='session')
 def app():
