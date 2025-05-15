@@ -1,7 +1,7 @@
 -- Create Student table with additional authentication fields
 CREATE TABLE Student (
     StudentID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    UniStudentID TEXT NOT NULL,
+    UniStudentID TEXT NOT NULL UNIQUE,
     FirstName TEXT NOT NULL,
     LastName TEXT NOT NULL,
     Email VARCHAR(100) UNIQUE,
@@ -65,7 +65,6 @@ CREATE TABLE Share (
     NoteID            INTEGER NOT NULL,
     OwnerStudentID    INTEGER NOT NULL,
     AccesseeStudentID INTEGER NOT NULL,
-    EditPower         INTEGER,
     FOREIGN KEY (NoteID)            REFERENCES Notes(NoteID)            ON DELETE CASCADE,
     FOREIGN KEY (OwnerStudentID)    REFERENCES Student(StudentID)      ON DELETE CASCADE,
     FOREIGN KEY (AccesseeStudentID) REFERENCES Student(StudentID)      ON DELETE CASCADE,

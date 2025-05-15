@@ -40,6 +40,7 @@
       {% endif %}
 
       <form method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit" class="btn btn-warning w-100">
           Complete Setup 2FA
         </button>

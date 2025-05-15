@@ -24,6 +24,8 @@
       {% endif %}
 
       <form method="POST" onsubmit="collectCode()">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <p class="text-center mb-3">Enter the 6-digit code from your authenticator app:</p>
 
         <div class="d-flex justify-content-center gap-2 mb-3">
@@ -39,6 +41,8 @@
 
         <!-- Hidden input for final code -->
         <input type="hidden" name="code" id="hiddenCode">
+        <!-- Hidden input for action -->
+        <input type="hidden" name="action" id="hiddenAction">
 
         <div class="d-grid gap-2">
           <button type="submit" name="action" value="verify" class="btn btn-primary">
@@ -55,12 +59,42 @@
 
 <script>
   const inputs = Array.from(document.querySelectorAll('input[id^="code-"]'));
+  const form = document.querySelector('form');
+  const hiddenCode = document.getElementById('hiddenCode');
+  const hiddenAction = document.getElementById('hiddenAction');
+
+  let lastClickedButton = null;
+
+  window.addEventListener('load', () => {
+    inputs[0].focus();
+  });
+
+  document.querySelectorAll('button[type="submit"]').forEach(btn => {
+    btn.addEventListener('mousedown', () => {
+      lastClickedButton = btn;
+    });
+  });
+
+  function getCode() {
+    return inputs.map(i => i.value).join('');
+  }
 
   inputs.forEach((input, idx) => {
     input.addEventListener('input', () => {
       input.value = input.value.replace(/[^0-9]/g, '');
       if (input.value && idx < inputs.length - 1) {
         inputs[idx + 1].focus();
+      }
+
+      const code = getCode();
+      if (code.length === 6) {
+        setTimeout(() => {
+          if (!lastClickedButton) {
+            hiddenCode.value = code;
+            hiddenAction.value = 'verify';
+            form.submit();
+          }
+        }, 10);
       }
     });
 
@@ -71,13 +105,11 @@
     });
   });
 
-  function collectCode() {
-    const code = inputs.map(i => i.value).join('');
-    document.getElementById('hiddenCode').value = code;
-  }
-
-  window.addEventListener('load', () => {
-    inputs[0].focus();
+  form.addEventListener('submit', (e) => {
+    const code = getCode();
+    hiddenCode.value = code;
+    hiddenAction.value = lastClickedButton ? lastClickedButton.value : 'verify';
+    lastClickedButton = null;
   });
 </script>
 {% endblock %}

@@ -1,6 +1,7 @@
 # at the top, add these imports
 import secrets
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 import re
 import os
 import logging
@@ -13,7 +14,7 @@ from collections import defaultdict
 from datetime import datetime
 from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash
-
+from flask_wtf import CSRFProtect
 
 from flask import Flask, render_template, redirect, url_for, flash, request, session, send_from_directory, abort
 from flask_sqlalchemy import SQLAlchemy
@@ -53,8 +54,8 @@ logger.addHandler(console_handler)
 # --- Flask App Setup ---
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = app.config.get('SECRET_KEY')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super-secret-key')
+csrf = CSRFProtect(app)
 #Upload folder
 UPLOAD_FOLDER = os.path.join(app.root_path, 'secure_notes')
 ALLOWED_EXTENSIONS = {'md', 'pdf', 'txt', 'docx'}
@@ -89,6 +90,11 @@ def map_category(cat):
         'Past Exam Papers':   'Exam',
         'Assignment Solutions':'Other'
     }.get(cat, 'Other')
+#error file size.
+@app.errorhandler(RequestEntityTooLarge)
+def handle_file_too_large(e):
+    flash('File is too large (max 10 MB).', 'danger')
+    return redirect(request.url)
 
 
 @login_manager.user_loader
@@ -398,15 +404,34 @@ def share():
         return redirect(url_for('share'))
     # GET: gather lists for the template
     owned_notes  = Notes.query.filter_by(StudentID=current_user.StudentID).all()
-    shared_notes = [
-        s.note for s in Share.query.filter_by(AccesseeStudentID=current_user.StudentID).all()
-    ]
+    received_shares = Share.query.filter_by(
+        AccesseeStudentID=current_user.StudentID
+    ).join(Notes).all()
+    owned_notes    = Notes.query.filter_by(StudentID=current_user.StudentID).all()
+    owned_shares   = Share.query.filter_by(OwnerStudentID=current_user.StudentID).all()
+
     return render_template(
         'share.html',
         owned_notes=owned_notes,
-        shared_notes=shared_notes,
+        received_shares=received_shares,
+        owned_shares=owned_shares,
         courses=session.get('courses', [])
     )
+
+@app.route('/share/remove/<int:share_id>', methods=['POST'])
+@login_required
+@twofa_required
+def remove_share(share_id):
+    share = Share.query.get_or_404(share_id)
+    if share.OwnerStudentID != current_user.StudentID:
+        flash("You don't have permission to do that.", 'danger')
+        return redirect(url_for('share'))
+    db.session.delete(share)
+    db.session.commit()
+    flash('Access revoked.', 'success')
+    return redirect(url_for('share'))
+
+
 @app.route('/download/<int:note_id>')
 @login_required
 @twofa_required
@@ -449,59 +474,6 @@ def shared_with_me():
     )
 
 
-@app.route('/deadlines', methods=['GET', 'POST'])
-@login_required
-def deadlines():
-    if request.method == 'POST':
-        # distinguish “add” vs “toggle done” by a hidden field
-        if 'new_deadline' in request.form:
-            # add new
-            unit_code   = request.form['unit_code'].strip().upper()
-            name        = request.form['task'].strip()
-            due_date    = datetime.strptime(request.form['due_date'], '%Y-%m-%d').date()
-            course = Course.query.filter_by(UnitCode=unit_code).first()
-            if not course:
-                flash(f"Unit '{unit_code}' not found.", 'danger')
-            else:
-                a = Assignment(
-                  AssignmentName = name,
-                  CourseID       = course.CourseID,
-                  StudentID      = current_user.StudentID,
-                  HoursSpent     = 0.0,
-                  Weight         = 0.0,
-                  MarksAchieved  = 0.0,
-                  MarksOutOf     = 1.0,
-                  DueDate        = due_date,
-                  Completed      = False
-                )
-                db.session.add(a)
-                db.session.commit()
-                flash('Deadline added.', 'success')
-        elif 'toggle_id' in request.form:
-            # toggle completed
-            aid = int(request.form['toggle_id'])
-            a = Assignment.query.get_or_404(aid)
-            if a.StudentID == current_user.StudentID:
-                a.Completed = not a.Completed
-                db.session.commit()
-                flash('Updated status.', 'success')
-            else:
-                flash("Permission denied.", 'danger')
-        return redirect(url_for('deadlines'))
-
-    # GET: fetch upcoming vs done
-    upcoming = Assignment.query.filter_by(
-        StudentID=current_user.StudentID, Completed=False
-    ).order_by(Assignment.DueDate).all()
-    done = Assignment.query.filter_by(
-        StudentID=current_user.StudentID, Completed=True
-    ).order_by(Assignment.DueDate.desc()).all()
-
-    return render_template(
-      'deadlines.html',
-      upcoming=upcoming,
-      done=done
-    )
 
 
 @app.route('/course/<course_code>')
@@ -619,6 +591,7 @@ def grades_view():
 
 @app.route('/grades/delete/<int:assignment_id>', methods=['POST'])
 @login_required
+@twofa_required
 def delete_assignment(assignment_id):
     assignment = Assignment.query.get_or_404(assignment_id)
     # ensure users can only delete their own assignments
@@ -670,7 +643,58 @@ def test_login():
         return redirect("/dashboard")
     return "User not found", 404
 
+@app.route('/manage-courses')
+@login_required
+@twofa_required
+def manage_courses():
+    # all courses, plus which ones this user is already in
+    courses      = Course.query.order_by(Course.UnitCode).all()
+    enrolled_ids = { c.CourseID for c in current_user.courses }
+    return render_template(
+        'manage_courses.html',
+        courses=courses,
+        enrolled_ids=enrolled_ids,
+        courses_session=session.get('courses', [])
+    )
+#courses page
+@app.route('/manage-courses/add', methods=['POST'])
+@login_required
+@twofa_required
+def add_course_db():
+    unit = request.form['unitcode'].strip().upper()
+    name = request.form['name'].strip()
+    try:
+        cp = int(request.form['creditpoints'])
+    except ValueError:
+        flash('Credit points must be a number.', 'danger')
+        return redirect(url_for('manage_courses'))
 
+    if Course.query.filter_by(UnitCode=unit).first():
+        flash(f"Course {unit} already exists.", 'warning')
+    else:
+        new = Course(UnitCode=unit, CourseName=name, CreditPoints=cp)
+        db.session.add(new)
+        db.session.commit()
+        flash(f"Added course {unit}.", 'success')
+    return redirect(url_for('manage_courses'))
+
+@app.route('/manage-courses/enroll/<int:course_id>', methods=['POST'])
+@login_required
+@twofa_required
+def enroll_course(course_id):
+    course = Course.query.get_or_404(course_id)
+    if course in current_user.courses:
+        flash(f"Already enrolled in {course.UnitCode}.", 'info')
+    else:
+        sc = StudentCourse(
+            StudentID=current_user.StudentID,
+            CourseID=course.CourseID,
+            EnrollmentDate=date.today()
+        )
+        db.session.add(sc)
+        db.session.commit()
+        flash(f"Enrolled in {course.UnitCode}.", 'success')
+    return redirect(url_for('manage_courses'))
 
 if __name__ == '__main__':
     app.run(debug=True)

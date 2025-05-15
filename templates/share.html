@@ -2,50 +2,67 @@
 {% block title %}Share Notes{% endblock %}
 {% block content %}
 <div class="container py-4">
-    <div class="card p-4 shadow-sm">
+  <div class="card p-4 shadow-sm">
 
-       <h2 class="mb-4">Your Accessible Notes 📥</h2>
-       <ul class="list-group mb-4">
-           {# owned notes #}
-           {% for note in current_user.notes %}
-             <li class="list-group-item d-flex justify-content-between align-items-center">
-               {{ note.Title }}
-               <a href="{{ url_for('download', note_id=note.NoteID) }}" class="btn btn-sm btn-primary">Download</a>
-             </li>
-           {% endfor %}
-           {# notes shared to you #}
-           {% for note in shared_notes %}
-             <li class="list-group-item d-flex justify-content-between align-items-center">
-               {{ note.Title }} <em>(shared)</em>
-               <a href="{{ url_for('download', note_id=note.NoteID) }}" class="btn btn-sm btn-primary">Download</a>
-             </li>
-           {% endfor %}
-       </ul>
+    <h2 class="mb-4">Your Accessible Notes 📥</h2>
+    <ul class="list-group mb-4">
+      {# Notes you own #}
+      {% for note in owned_notes %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ note.Title }}
+          <a href="{{ url_for('download', note_id=note.NoteID) }}" class="btn btn-sm btn-primary">Download</a>
+        </li>
+      {% endfor %}
 
-        <h2 class="mb-4">Share a Note ✉️</h2>
-        <form method="POST">
-            <div class="mb-3">
-                <label class="form-label">Select Note You Own</label>
-                <select name="note_id" class="form-select" required>
-                    <option disabled selected>Choose a note</option>
-                    {% for note in owned_notes %}
-                      <option value="{{ note.NoteID }}">{{ note.Title }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+      {# Notes shared to you, showing who shared #}
+      {% for share in received_shares %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ share.note.Title }}
+          <small class="text-muted">(shared by {{ share.owner.FirstName }} {{ share.owner.LastName }})</small>
+          <a href="{{ url_for('download', note_id=share.note.NoteID) }}" class="btn btn-sm btn-primary">Download</a>
+        </li>
+      {% endfor %}
+    </ul>
 
-            <div class="mb-3">
-            <label class="form-label">Recipient Uni Student ID</label>
-            <input
-                type="text"
-                name="accessee_uni_id"
-                class="form-control"
-                placeholder="Enter your Uni Student ID (e.g. s1234567)"
-                required>
-            </div>
+    <h2 class="mb-4">Share a Note ✉️</h2>
+    <form method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="mb-3">
+        <label class="form-label">Select Note You Own</label>
+        <select name="note_id" class="form-select" required>
+          <option disabled selected>Choose a note</option>
+          {% for note in owned_notes %}
+            <option value="{{ note.NoteID }}">{{ note.Title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Recipient Uni Student ID</label>
+        <input type="text" name="accessee_uni_id" class="form-control"
+               placeholder="e.g. s1234567" required>
+      </div>
+      <button type="submit" class="btn btn-warning mt-2">Share Note</button>
+    </form>
 
-            <button type="submit" class="btn btn-warning mt-2">Share Note</button>
-        </form>
-    </div>
+    <h2 class="mt-5 mb-4">Manage Shared Access 🔒</h2>
+    <ul class="list-group mb-4">
+      {% for share in owned_shares %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            {{ share.note.Title }}<br>
+            <small class="text-muted">
+              shared with {{ share.accessee.FirstName }} {{ share.accessee.LastName }}
+            </small>
+          </div>
+          <form action="{{ url_for('remove_share', share_id=share.ShareID) }}"
+                method="POST" style="margin:0">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-sm btn-danger">Revoke</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+
+  </div>
 </div>
 {% endblock %}
