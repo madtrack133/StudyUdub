@@ -40,3 +40,13 @@ def test_signup_page_loads(client):
     response = client.get('/signup')
     assert response.status_code == 200
     assert b'Sign Up' in response.data
+
+def test_forgot_password_page_loads(client):
+    response = client.get('/forgot')
+    assert response.status_code == 200
+    assert b'name="email"' in response.data
+
+def test_upload_requires_login(client):
+    response = client.get('/upload')
+    assert response.status_code == 302
+    assert '/login' in response.headers['Location']
