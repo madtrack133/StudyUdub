@@ -23,16 +23,16 @@ StudyUdub is a secure web application designed to help university students organ
 - Bootstrap 5 for responsive UI
 
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the repository
 
-Clone the project [git clone ](https://github.com/madtrack133/StudyUdub.git)
+Clone the project git clone (https://github.com/madtrack133/StudyUdub.git)<br>
 cd StudyUdub
 
 ### 2. Create and Activate a Virtual Environment
 
-python3 -m venv venv
+python3 -m venv venv<br>
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 ### 3. Install Dependencies
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 flask db upgrade
 
 ### 6. Running the App
-flask run
+flask run<br>
 Visit: http://localhost:5000
 
 ### 7. Run Unit Tests
