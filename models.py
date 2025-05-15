@@ -10,6 +10,9 @@ db = SQLAlchemy()
 
 class Student(db.Model, UserMixin):
     __tablename__ = 'Student'
+    __table_args__ = (
+        db.UniqueConstraint('UniStudentID', name='uq_student_unistudentid'),
+    )
     StudentID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     UniStudentID = db.Column(db.Text, nullable=False)
     FirstName = db.Column(db.Text, nullable=False)
@@ -115,7 +118,6 @@ class Share(db.Model):
     NoteID = db.Column(db.Integer, db.ForeignKey('Notes.NoteID', ondelete='CASCADE'), nullable=False)
     OwnerStudentID = db.Column(db.Integer, db.ForeignKey('Student.StudentID', ondelete='CASCADE'), nullable=False)
     AccesseeStudentID = db.Column(db.Integer, db.ForeignKey('Student.StudentID', ondelete='CASCADE'), nullable=False)
-    EditPower = db.Column(db.Integer)
 
     __table_args__ = (
         UniqueConstraint('NoteID', 'AccesseeStudentID', name='share_unique_note_accessee'),

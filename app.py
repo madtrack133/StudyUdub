@@ -474,59 +474,6 @@ def shared_with_me():
     )
 
 
-@app.route('/deadlines', methods=['GET', 'POST'])
-@login_required
-def deadlines():
-    if request.method == 'POST':
-        # distinguish “add” vs “toggle done” by a hidden field
-        if 'new_deadline' in request.form:
-            # add new
-            unit_code   = request.form['unit_code'].strip().upper()
-            name        = request.form['task'].strip()
-            due_date    = datetime.strptime(request.form['due_date'], '%Y-%m-%d').date()
-            course = Course.query.filter_by(UnitCode=unit_code).first()
-            if not course:
-                flash(f"Unit '{unit_code}' not found.", 'danger')
-            else:
-                a = Assignment(
-                  AssignmentName = name,
-                  CourseID       = course.CourseID,
-                  StudentID      = current_user.StudentID,
-                  HoursSpent     = 0.0,
-                  Weight         = 0.0,
-                  MarksAchieved  = 0.0,
-                  MarksOutOf     = 1.0,
-                  DueDate        = due_date,
-                  Completed      = False
-                )
-                db.session.add(a)
-                db.session.commit()
-                flash('Deadline added.', 'success')
-        elif 'toggle_id' in request.form:
-            # toggle completed
-            aid = int(request.form['toggle_id'])
-            a = Assignment.query.get_or_404(aid)
-            if a.StudentID == current_user.StudentID:
-                a.Completed = not a.Completed
-                db.session.commit()
-                flash('Updated status.', 'success')
-            else:
-                flash("Permission denied.", 'danger')
-        return redirect(url_for('deadlines'))
-
-    # GET: fetch upcoming vs done
-    upcoming = Assignment.query.filter_by(
-        StudentID=current_user.StudentID, Completed=False
-    ).order_by(Assignment.DueDate).all()
-    done = Assignment.query.filter_by(
-        StudentID=current_user.StudentID, Completed=True
-    ).order_by(Assignment.DueDate.desc()).all()
-
-    return render_template(
-      'deadlines.html',
-      upcoming=upcoming,
-      done=done
-    )
 
 
 @app.route('/course/<course_code>')
@@ -644,6 +591,7 @@ def grades_view():
 
 @app.route('/grades/delete/<int:assignment_id>', methods=['POST'])
 @login_required
+@twofa_required
 def delete_assignment(assignment_id):
     assignment = Assignment.query.get_or_404(assignment_id)
     # ensure users can only delete their own assignments

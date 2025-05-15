@@ -10,6 +10,7 @@
     <div class="card-body">
       <h4 class="card-title">Add New Course</h4>
       <form method="POST" action="{{ url_for('add_course_db') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="mb-3">
           <label class="form-label">Unit Code</label>
           <input type="text" name="unitcode" class="form-control" required>
@@ -37,7 +38,6 @@
             <th>Unit Code</th>
             <th>Name</th>
             <th>Credits</th>
-            <th>Enroll</th>
           </tr>
         </thead>
         <tbody>
@@ -46,15 +46,6 @@
             <td>{{ c.UnitCode }}</td>
             <td>{{ c.CourseName }}</td>
             <td>{{ c.CreditPoints }}</td>
-            <td>
-              {% if c.CourseID in enrolled_ids %}
-                <span class="badge bg-success">Enrolled</span>
-              {% else %}
-                <form method="POST" action="{{ url_for('enroll_course', course_id=c.CourseID) }}">
-                  <button type="submit" class="btn btn-sm btn-primary">Enroll</button>
-                </form>
-              {% endif %}
-            </td>
           </tr>
         {% endfor %}
         </tbody>
