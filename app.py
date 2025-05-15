@@ -696,7 +696,7 @@ def manage_courses():
         enrolled_ids=enrolled_ids,
         courses_session=session.get('courses', [])
     )
-
+#courses page
 @app.route('/manage-courses/add', methods=['POST'])
 @login_required
 @twofa_required
