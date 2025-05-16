@@ -95,7 +95,7 @@ rmdir /s /q migrations
 
 ```bash
 flask db init         # Only if migrations folder doesn't already exist
-flask db migrate -m "Initial migration"
+flask db migrate -m "Initial migration" # Only if migrations folder doesn't already exist
 flask db upgrade
 ```
 
@@ -112,7 +112,7 @@ Visit: http://localhost:5000
 ---
 
 ### 7. Run Unit Tests
-
+In a new terminal:
 ```bash
 pytest
 ```
@@ -128,11 +128,6 @@ Selenium tests cover critical user flows such as:
 - Dashboard and profile access after login
 - Upload form functionality and validation
 
-Make sure Selenium is installed:
-
-```bash
-pip install selenium
-```
 
 To run the tests:
 
