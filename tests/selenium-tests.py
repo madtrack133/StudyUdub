@@ -79,7 +79,7 @@ class SeleniumStudyUdubTest(unittest.TestCase):
             self.driver.find_element(By.ID, f"code-{i}").send_keys(digit)
 
         # Submit verification and wait for dashboard
-        self.driver.find_element(By.XPATH, "//button[@value='verify']").click()
+        #self.driver.find_element(By.XPATH, "//button[@value='verify']").click()
         WebDriverWait(self.driver, 10).until(EC.url_contains("/dashboard"))
 
     def test_signup_form_visible(self):
