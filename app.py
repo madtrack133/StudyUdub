@@ -1,4 +1,4 @@
-# at the top, add these imports
+# --- Standard & Third-Party Imports ---
 import secrets
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
@@ -11,7 +11,6 @@ from datetime import datetime
 import base64
 from functools import wraps
 from collections import defaultdict
-from datetime import datetime
 from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash
 from flask_wtf import CSRFProtect
@@ -32,10 +31,13 @@ from email_validator import validate_email, EmailNotValidError
 import pyotp
 import qrcode
 
+# --- Local Imports ---
+# Application configuration and database models
 from config import Config
 from models import db, Student, Notes, Course, Share, Assignment
 
 # --- Logging Configuration ---
+# Set up file and console logging
 log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
 
 file_handler = RotatingFileHandler('app.log', maxBytes=1_000_000, backupCount=3)
@@ -52,11 +54,14 @@ logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
 # --- Flask App Setup ---
+# Create Flask instance and load configuration
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super-secret-key')
 csrf = CSRFProtect(app)
+
 #Upload folder
+#Directory for storing uploaded notes and allowed file types
 UPLOAD_FOLDER = os.path.join(app.root_path, 'secure_notes')
 ALLOWED_EXTENSIONS = {'md', 'pdf', 'txt', 'docx'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -90,13 +95,14 @@ def map_category(cat):
         'Past Exam Papers':   'Exam',
         'Assignment Solutions':'Other'
     }.get(cat, 'Other')
-#error file size.
+
+# --- Error Handling ---
 @app.errorhandler(RequestEntityTooLarge)
 def handle_file_too_large(e):
     flash('File is too large (max 10 MB).', 'danger')
     return redirect(request.url)
 
-
+# --- User Loader ---
 @login_manager.user_loader
 def load_user(user_id):
     return Student.query.get(int(user_id))
@@ -129,10 +135,11 @@ Hi {user.FirstName},\n\nReset your 2FA key via:\n{link}\n\nThis expires in 1 hou
 """
     mail.send(msg)
 
-# --- Routes: Auth ---
+# --- Routes: User Registration & Authentication ---
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        # Extract and validate form inputs
         email = request.form['email'].strip().lower()
         password = request.form['password'].strip()
         confirm = request.form['confirm_password'].strip()
@@ -151,6 +158,8 @@ def signup():
         if Student.query.filter_by(Email=email).first():
             flash('Email already registered.', 'warning')
             return redirect(url_for('signup'))
+        
+        # Create and store the new user
         user = Student(Email=email, FirstName=first, LastName=last,UniStudentID=UniStudentID)
         user.set_password(password)
         db.session.add(user); db.session.commit()
@@ -167,10 +176,14 @@ def setup_2fa():
         logout_user()
         return redirect(url_for('login'))
     if request.method == 'POST':
+        # After user scans QR, log them out for login flow
         logout_user(); flash('2FA setup complete; please log in.', 'success')
         return redirect(url_for('login'))
+    #generate and store new TOTP secret
     secret = pyotp.random_base32()
     current_user.totp_secret = secret; db.session.commit()
+
+    #generate QR code for authenticator apps
     uri = pyotp.TOTP(secret).provisioning_uri(name=current_user.Email, issuer_name='StudyApp')
     img = qrcode.make(uri)
     buf = BytesIO(); img.save(buf, 'PNG')
