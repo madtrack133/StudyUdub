@@ -41,12 +41,12 @@
 
   <!-- Recent Notes Section -->
   <div class="card p-4 shadow-sm">
-    <h4 class="card-title">Recent Notes 📚</h4>
+    <h4 class="card-title">Uploaded Notes 📚</h4>
     <table class="table mt-3">
       <thead>
         <tr>
           <th>Title</th>
-          <th>Date</th>
+          <th>Course</th>
         </tr>
       </thead>
       <tbody>
@@ -54,7 +54,7 @@
           {% for note in notes %}
           <tr>
             <td>{{ note.title }}</td>
-            <td>{{ note.date }}</td>
+            <td>{{ note.course }}</td>
           </tr>
           {% endfor %}
         {% else %}
@@ -65,7 +65,6 @@
       </tbody>
     </table>
   </div>
-
 </div>
 
 <style>

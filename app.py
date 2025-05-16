@@ -330,7 +330,21 @@ def home():
 @login_required
 @twofa_required
 def dashboard():
-    return render_template('dashboard.html', courses=session.get('courses', []), user=current_user)
+    recent_notes = (
+        Notes.query
+        .filter_by(StudentID=current_user.StudentID)
+        .order_by(Notes.CreatedAt.desc())
+        .limit(5)
+        .all()
+    )
+
+    # Pass note title and course code
+    notes = [{
+        'title': n.Title,
+        'course': n.course.UnitCode if n.course else 'Unassigned'
+    } for n in recent_notes]
+
+    return render_template('dashboard.html', courses=session.get('courses', []), user=current_user, notes=notes)
 
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
