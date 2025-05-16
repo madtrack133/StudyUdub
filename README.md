@@ -72,6 +72,7 @@ To run the tests:
 
 Make sure you’ve installed all dependencies first using:  
 pip install selenium
+
 pip install -r requirements.txt
 
 ```bash
