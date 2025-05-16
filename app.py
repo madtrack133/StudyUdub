@@ -167,7 +167,7 @@ def signup():
         flash('Account created; complete 2FA setup.', 'success')
         return redirect(url_for('setup_2fa'))
     return render_template('signup.html')
-
+#2fa setup
 @app.route('/setup-2fa', methods=['GET','POST'])
 @login_required
 def setup_2fa():
@@ -198,7 +198,7 @@ def login():
         user  = Student.query.filter_by(Email=email).first()
 
         if user and user.check_password(pwd):
-            #set your session flag so twofa_required passes
+            #set session flag so twofa_required passes
             session['temp_user_id'] = user.StudentID
             flash('Logged in successfully!', 'success')
             return redirect(url_for('verify_2fa'))
@@ -207,7 +207,7 @@ def login():
 
     return render_template('login.html')
 
-
+#check 2fa
 @app.route('/verify-2fa', methods=['GET', 'POST'])
 def verify_2fa():
     if 'temp_user_id' not in session:
@@ -256,7 +256,7 @@ def verify_2fa():
 
     return render_template('verify_2fa.html')
 
-
+#For 2fa reset issues
 @app.route('/reset-2fa-request', methods=['GET','POST'])
 def reset_2fa_request():
     if request.method=='POST':
@@ -285,7 +285,7 @@ def reset_2fa_token(token):
     img = qrcode.make(uri); buf = BytesIO(); img.save(buf,'PNG')
     qr = base64.b64encode(buf.getvalue()).decode()
     return render_template('setup_2fa.html', qr_code=qr, totp_secret=secret)
-
+#Password reset capability
 @app.route('/forgot', methods=['GET','POST'])
 def forgot():
     if request.method=='POST':
@@ -297,7 +297,6 @@ def forgot():
         else:
             flash('Email not found.', 'warning')
     return render_template('forgot_password.html')
-
 @app.route('/reset/<token>', methods=['GET','POST'])
 def reset_password(token):
     try:
@@ -315,6 +314,7 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('reset_password.html')
 
+#logout functionality
 @app.route('/logout')
 @login_required
 def logout():
@@ -360,7 +360,7 @@ def upload():
             flash('Invalid file type. Allowed: .md, .pdf, .txt, .docx', 'danger')
             return redirect(request.url)
 
-        # generate 64-hex-char prefix (meets your CHECK constraint)
+        # generate 64-hex-char prefix (For security)
         prefix   = secrets.token_hex(32)
         filename = secure_filename(file.filename)
         save_name = f"{prefix}_{filename}"
