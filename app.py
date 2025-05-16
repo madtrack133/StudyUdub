@@ -362,7 +362,9 @@ def upload():
     all_courses = Course.query.order_by(Course.UnitCode).all()
     return render_template('upload.html', courses=all_courses)
 
+#Share handles the user's notes-sharing capabilities. Includes current notes.
 @app.route('/share', methods=['GET', 'POST'])
+#Check user validity.
 @login_required
 @twofa_required
 def share():
@@ -376,7 +378,7 @@ def share():
             flash('Cannot share a note you do not own.', 'danger')
             return redirect(url_for('share'))
 
-        # look up the student by UniStudentID, not PK
+        # look up the student by UniStudentID, 
         student = Student.query.filter_by(UniStudentID=uni_id).first()
         if not student:
             flash(f"No student found with UniStudentID '{uni_id}'.", 'warning')
@@ -395,7 +397,6 @@ def share():
                 NoteID=note_id,
                 OwnerStudentID=current_user.StudentID,
                 AccesseeStudentID=accessee_id,
-                EditPower=0
             )
             db.session.add(new_share)
             db.session.commit()
@@ -417,8 +418,9 @@ def share():
         owned_shares=owned_shares,
         courses=session.get('courses', [])
     )
-
+#Functionality to revoke shared document access
 @app.route('/share/remove/<int:share_id>', methods=['POST'])
+#Check login 
 @login_required
 @twofa_required
 def remove_share(share_id):
@@ -431,12 +433,14 @@ def remove_share(share_id):
     flash('Access revoked.', 'success')
     return redirect(url_for('share'))
 
-
+#File Download FUnctionality
 @app.route('/download/<int:note_id>')
+#check login
 @login_required
 @twofa_required
 def download(note_id):
     note = Notes.query.get_or_404(note_id)
+    #secondary check to ensure downloader is owner or has current share access.
     is_owner = (note.StudentID == current_user.StudentID)
     is_shared = Share.query.filter_by(
         NoteID=note_id, AccesseeStudentID=current_user.StudentID
@@ -449,6 +453,8 @@ def download(note_id):
     filename = os.path.basename(note.FilePath)
     directory = os.path.join(app.root_path, 'secure_notes')
     return send_from_directory(directory, filename, as_attachment=True)
+
+#Shows shared documents.
 @app.route('/shared_with_me')
 @login_required
 @twofa_required
@@ -456,7 +462,7 @@ def shared_with_me():
     # pull all Share records for this user
     shares = Share.query.filter_by(AccesseeStudentID=current_user.StudentID).all()
 
-    # build a list of dicts for the template
+    # build a list of dicts for the template to render
     shared_docs = []
     for share in shares:
         note  = share.note
@@ -473,16 +479,9 @@ def shared_with_me():
         courses=session.get('courses', [])
     )
 
-
-
-
-@app.route('/course/<course_code>')
-@login_required
-@twofa_required
-def course_notes(course_code):
-    return render_template('course_notes.html', course_code=course_code, courses=session.get('courses', []))
-
+#Add new courses
 @app.route('/add_course', methods=['POST'])
+#Check Login
 @login_required
 @twofa_required
 def add_course():
@@ -493,8 +492,9 @@ def add_course():
     return redirect(url_for('dashboard'))
 
 
-
+#Allows you to add and display grades.
 @app.route('/grades', methods=['GET', 'POST'])
+#Check Login
 @login_required
 @twofa_required
 def grades_view():
@@ -588,8 +588,9 @@ def grades_view():
         courses    = session.get('courses', [])
     )
 
-
+#Deleting an assignment in the grades section.
 @app.route('/grades/delete/<int:assignment_id>', methods=['POST'])
+#Check Login
 @login_required
 @twofa_required
 def delete_assignment(assignment_id):
@@ -609,7 +610,9 @@ def delete_assignment(assignment_id):
 
     return redirect(url_for('grades_view'))
 
+#Show general user information and allows changes.
 @app.route('/profile', methods=['GET', 'POST'])
+#Check Login
 @login_required
 @twofa_required
 def profile():
@@ -617,10 +620,7 @@ def profile():
         current_user.FirstName = request.form['name'].split()[0]
         current_user.LastName = ' '.join(request.form['name'].split()[1:])
         current_user.Email = request.form['email']
-        current_user.Major = request.form['major']
-        current_user.Year = request.form['year']
-        current_user.Units = request.form['units']
-        current_user.StudentID = request.form['student_id']
+        current_user.UniStudentID = request.form['uniStudentID']
         db.session.commit()
         flash('Profile updated successfully!', 'success')
         return redirect(url_for('profile'))
@@ -632,6 +632,7 @@ def profile():
     }
     return render_template('profile.html', user=user_data)
 
+#Testing
 @app.route("/test-login", methods=["POST"])
 def test_login():
     if not app.config.get("TESTING"):
@@ -643,7 +644,9 @@ def test_login():
         return redirect("/dashboard")
     return "User not found", 404
 
+#Manage Courses Page
 @app.route('/manage-courses')
+#Login Check
 @login_required
 @twofa_required
 def manage_courses():
@@ -656,8 +659,10 @@ def manage_courses():
         enrolled_ids=enrolled_ids,
         courses_session=session.get('courses', [])
     )
-#courses page
+
+#Add courses functionality
 @app.route('/manage-courses/add', methods=['POST'])
+#Login Check
 @login_required
 @twofa_required
 def add_course_db():
@@ -676,24 +681,6 @@ def add_course_db():
         db.session.add(new)
         db.session.commit()
         flash(f"Added course {unit}.", 'success')
-    return redirect(url_for('manage_courses'))
-
-@app.route('/manage-courses/enroll/<int:course_id>', methods=['POST'])
-@login_required
-@twofa_required
-def enroll_course(course_id):
-    course = Course.query.get_or_404(course_id)
-    if course in current_user.courses:
-        flash(f"Already enrolled in {course.UnitCode}.", 'info')
-    else:
-        sc = StudentCourse(
-            StudentID=current_user.StudentID,
-            CourseID=course.CourseID,
-            EnrollmentDate=date.today()
-        )
-        db.session.add(sc)
-        db.session.commit()
-        flash(f"Enrolled in {course.UnitCode}.", 'success')
     return redirect(url_for('manage_courses'))
 
 if __name__ == '__main__':
