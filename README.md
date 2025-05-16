@@ -23,7 +23,7 @@ StudyUdub is a secure web application designed to help university students organ
 - Bootstrap 5 for responsive UI
 
 ## Getting Started
-
+This project requires **Python 3.9.0** to ensure compatibility with all packages.
 ### 1. Clone the Repository
 
 ```bash
