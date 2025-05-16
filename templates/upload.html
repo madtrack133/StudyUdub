@@ -9,19 +9,19 @@
         <form method="POST" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="mb-3">
-                <label class="form-label">Note Title</label>
+                <label class="form-label">Note Title<span class="text-danger">*</span></label>
                 <input type="text" name="title" class="form-control" placeholder="Enter note title" required>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Select File</label>
+                <label class="form-label">Select File<span class="text-danger">*</span></label>
                 <input type="file" name="file" class="form-control" required>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Category</label>
+                <label class="form-label">Category<span class="text-danger">*</span></label>
                 <select name="category" class="form-select" required>
-                    <option disabled selected>Select category</option>
+                    <<option value="" disabled selected>Select category</option>
                     <option>Lecture Notes</option>
                     <option>Assignment Solutions</option>
                     <option>Past Exam Papers</option>
@@ -30,9 +30,9 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Course</label>
+              <label class="form-label">Course <span class="text-danger">*</span></label>
                 <select name="course" class="form-select" required>
-                  <option disabled selected>Select course</option>
+                  <option value="" disabled selected>Select course</option>
                   {% for course in courses %}
                     <option value="{{ course.UnitCode }}">
                       {{ course.UnitCode }} – {{ course.CourseName }}
