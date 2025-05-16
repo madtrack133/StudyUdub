@@ -1,4 +1,4 @@
-# at the top, add these imports
+# --- Standard & Third-Party Imports ---
 import secrets
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
@@ -11,7 +11,6 @@ from datetime import datetime
 import base64
 from functools import wraps
 from collections import defaultdict
-from datetime import datetime
 from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash
 from flask_wtf import CSRFProtect
@@ -32,10 +31,13 @@ from email_validator import validate_email, EmailNotValidError
 import pyotp
 import qrcode
 
+# --- Local Imports ---
+# Application configuration and database models
 from config import Config
 from models import db, Student, Notes, Course, Share, Assignment
 
 # --- Logging Configuration ---
+# Set up file and console logging
 log_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
 
 file_handler = RotatingFileHandler('app.log', maxBytes=1_000_000, backupCount=3)
@@ -52,11 +54,14 @@ logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
 # --- Flask App Setup ---
+# Create Flask instance and load configuration
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super-secret-key')
 csrf = CSRFProtect(app)
+
 #Upload folder
+#Directory for storing uploaded notes and allowed file types
 UPLOAD_FOLDER = os.path.join(app.root_path, 'secure_notes')
 ALLOWED_EXTENSIONS = {'md', 'pdf', 'txt', 'docx'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -90,13 +95,14 @@ def map_category(cat):
         'Past Exam Papers':   'Exam',
         'Assignment Solutions':'Other'
     }.get(cat, 'Other')
-#error file size.
+
+# --- Error Handling ---
 @app.errorhandler(RequestEntityTooLarge)
 def handle_file_too_large(e):
     flash('File is too large (max 10 MB).', 'danger')
     return redirect(request.url)
 
-
+# --- User Loader ---
 @login_manager.user_loader
 def load_user(user_id):
     return Student.query.get(int(user_id))
@@ -129,10 +135,11 @@ Hi {user.FirstName},\n\nReset your 2FA key via:\n{link}\n\nThis expires in 1 hou
 """
     mail.send(msg)
 
-# --- Routes: Auth ---
+# --- Routes: User Registration & Authentication ---
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        # Extract and validate form inputs
         email = request.form['email'].strip().lower()
         password = request.form['password'].strip()
         confirm = request.form['confirm_password'].strip()
@@ -151,6 +158,8 @@ def signup():
         if Student.query.filter_by(Email=email).first():
             flash('Email already registered.', 'warning')
             return redirect(url_for('signup'))
+        
+        # Create and store the new user
         user = Student(Email=email, FirstName=first, LastName=last,UniStudentID=UniStudentID)
         user.set_password(password)
         db.session.add(user); db.session.commit()
@@ -167,10 +176,14 @@ def setup_2fa():
         logout_user()
         return redirect(url_for('login'))
     if request.method == 'POST':
+        # After user scans QR, log them out for login flow
         logout_user(); flash('2FA setup complete; please log in.', 'success')
         return redirect(url_for('login'))
+    #generate and store new TOTP secret
     secret = pyotp.random_base32()
     current_user.totp_secret = secret; db.session.commit()
+
+    #generate QR code for authenticator apps
     uri = pyotp.TOTP(secret).provisioning_uri(name=current_user.Email, issuer_name='StudyApp')
     img = qrcode.make(uri)
     buf = BytesIO(); img.save(buf, 'PNG')
@@ -362,7 +375,9 @@ def upload():
     all_courses = Course.query.order_by(Course.UnitCode).all()
     return render_template('upload.html', courses=all_courses)
 
+#Share handles the user's notes-sharing capabilities. Includes current notes.
 @app.route('/share', methods=['GET', 'POST'])
+#Check user validity.
 @login_required
 @twofa_required
 def share():
@@ -376,7 +391,7 @@ def share():
             flash('Cannot share a note you do not own.', 'danger')
             return redirect(url_for('share'))
 
-        # look up the student by UniStudentID, not PK
+        # look up the student by UniStudentID, 
         student = Student.query.filter_by(UniStudentID=uni_id).first()
         if not student:
             flash(f"No student found with UniStudentID '{uni_id}'.", 'warning')
@@ -395,7 +410,6 @@ def share():
                 NoteID=note_id,
                 OwnerStudentID=current_user.StudentID,
                 AccesseeStudentID=accessee_id,
-                EditPower=0
             )
             db.session.add(new_share)
             db.session.commit()
@@ -417,8 +431,9 @@ def share():
         owned_shares=owned_shares,
         courses=session.get('courses', [])
     )
-
+#Functionality to revoke shared document access
 @app.route('/share/remove/<int:share_id>', methods=['POST'])
+#Check login 
 @login_required
 @twofa_required
 def remove_share(share_id):
@@ -431,12 +446,14 @@ def remove_share(share_id):
     flash('Access revoked.', 'success')
     return redirect(url_for('share'))
 
-
+#File Download FUnctionality
 @app.route('/download/<int:note_id>')
+#check login
 @login_required
 @twofa_required
 def download(note_id):
     note = Notes.query.get_or_404(note_id)
+    #secondary check to ensure downloader is owner or has current share access.
     is_owner = (note.StudentID == current_user.StudentID)
     is_shared = Share.query.filter_by(
         NoteID=note_id, AccesseeStudentID=current_user.StudentID
@@ -449,6 +466,8 @@ def download(note_id):
     filename = os.path.basename(note.FilePath)
     directory = os.path.join(app.root_path, 'secure_notes')
     return send_from_directory(directory, filename, as_attachment=True)
+
+#Shows shared documents.
 @app.route('/shared_with_me')
 @login_required
 @twofa_required
@@ -456,7 +475,7 @@ def shared_with_me():
     # pull all Share records for this user
     shares = Share.query.filter_by(AccesseeStudentID=current_user.StudentID).all()
 
-    # build a list of dicts for the template
+    # build a list of dicts for the template to render
     shared_docs = []
     for share in shares:
         note  = share.note
@@ -473,16 +492,9 @@ def shared_with_me():
         courses=session.get('courses', [])
     )
 
-
-
-
-@app.route('/course/<course_code>')
-@login_required
-@twofa_required
-def course_notes(course_code):
-    return render_template('course_notes.html', course_code=course_code, courses=session.get('courses', []))
-
+#Add new courses
 @app.route('/add_course', methods=['POST'])
+#Check Login
 @login_required
 @twofa_required
 def add_course():
@@ -493,8 +505,9 @@ def add_course():
     return redirect(url_for('dashboard'))
 
 
-
+#Allows you to add and display grades.
 @app.route('/grades', methods=['GET', 'POST'])
+#Check Login
 @login_required
 @twofa_required
 def grades_view():
@@ -588,8 +601,9 @@ def grades_view():
         courses    = session.get('courses', [])
     )
 
-
+#Deleting an assignment in the grades section.
 @app.route('/grades/delete/<int:assignment_id>', methods=['POST'])
+#Check Login
 @login_required
 @twofa_required
 def delete_assignment(assignment_id):
@@ -609,7 +623,9 @@ def delete_assignment(assignment_id):
 
     return redirect(url_for('grades_view'))
 
+#Show general user information and allows changes.
 @app.route('/profile', methods=['GET', 'POST'])
+#Check Login
 @login_required
 @twofa_required
 def profile():
@@ -617,10 +633,7 @@ def profile():
         current_user.FirstName = request.form['name'].split()[0]
         current_user.LastName = ' '.join(request.form['name'].split()[1:])
         current_user.Email = request.form['email']
-        current_user.Major = request.form['major']
-        current_user.Year = request.form['year']
-        current_user.Units = request.form['units']
-        current_user.StudentID = request.form['student_id']
+        current_user.UniStudentID = request.form['uniStudentID']
         db.session.commit()
         flash('Profile updated successfully!', 'success')
         return redirect(url_for('profile'))
@@ -632,6 +645,7 @@ def profile():
     }
     return render_template('profile.html', user=user_data)
 
+#Testing
 @app.route("/test-login", methods=["POST"])
 def test_login():
     if not app.config.get("TESTING"):
@@ -643,7 +657,9 @@ def test_login():
         return redirect("/dashboard")
     return "User not found", 404
 
+#Manage Courses Page
 @app.route('/manage-courses')
+#Login Check
 @login_required
 @twofa_required
 def manage_courses():
@@ -656,8 +672,10 @@ def manage_courses():
         enrolled_ids=enrolled_ids,
         courses_session=session.get('courses', [])
     )
-#courses page
+
+#Add courses functionality
 @app.route('/manage-courses/add', methods=['POST'])
+#Login Check
 @login_required
 @twofa_required
 def add_course_db():
@@ -676,24 +694,6 @@ def add_course_db():
         db.session.add(new)
         db.session.commit()
         flash(f"Added course {unit}.", 'success')
-    return redirect(url_for('manage_courses'))
-
-@app.route('/manage-courses/enroll/<int:course_id>', methods=['POST'])
-@login_required
-@twofa_required
-def enroll_course(course_id):
-    course = Course.query.get_or_404(course_id)
-    if course in current_user.courses:
-        flash(f"Already enrolled in {course.UnitCode}.", 'info')
-    else:
-        sc = StudentCourse(
-            StudentID=current_user.StudentID,
-            CourseID=course.CourseID,
-            EnrollmentDate=date.today()
-        )
-        db.session.add(sc)
-        db.session.commit()
-        flash(f"Enrolled in {course.UnitCode}.", 'success')
     return redirect(url_for('manage_courses'))
 
 if __name__ == '__main__':

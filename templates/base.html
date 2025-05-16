@@ -11,18 +11,22 @@
   <!-- Custom Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Global Styles -->
   <style>
+    /* page background and font */
     body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(120deg, #f5f7fa 0%, #ebf0ff 100%);
       min-height: 100vh;
     }
+    /* sidebar styling */
     .sidebar {
       height: 100vh;
       background: #f5f7fa;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
     }
+    /* sidebar links styling */
     .sidebar a {
       color: #212529;
       display: flex;
@@ -35,6 +39,7 @@
       font-weight: 500;
       transition: all 0.2s ease-in-out;
     }
+    /* active/hover effects for sidebar links */
     .sidebar a:hover,
     .sidebar a.active {
       background-color: #ece7ff;
@@ -92,7 +97,7 @@
   </style>
 </head>
 <body>
-  <!-- AUTH NAVBAR -->
+  
   <!-- AUTH NAVBAR -->
   <nav class="navbar navbar-expand bg-transparent px-4 py-2 d-flex justify-content-between">
 
@@ -106,7 +111,7 @@
 
 
 
-  <!-- FLASH MESSAGES -->
+  <!-- FLASH MESSAGES HANDLING -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <div class="container mt-3">
@@ -120,10 +125,11 @@
     {% endif %}
   {% endwith %}
 
+   <!-- Page Layout -->
   <div class="container-fluid">
     <div class="row">
       {% if request.endpoint not in ['login','signup','forgot','reset_password','verify_2fa', 'setup_2fa', 'reset_2fa','reset_2fa_request'] %}
-      <!-- Sidebar -->
+      <!-- Sidebar (hidden for auth pages) -->
       <nav class="col-md-2 d-none d-md-block sidebar">
         <div class="branding mb-4">
           <a href="{{ url_for('dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
@@ -131,6 +137,8 @@
             <h4 class="mb-0 fw-medium text-dark">StudyUdub</h4>
           </a>
         </div>
+
+        <!-- Navigation Menu -->
         <h6 class="text-muted mb-2">Menu</h6>
         <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
           <i class="bi bi-grid"></i> Dashboard
@@ -165,7 +173,7 @@
         {% endfor %}
         <button class="add-course-btn mt-2" data-bs-toggle="modal" data-bs-target="#addCourseModal">+</button>
         #}
-
+        
         <div class="mt-auto pt-4">
           <a href="{{ url_for('profile') }}" class="d-flex align-items-center gap-2 text-decoration-none text-dark small p-2 rounded sidebar-profile-link {% if request.endpoint == 'profile' %}active{% endif %}">
             <i class="bi bi-person-circle"></i>
