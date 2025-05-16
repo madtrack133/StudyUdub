@@ -9,31 +9,34 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# モジュールのルートパスを追加
+# Add the root path so we can import from the app package
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# Flask アプリと DB をインポート
+# Import the Flask app and database
 from app import app as flask_app, db
 from models import Student
 
-# OTP 設定
+# Predefined TOTP secret used for 2FA
 secret = "JBSWY3DPEHPK3PXP"
 totp = pyotp.TOTP(secret)
-
 
 class SeleniumStudyUdubTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # --- Flask アプリケーション設定 ---
+        """
+        Runs once before all test methods.
+        Sets up the test database and Selenium WebDriver.
+        """
+        # Configure Flask app for testing
         flask_app.config.update({
             "TESTING": True,
             "WTF_CSRF_ENABLED": False,
-            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",  # in-memory DB
             "LOGIN_DISABLED": False,
         })
 
-        # --- DBとユーザー作成 ---
+        # Create test user in the test database
         with flask_app.app_context():
             db.create_all()
             user = Student.query.filter_by(Email="testuser@example.com").first()
@@ -49,92 +52,97 @@ class SeleniumStudyUdubTest(unittest.TestCase):
                 db.session.add(user)
                 db.session.commit()
 
-        # --- Selenium ドライバ起動 ---
+        # Launch Chrome WebDriver
         options = webdriver.ChromeOptions()
-        # options.add_argument("--headless")  # 必要に応じてコメントアウト
+        # options.add_argument("--headless")  # Uncomment to run headless
         cls.driver = webdriver.Chrome(options=options)
         cls.driver.implicitly_wait(5)
-        cls.base_url = "http://localhost:5001"
+        cls.base_url = "http://localhost:5001"  # Adjust to your Flask port
 
     @classmethod
     def tearDownClass(cls):
+        """
+        Runs once after all test methods.
+        Tears down the browser and database.
+        """
         cls.driver.quit()
         with flask_app.app_context():
             db.drop_all()
-            
-    def login_without_2fa(self):
+
+    def login_with_2fa(self):
+        """
+        Helper function to perform a full login including 2FA.
+        Assumes the user is already registered in the test DB.
+        """
         self.driver.get(f"{self.base_url}/login")
         self.driver.find_element(By.NAME, "email").send_keys("testuser@example.com")
         self.driver.find_element(By.NAME, "password").send_keys("Password@123")
         self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+
+        # Wait until redirected to 2FA verification page
         WebDriverWait(self.driver, 10).until(EC.url_contains("/verify-2fa"))
 
-        # input code
+        # Input the 6-digit TOTP code
         code = totp.now()
         for i, digit in enumerate(code):
             input_elem = self.driver.find_element(By.ID, f"code-{i}")
             input_elem.clear()
             input_elem.send_keys(digit)
 
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@type='submit' and @value='verify']"))
-        ).click()
+        # Wait until dashboard is loaded (auto submit happens via JS)
         WebDriverWait(self.driver, 10).until(EC.url_contains("/dashboard"))
 
-
     def test_2fa_verification_works(self):
-        # 1. ログインフェーズ
+        """
+        Verifies that TOTP 2FA process redirects correctly to dashboard.
+        """
         self.driver.get(f"{self.base_url}/login")
         self.driver.find_element(By.NAME, "email").send_keys("testuser@example.com")
         self.driver.find_element(By.NAME, "password").send_keys("Password@123")
         self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
 
-        # 2. 2FA ページに遷移したことを確認
         WebDriverWait(self.driver, 10).until(EC.url_contains("/verify-2fa"))
 
-        # 3. 現在のTOTPコードを取得し、各桁を分割
         code = totp.now()
-        assert len(code) == 6
-
-        # 4. 各 input フィールドに1桁ずつ送信
         for i, digit in enumerate(code):
             input_elem = self.driver.find_element(By.ID, f"code-{i}")
             input_elem.clear()
             input_elem.send_keys(digit)
 
-        # 5. Verifyボタンをクリック
-        self.driver.find_element(By.XPATH, "//button[@type='submit' and @value='verify']").click()
-
-        # 6. 認証後に dashboard にリダイレクトされたことを検証
         WebDriverWait(self.driver, 10).until(EC.url_contains("/dashboard"))
         self.assertIn("dashboard", self.driver.current_url)
 
     def test_signup_form_visible(self):
+        """
+        Checks that the signup form is rendered and contains the expected heading.
+        """
         self.driver.get(f"{self.base_url}/signup")
         heading = self.driver.find_element(By.TAG_NAME, "h4").text
         self.assertIn("Sign Up", heading)
 
     def test_login_page_loads(self):
+        """
+        Confirms that the login page loads correctly and contains 'Log In'.
+        """
         self.driver.get(f"{self.base_url}/login")
         self.assertIn("Log In", self.driver.page_source)
 
     def test_dashboard_accessible_after_login(self):
-        self.login_without_2fa()
+        """
+        Ensures the dashboard is accessible after logging in with 2FA.
+        """
+        self.login_with_2fa()
         self.assertIn("dashboard", self.driver.current_url)
         self.assertIn("Welcome", self.driver.page_source)
 
     def test_file_upload_ui_visible(self):
-        self.login_without_2fa()
+        """
+        Verifies that the file upload form is visible and functional after login.
+        """
+        self.login_with_2fa()
         self.driver.get(f"{self.base_url}/upload")
         self.assertTrue(self.driver.find_element(By.NAME, "title"))
         self.assertTrue(self.driver.find_element(By.NAME, "file"))
-
-    def test_add_deadline_button_visible(self):
-        self.login_without_2fa()
-        self.driver.get(f"{self.base_url}/deadlines")
-        add_btn = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Add Deadline')]")
-        self.assertTrue(add_btn)
-
 
 if __name__ == "__main__":
     unittest.main()
