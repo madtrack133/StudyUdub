@@ -51,4 +51,28 @@ Visit: http://localhost:5000
 ### 7. Run Unit Tests
 pytest
 
+### Selenium Integration Tests
+
+Selenium tests were implemented to cover critical user flows, including:
+
+- Signup page rendering
+- Login + 2FA verification using PyOTP
+- Dashboard and profile access after login
+- Upload form functionality and validation
+
+#### How we got Selenium working:
+
+- We configured a headless Chrome browser using `webdriver.ChromeOptions()`
+- To handle 2FA, we used a static PyOTP secret and passed the current TOTP during the test
+- A helper method was created to simulate login and complete the 2FA prompt using 6-digit autofill
+- We inserted a temporary test user in an in-memory SQLite database before each test run
+- Selenium was used to assert presence of elements, redirection to correct URLs, and visibility of UI components
+
+To run the tests:
+```bash
+python3 -m unittest tests/selenium-tests.py
+```
+If you want to see the browser pop up and interact:
+- Comment out the `--headless` line in the `setUpClass` method of `selenium-tests.py`.
+
 ### Authors: Takumi Iizuka, Venu Soma, Donna Peari, Krishna Modi
