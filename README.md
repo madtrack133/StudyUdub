@@ -69,6 +69,11 @@ Selenium tests were implemented to cover critical user flows, including:
 - Selenium was used to assert presence of elements, redirection to correct URLs, and visibility of UI components
 
 To run the tests:
+
+Make sure you’ve installed all dependencies first using:  
+pip install selenium
+pip install -r requirements.txt
+
 ```bash
 python3 -m unittest tests/selenium-tests.py
 ```
