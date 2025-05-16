@@ -45,7 +45,7 @@ class SeleniumStudyUdubTest(unittest.TestCase):
                     UniStudentID="12345678",
                     totp_secret=secret
                 )
-                user.set_password("Password@123")
+                user.set_password("Passwod@123")
                 db.session.add(user)
                 db.session.commit()
 
@@ -66,7 +66,7 @@ class SeleniumStudyUdubTest(unittest.TestCase):
     def login_with_2fa(self):
         self.driver.get(f"{self.base_url}/login")
         self.driver.find_element(By.NAME, "email").send_keys("testuser@example.com")
-        self.driver.find_element(By.NAME, "password").send_keys("Password@123")
+        self.driver.find_element(By.NAME, "password").send_keys("Passwod@123")
         self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
 
         WebDriverWait(self.driver, 10).until(EC.url_contains("/verify-2fa"))
@@ -94,7 +94,23 @@ class SeleniumStudyUdubTest(unittest.TestCase):
         self.driver.get(f"{self.base_url}/upload")
         self.assertTrue(self.driver.find_element(By.NAME, "title"))
 
-  
+    def test_profile_page_heading_visible(self):
+        self.login_with_2fa()
+        self.driver.get(f"{self.base_url}/profile")
+        heading = self.driver.find_element(By.TAG_NAME, "h4").text
+        self.assertIn("StudyUdub", heading)
+
+
+
+    def test_upload_form_requires_fields(self):
+        self.login_with_2fa()
+        self.driver.get(f"{self.base_url}/upload")
+        self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+
+        # Still on the same page after failed submit
+        current_url = self.driver.current_url
+        self.assertIn("/upload", current_url)
+
 
 
 if __name__ == "__main__":
