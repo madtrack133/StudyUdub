@@ -22,63 +22,147 @@ StudyUdub is a secure web application designed to help university students organ
 - PyOTP and QRCode for 2FA support
 - Bootstrap 5 for responsive UI
 
-
 ## Getting Started
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
-Clone the project git clone (https://github.com/madtrack133/StudyUdub.git)<br>
+```bash
+git clone https://github.com/madtrack133/StudyUdub.git
 cd StudyUdub
+```
+
+---
 
 ### 2. Create and Activate a Virtual Environment
 
-python3 -m venv venv<br>
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+<details>
+<summary><strong>macOS / Linux</strong></summary>
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+</details>
+
+<details>
+<summary><strong>Windows</strong></summary>
+
+```cmd
+python -m venv venv
+venv\Scripts\activate
+```
+
+</details>
+
+---
 
 ### 3. Install Dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
-### 4. Configure Environment Variables
+---
+
+### 4. Ensure No Existing Database
+
+To avoid migration or schema issues, delete any old database files or migration folders before setup.
+
+<details>
+<summary><strong>macOS / Linux</strong></summary>
+
+```bash
+rm -f StudyUdub_V2.db
+rm -rf migrations/
+```
+
+</details>
+
+<details>
+<summary><strong>Windows</strong></summary>
+
+```cmd
+del StudyUdub_V2.db
+rmdir /s /q migrations
+```
+
+</details>
+
+---
 
 ### 5. Database Setup
+
+```bash
+flask db init         # Only if migrations folder doesn't already exist
+flask db migrate -m "Initial migration"
 flask db upgrade
+```
+
+---
 
 ### 6. Running the App
-flask run<br>
+
+```bash
+flask run
+```
+
 Visit: http://localhost:5000
 
+---
+
 ### 7. Run Unit Tests
+
+```bash
 pytest
+```
+
+---
 
 ### Selenium Integration Tests
 
-Selenium tests were implemented to cover critical user flows, including:
+Selenium tests cover critical user flows such as:
 
 - Signup page rendering
 - Login + 2FA verification using PyOTP
 - Dashboard and profile access after login
 - Upload form functionality and validation
 
-#### How we got Selenium working:
+Make sure Selenium is installed:
 
-- We configured a headless Chrome browser using `webdriver.ChromeOptions()`
-- To handle 2FA, we used a static PyOTP secret and passed the current TOTP during the test
-- A helper method was created to simulate login and complete the 2FA prompt using 6-digit autofill
-- We inserted a temporary test user in an in-memory SQLite database before each test run
-- Selenium was used to assert presence of elements, redirection to correct URLs, and visibility of UI components
+```bash
+pip install selenium
+```
 
 To run the tests:
 
-Make sure you’ve installed all dependencies first using:  
-pip install selenium
-
-pip install -r requirements.txt
+<details>
+<summary><strong>macOS / Linux</strong></summary>
 
 ```bash
 python3 -m unittest tests/selenium-tests.py
 ```
-If you want to see the browser pop up and interact:
-- Comment out the `--headless` line in the `setUpClass` method of `selenium-tests.py`.
+
+</details>
+
+<details>
+<summary><strong>Windows</strong></summary>
+
+```cmd
+python -m unittest tests/selenium-tests.py
+```
+
+</details>
+
+>  **Want to see the browser pop up?**  
+> Open `tests/selenium-tests.py` and **comment out** the following line in `setUpClass`:
+>
+> ```python
+> options.add_argument("--headless")  # ← comment this line to view the browser
+> ```
+
+---
+
+
 
 ### Authors: Takumi Iizuka, Venu Soma, Donna Peari, Krishna Modi
